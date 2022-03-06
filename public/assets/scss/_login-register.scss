@@ -1,0 +1,66 @@
+/*----------------------------------------*/
+/*  20. Login & Register CSS
+/*----------------------------------------*/
+
+/*-- Login & Register Tab List --*/
+.login-register-tab-list {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+    margin-bottom: 30px;
+    & li {
+        font-size: 30px;
+        font-weight: 300;
+        line-height: 1;
+        color: #aaaaaa;
+        margin: 0 10px;
+        // Responsive
+        @media #{$extra-small-mobile}{
+            font-size: 18px;
+        }
+        & a {
+            display: block;
+            font-weight: 600;
+            &.active {
+                color: $theme-color;
+            }
+        }
+    }
+}
+
+/*-- My Account Tab List --*/
+.myaccount-tab-list {
+    display: flex;
+    border: 1px solid #eeeeee;
+    & li {
+        flex: 1 0 100%;
+        border-bottom: 1px solid #eeeeee;
+        &:last-child {
+            border-bottom: none;
+        }
+        & a {
+            display: flex;
+            line-height: 24px;
+            padding: 15px;
+            & i {
+                font-size: 24px;
+                line-height: 1;
+                width: 24px;
+                text-align: center;
+                margin-right: 10px;
+            }
+            &.active {
+                background-color: $theme-color;
+                color: $white;
+                &:hover {
+                    background-color: $theme-color;
+                    color: $white;
+                }
+            }
+            &:hover {
+                background-color: transparent;
+                color: $theme-color;
+            }
+        }
+    }
+}

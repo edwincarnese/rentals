@@ -1,0 +1,62 @@
+/*----------------------------------------*/
+/*  05. About CSS
+/*----------------------------------------*/
+/*-- About Content --*/
+.about-content {
+    & h3 {
+        & span {
+            color: $theme-color;
+            font-weight: 600;
+        }
+    }
+    & h1 {
+        font-size: 40px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        max-width: 550px;
+        
+        // Responsive
+        @media #{$desktop-device}{
+            font-size: 36px;
+        }
+        @media #{$large-mobile}{
+            font-size: 36px;
+        }
+        @media #{$small-mobile}{
+            font-size: 30px;
+        }
+        @media #{$extra-small-mobile}{
+            font-size: 30px;
+        }
+    }
+    & p {}
+    & .feature-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: -15px;
+        margin-top: 30px;
+        & li {
+            max-width: 50%;
+            flex: 1 0 50%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+            & i {
+                font-size: 30px;
+                width: 30px;
+                text-align: center;
+                margin-right: 15px;
+            }
+            & h4 {
+                margin: 0;
+            }
+            
+            // Responsive
+            @media #{$extra-small-mobile}{
+                flex: 1 0 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}

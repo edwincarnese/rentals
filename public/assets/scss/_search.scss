@@ -1,0 +1,298 @@
+/*----------------------------------------*/
+/*  04. Search CSS
+/*----------------------------------------*/
+
+/*-- Hero Search --*/
+.search-section {
+    position: relative;
+    z-index: 99;
+}
+.hero-search {
+    margin-top: -50px;
+    margin-bottom: -10px;
+        
+    // Responsive
+    @media #{$tablet-device}{
+        margin-top: 0;
+    }
+    @media #{$large-mobile}{
+        margin-top: 0;
+    }
+    & form {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -5px;
+        & > div {
+            flex: 1 0 auto;
+            border: 5px solid rgba($white, 0.3);
+            margin: 0 5px 10px;
+        
+            // Responsive
+            @media #{$tablet-device}{
+                flex: 1 0 33.3333%;
+                border-color: rgba($black, 0.1);
+                & .nice-select {
+                    & .current {
+                        border-color: transparent !important;
+                    }
+                }
+                & .submit {
+                    border-color: transparent !important;
+                }
+            }
+            @media #{$large-mobile}{
+                flex: 1 0 33.3333%;
+                border-color: rgba($black, 0.1);
+                & .nice-select {
+                    & .current {
+                        border-color: transparent !important;
+                    }
+                }
+                & .submit {
+                    border-color: transparent !important;
+                }
+            }
+            @media #{$extra-small-mobile}{
+                flex: 1 0 100%;
+            }
+            
+            & h4 {
+                background-color: $theme-color;
+                color: $white;
+                margin: 0;
+                padding: 10px 15px;
+                line-height: 25px;
+                font-weight: 600;
+                text-transform: capitalize;
+            }
+            
+            & .nice-select {
+                width: 100%;
+                border: none;
+                background-color: transparent;
+                padding: 0;
+                border-radius: 0;
+                height: auto;
+                
+                &::after {
+                    height: 7px;
+                    width: 7px;
+                    right: 20px;
+                }
+                
+                & .current {
+                    display: block;
+                    line-height: 30px;
+                    padding: 15px 20px;
+                    text-transform: capitalize;
+                    color: $body-color;
+                    font-size: 15px;
+                    border-width: 0 5px 5px;
+                    border-style: solid;
+                    border-color: rgba($black, 0.1);
+                    margin: 0 -5px -5px;
+                }
+                & .list {
+                    width: auto;
+                    left: -4px;
+                    right: -4px;
+                    margin-top: 5px;
+                    border-radius: 0;
+                    max-height: 224px;
+                    overflow: auto;
+                    & li {
+                        padding: 4px 20px;
+                        border-bottom: 1px solid #eeeeee;
+                        min-height: 36px;
+                        line-height: 36px;
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+            
+            & .submit {
+                border-width: 0 5px 5px;
+                border-style: solid;
+                border-color: rgba($black, 0.1);
+                margin: 0 -5px -5px;
+                & button {
+                    width: 100%;
+                    background-color: $white;
+                    border: none;
+                    color: $theme-color;
+                    text-transform: uppercase;
+                    font-size: 18px;
+                    font-weight: 600;
+                    line-height: 30px;
+                    padding: 15px;
+                    &:hover {
+                        background-color: $secondary;
+                        color: $theme-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*-- Default Property Search --*/
+.property-search {
+    // Sidebar Property Search
+    &.sidebar-property-search {
+        & form {
+            margin: 0 -10px -20px;
+            & > div {
+                flex: 1 0 50%;
+                padding: 0 10px 20px;
+        
+                // Responsive
+                @media #{$desktop-device}{
+                    flex: 1 0 100%;
+                }
+                @media #{$tablet-device}{
+                    flex: 1 0 33.3333%;
+                }
+                @media #{$extra-small-mobile}{
+                    flex: 1 0 100%;
+                }
+                &:nth-last-child(2):nth-child(odd) {
+                    flex: 1 0 100%;
+                }
+                &:last-child {
+                    margin-top: 10px;
+                }
+                & button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    & form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 0 -15px -30px;
+        & > div {
+            flex: 1 0 25%;
+            padding: 0 15px 30px;
+        
+            // Responsive
+            @media #{$tablet-device}{
+                flex: 1 0 33.3333%;
+            }
+            @media #{$large-mobile}{
+                flex: 1 0 50%;
+            }
+            @media #{$extra-small-mobile}{
+                flex: 1 0 100%;
+            }
+            & input {
+                width: 100%;
+                border: 1px solid #eeeeee;
+                background-color: transparent;
+                line-height: 30px;
+                padding: 9px 20px;
+                color: $body-color;
+                font-size: 15px;
+                border-radius: 0;
+                height: auto;
+            }
+            & .nice-select {
+                width: 100%;
+                border: 1px solid #eeeeee;
+                background-color: transparent;
+                padding: 0;
+                border-radius: 0;
+                height: auto;
+                
+                &::after {
+                    height: 7px;
+                    width: 7px;
+                    right: 20px;
+                }
+                
+                & .current {
+                    display: block;
+                    line-height: 30px;
+                    padding: 9px 20px;
+                    text-transform: capitalize;
+                    color: $body-color;
+                    font-size: 15px;
+                }
+                & .list {
+                    width: 100%;
+                    border-radius: 0;
+                    max-height: 224px;
+                    overflow: auto;
+                    & li {
+                        padding: 4px 20px;
+                        border-bottom: 1px solid #eeeeee;
+                        min-height: 36px;
+                        line-height: 36px;
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+            & #search-price-range {
+                background-color: #f4f4f4;
+                height: 10px;
+                width: 100%;
+                border-radius: 50px;
+                position: relative;
+                margin-top: 25px;
+                & .ui-slider-range {
+                    background-color: $theme-color;
+                    height: 100%;
+                    border-radius: 50px;
+                    position: absolute;
+                    top: 0;
+                }
+                & .ui-slider-handle {
+                    position: absolute;
+                    top: -3px;
+                    height: 16px;
+                    width: 16px;
+                    background-color: $theme-color;
+                    border-radius: 50px;
+                    transition: none;
+                    cursor: pointer;
+                    & span {
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        bottom: 100%;
+                        margin-bottom: 3px;
+                        color: $heading-color;
+                        display: block;
+                        line-height: 23px;
+                    }
+                    &:nth-child(2) {
+                    }
+                    &:nth-child(3) {
+                        margin-left: -16px;
+                    }
+                }
+            }
+            
+            & button {
+                width: auto;
+                background-color: $theme-color;
+                border: none;
+                color: $secondary;
+                text-transform: uppercase;
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 30px;
+                padding: 10px 40px;
+                &:hover {
+                    background-color: $secondary;
+                    color: $theme-color;
+                }
+            }
+        }
+    }
+}

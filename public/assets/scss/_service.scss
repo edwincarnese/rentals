@@ -1,0 +1,31 @@
+/*----------------------------------------*/
+/*  15. Service CSS
+/*----------------------------------------*/
+
+/*-- Service --*/
+.service {
+    & .service-inner {
+        display: flex;
+        flex-direction: column;
+        & .head {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+            & .icon {
+                width: 40px;
+                margin-right: 15px;
+                & img {
+                    max-width: 100%;
+                }
+            }
+            & h4 {
+                font-weight: 600;
+                margin: 0;
+                font-size: 18px;
+            }
+        }
+        & .content {
+            & p {}
+        }
+    }
+}

@@ -1,0 +1,176 @@
+/*----------------------------------------*/
+/*  21. Footer CSS
+/*----------------------------------------*/
+
+.footer-section {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    z-index: 1;
+    
+    &::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        background-color: $black;
+        opacity: 0.85;
+        z-index: -1;
+    }
+}
+
+/*-- Footer Widget --*/
+.footer-widget {
+    // Title
+    & .title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 500;
+        color: $body-color-light;
+        white-space: nowrap;
+        text-transform: capitalize;
+        margin-bottom: 30px;
+        & .text {
+            margin-right: 10px;
+        }
+        & .shape {
+            height: 5px;
+            display: block;
+            background-color: rgba($white, 0.3);
+            flex: 1 0 auto;
+        }
+    }
+    & img {
+        margin-bottom: 18px;
+    }
+    & p {
+        color: $body-color-light;
+        max-width: 270px;
+        line-height: 23px;
+        // Responsive
+        @media #{$large-mobile}{
+            width: auto;
+        }
+    }
+    & ul {
+        & li {
+            color: $body-color-light;
+            display: flex;
+            font-size: 14px;
+            line-height: 22px;
+            margin-bottom: 12px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            
+            & i {
+                margin-right: 15px;
+                line-height: 28px;
+                font-size: 18px;
+            }
+            & span {
+                overflow: hidden;
+            }
+            & a {
+                display: block;
+                &:hover {
+                    color: $secondary;
+                }
+            }
+        }
+    }
+}
+/*-- Footer Social --*/
+.footer-social {
+    display: flex;
+    & a {
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        text-align: center;
+        border-radius: 50px;
+        color: $white;
+        margin-top: 5px;
+        margin-right: 5px;
+        &:last-child {
+            margin-right: 0;
+        }
+        &:hover {
+            opacity: 0.9;
+        }
+        & i {
+            display: block;
+            font-size: 14px;
+            line-height: 20px;
+        }
+        &.facebook {
+            background-color: $facebook;
+        }
+        &.twitter {
+            background-color: $twitter
+        }
+        &.linkedin {
+            background-color: $linkedin;
+        }
+        &.google {
+            background-color: $google-plus;
+        }
+        &.instagram {
+            background-color: $instagram;
+        }
+        &.pinterest {
+            background-color: $pinterest;
+        }
+        &.skype {
+            background-color: $skype;
+        }
+        &.tumblr {
+            background-color: $tumblr;
+        }
+    }
+}
+/*-- Footer News Letter --*/
+.footer-newsletter {
+    display: flex;
+    flex-wrap: wrap;
+    & input {
+        width: calc(100% - 40px);
+        max-width: 250px;
+        border: 1px solid rgba($white, 0.3);
+        background-color: transparent;
+        color: $white;
+        line-height: 24px;
+        padding: 7px 15px;
+        font-size: 13px;
+    }
+    & button {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background-color: $secondary;
+        color: $white;
+    }
+}
+
+/*-- Footer Bottom --*/
+.footer-bottom {
+    padding: 15px 0;
+    border-top: 1px solid rgba($white, 0.3);
+}
+/*-- Copyright --*/
+.copyright {
+    & p {
+        line-height: 30px;
+        color: $body-color-light;
+        & a {
+            &:hover {
+                color: $secondary;
+            }
+        }
+    }
+}

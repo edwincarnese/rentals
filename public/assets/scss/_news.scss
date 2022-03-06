@@ -1,0 +1,372 @@
+/*----------------------------------------*/
+/*  16. News CSS
+/*----------------------------------------*/
+.news-carousel {
+    margin-bottom: -30px;
+    &.slick-dotted {
+        margin-bottom: 0;
+        & .slick-arrow {
+            margin-top: -30px;
+        }
+    }
+    & .slick-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: -15px;
+        z-index: 9;
+        border: none;
+        background-color: $white;
+        color: $theme-color;
+        padding: 10px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        text-align: center;
+        box-shadow: 0 5px 10px rgba($black, 0.15);
+        opacity: 0;
+        & i {
+            font-size: 24px;
+            line-height: 24px;
+            display: block;
+        }
+        &.slick-prev {
+            left: -7px;
+            margin-left: 30px;
+            // Responsive
+            @media #{$laptop-device}{
+                left: 8px;
+            }
+            @media #{$desktop-device}{
+                left: 8px;
+            }
+            @media #{$tablet-device}{
+                left: 8px;
+            }
+            @media #{$large-mobile}{
+                left: 8px;
+            }
+        }
+        &.slick-next {
+            right: -7px;
+            margin-right: 30px;
+            // Responsive
+            @media #{$laptop-device}{
+                right: 8px;
+            }
+            @media #{$desktop-device}{
+                right: 8px;
+            }
+            @media #{$tablet-device}{
+                right: 8px;
+            }
+            @media #{$large-mobile}{
+                right: 8px;
+            }
+        }
+        &:hover {
+            background-color: $theme-color;
+            color: $white;
+        }
+    }
+    &:hover {
+        & .slick-arrow {
+            opacity: 1;
+            &.slick-prev {
+                margin-left: 0;
+            }
+            &.slick-next {
+                margin-right: 0;
+            }
+        }
+    }
+    
+    & .slick-dots {
+        width: 100%;
+        padding: 0;
+        margin: 20px 0 0;
+        display: flex;
+        justify-content: center;
+        & li {
+            margin: 0 5px;
+            & button {
+                display: block;
+                padding: 0;
+                width: 12px;
+                height: 12px;
+                border: none;
+                background-color: $body-color-light;
+                text-indent: -9999px;
+                border-radius: 50px;
+            }
+            &.slick-active {
+                & button {
+                    background-color: $theme-color;
+                }
+            }
+        }
+    }
+    
+    & .news {
+        margin-bottom: 30px;
+    }
+}
+
+/*-- News --*/
+.news {
+    padding: 20px;
+    border: 1px solid #eeeeee;
+    transition: all 0.3s ease 0s;
+    &:hover {
+        border-color: transparent;
+        box-shadow: 0 10px 15px rgba($black, 0.1);
+        & .image {
+            & .meta-wrap {
+                transform: rotateX(180deg);
+            }
+        }
+    }
+    & .image {
+        margin-bottom: 20px;
+        position: relative;
+        & a {
+            display: block;
+            overflow: hidden;
+            & img {
+                width: 100%;
+            }
+        }
+        & .meta-wrap {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            transition: transform 0.5s ease 0s;
+            transform-style: preserve-3d;
+        }
+        & .meta {
+            display: flex;
+            margin-bottom: 0;
+            background-color: rgba($white, 0.85);
+            padding: 8px 15px;
+            backface-visibility: hidden;
+            &.back {
+                transform: rotateX(180deg);
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background-color: rgba($theme-color, 0.85);
+                & li {
+                    color: $white;
+                    & a {
+                        &:hover {
+                            color: $secondary;
+                        }
+                    }
+                }
+            }
+            & li {
+                display: flex;
+                margin-bottom: 0;
+                font-size: 13px;
+                letter-spacing: 0.5px;
+                color: $heading-color;
+                &::after {
+                    content: "|";
+                    margin: 0 10px;
+                }
+                &:last-child {
+                    &::after {
+                        display: none;
+                    }
+                }
+                & a {
+                    margin-left: 5px;
+                    &:hover {
+                        color: $theme-color;
+                    }
+                }
+            }
+        }
+    }
+    & .content {
+        & .title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            & a {}
+        }
+        & .meta {
+            display: flex;
+            margin-bottom: 10px;
+            & li {
+                display: flex;
+                margin-bottom: 3px;
+                font-size: 13px;
+                letter-spacing: 0.5px;
+                &::after {
+                    content: "|";
+                    margin: 0 10px;
+                }
+                &:last-child {
+                    &::after {
+                        display: none;
+                    }
+                }
+                & a {
+                    margin-left: 5px;
+                    &:hover {
+                        color: $theme-color;
+                    }
+                }
+            }
+        }
+        & .desc {
+            margin-bottom: 10px;
+            & p {
+                line-height: 24px;
+            }
+        }
+        & .readmore {
+            font-weight: 500;
+            text-transform: capitalize;
+            text-decoration: underline;
+            color: lighten($heading-color, 10);
+            &:hover {
+                color: $theme-color;
+            }
+        }
+    }
+}
+
+/*-- Single News --*/
+.single-news-item {
+    & .image {
+        width: 100%;
+        margin-bottom: 21px;
+    }
+    & .content {
+        & .title {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        & .news-meta {
+            display: flex;
+            margin-bottom: 13px;
+            & li {
+                display: flex;
+                color: $heading-color;
+                letter-spacing: 0.5px;
+                font-family: $heading-font;
+                margin-bottom: 3px;
+                &::after {
+                    content: "|";
+                    margin: 0 10px;
+                }
+                &:last-child {
+                    &::after {
+                        display: none;
+                    }
+                }
+                & a {
+                    &:hover {
+                        color: $theme-color;
+                    }
+                }
+            }
+        }
+        & .desc {
+            & p {}
+            
+            & .blockquote {
+                margin: 30px 60px;
+                // Responsive
+                @media #{$large-mobile}{
+                    margin: 30px;
+                }
+                & p {
+                    font-size: 18px;
+                    line-height: 30px;
+                    font-style: italic;
+                }
+            }
+        }
+        .news-footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 30px;
+            & .tags, & .share {
+                display: flex;
+                flex-wrap: wrap;
+                & span {
+                    display: block;
+                    font-size: 15px;
+                    font-weight: 500;
+                    font-family: $heading-font;
+                    line-height: 25px;
+                    margin-right: 10px;
+                }
+                & a {
+                    font-size: 15px;
+                    line-height: 25px;
+                    &::after {
+                        content: ",";
+                        margin-right: 5px;
+                    }
+                    &:last-child {
+                        &::after {
+                            display: none;
+                        }
+                    }
+                }
+            }
+            & .share {
+                & a {
+                    margin-right: 15px;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*-- News Navigation --*/
+.news-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    & a {
+        font-size: 15px;
+        font-family: $heading-font;
+        line-height: 20px;
+        & i {
+            line-height: 24px;
+            display: block;
+            color: #acacac;
+        }
+        &.prev-blog {
+            & i {
+                float: left;
+                margin-right: 10px;
+            }
+        }
+        &.next-blog {
+            & i {
+                float: right;
+                margin-left: 10px;
+            }
+        }
+        &:hover {
+            color: $theme-color;
+            & i {
+                color: $theme-color;
+            }
+        }
+    }
+}

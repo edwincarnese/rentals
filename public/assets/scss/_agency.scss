@@ -1,0 +1,189 @@
+/*----------------------------------------*/
+/*  12. Agency CSS
+/*----------------------------------------*/
+
+/*-- Agency --*/
+.agency {
+    box-shadow: 0 0 10px rgba($black, 0.1);
+    transition: all 0.3s ease 0s;
+    
+    &:hover {
+        box-shadow: 0 10px 15px rgba($black, 0.1);
+    }
+    
+    & .image {
+        position: relative;
+        overflow: hidden;
+        & .img {
+            display: block;
+            & img {
+                width: 100%;
+            }
+        }
+    }
+    & .content {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+        border-top: 1px solid #eeeeee;
+        margin-bottom: 10px;
+        & .title {
+            font-weight: 600;
+            & a {}
+        }
+        & span {
+            line-height: 18px;
+            color: $theme-color;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+    }
+}
+
+
+/*-- Single Agency --*/
+/*-- Agency Image --*/
+.agency-image {
+    max-width: 470px;
+    border: 1px solid #eeeeee;
+    & img {
+        width: 100%;
+    }
+}
+/*-- Agency Content --*/
+.agency-content {
+    & .title {
+        margin-bottom: 15px;
+        font-weight: 600;
+        
+        // Responsive
+        @media #{$large-mobile}{
+            font-size: 20px;
+        }
+    }
+    & p {
+        margin-bottom: 25px;
+    }
+    & h4 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    & ul {
+        display: flex;
+        flex-wrap: wrap;
+        & li {
+            color: $body-color;
+            display: flex;
+            flex: 1 0 100%;
+            line-height: 24px;
+            margin-bottom: 15px;
+            flex: 1 0 50%;
+            // Responsive
+            @media #{$small-mobile}{
+                flex: 1 0 100%;
+            }
+            &:last-child, &:nth-last-child(2):nth-child(odd) {
+                margin-bottom: 0;
+            }
+            & i {
+                font-size: 24px;
+                line-height: 24px;
+                width: 24px;
+                text-align: center;
+                margin-right: 10px;
+                color: $heading-color;
+            }
+            & a {
+                &::after {
+                    content: ',';
+                    margin-right: 1px;
+                }
+                &:last-child {
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+            & span {
+                &:first-child {
+                    font-weight: 600;
+                    margin-right: 10px;
+                    color: $heading-color;
+                }
+            }
+        }
+    }
+    & .social {
+        display: flex;
+        margin-top: 25px;
+        & a {
+            width: 30px;
+            height: 30px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 50px;
+            display: block;
+            color: $white;
+            margin-right: 10px;
+            &:last-child {
+                margin-right: 0;
+            }
+            &:hover {
+                opacity: 0.9;
+            }
+            & i {
+                display: block;
+                font-size: 14px;
+                line-height: 20px;
+            }
+            &.facebook {
+                background-color: $facebook;
+            }
+            &.twitter {
+                background-color: $twitter
+            }
+            &.linkedin {
+                background-color: $linkedin;
+            }
+            &.google {
+                background-color: $google-plus;
+            }
+            &.instagram {
+                background-color: $instagram;
+            }
+            &.pinterest {
+                background-color: $pinterest;
+            }
+            &.skype {
+                background-color: $skype;
+            }
+            &.tumblr {
+                background-color: $tumblr;
+            }
+
+            &:nth-child(2) {
+                transition-delay: 0.15s;
+            }
+            &:nth-child(3) {
+                transition-delay: 0.3s;
+            }
+            &:nth-child(4) {
+                transition-delay: 0.45s;
+            }
+            &:nth-child(5) {
+                transition-delay: 0.6s;
+            }
+            &:nth-child(6) {
+                transition-delay: 0.75s;
+            }
+            &:nth-child(7) {
+                transition-delay: 0.9s;
+            }
+            &:nth-child(8) {
+                transition-delay: 1.05s;
+            }
+        }
+    }
+}

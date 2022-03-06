@@ -1,0 +1,41 @@
+/*----------------------------------------*/
+/*  07. Feature CSS
+/*----------------------------------------*/
+.feature-section-border-top {
+    border-top: 1px solid #eeeeee;
+}
+.feature-section-border-bottom {
+    border-bottom: 1px solid #eeeeee;
+}
+.feature-section-border-double {
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+}
+
+/*-- Feature Wrap --*/
+.feature-wrap {
+    margin-bottom: -50px;
+}
+/*-- Feature --*/
+.feature {
+    display: flex;
+    & .icon {
+        min-width: 50px;
+        text-align: center;
+        & i {
+            font-size: 50px;
+        }
+    }
+    & .content {
+        padding-left: 20px;
+        & h4 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        & p {
+            line-height: 22px;
+            max-width: 200px;
+        }
+    }
+}
