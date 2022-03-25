@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\Lister\PropertyController as ListerPropertyController;
+use App\Http\Controllers\Lister\ProfileController as ListerProfileController;
+use App\Http\Controllers\Lister\BookingController as ListerBookingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +19,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [PageController::class, 'home']);
+
+Route::get('home', [PageController::class, 'home'])->name('pages.home');
+Route::get('about', [PageController::class, 'about'])->name('pages.about');
+Route::get('contact', [PageController::class, 'contact'])->name('pages.contact');
+
+Route::get('properties', [PropertyController::class, 'index'])->name('pages.properties.index');
+Route::get('properties/{id}', [PropertyController::class, 'show'])->name('pages.properties.show');
+
+Route::get('owners', [OwnerController::class, 'index'])->name('pages.owners.index');
+Route::get('owners/{id}', [OwnerController::class, 'show'])->name('pages.owners.show');
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::post('lister/profile', [ListerProfileController::class, 'updateProfile'])->name('lister.profile.update');
+    Route::get('lister/profile', [ListerProfileController::class, 'index'])->name('lister.profile');
+    Route::post('lister/change-password', [ListerProfileController::class, 'updatePassword'])->name('lister.update.password');
+    Route::get('lister/change-password', [ListerProfileController::class, 'changePassword'])->name('lister.change.password');
+    
+    Route::get('lister/bookings', [ListerBookingController::class, 'index'])->name('lister.bookings');
+
+    Route::post('lister/properties', [ListerPropertyController::class, 'store'])->name('lister.properties.store');
+    Route::get('lister/properties', [ListerPropertyController::class, 'index'])->name('lister.properties.index');
+    Route::get('lister/properties/create', [ListerPropertyController::class, 'create'])->name('lister.properties.create');
+    Route::get('lister/properties/{id}/edit', [ListerPropertyController::class, 'edit'])->name('lister.properties.edit');
+    Route::delete('lister/properties/{id}', [ListerPropertyController::class, 'destroy'])->name('lister.properties.destroy');
 });
+
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
