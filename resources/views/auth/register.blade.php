@@ -66,8 +66,8 @@
                                 <div class="col-12 mb-30">
                                     <ul>
                                         <li>
-                                            <input type="radio" name="role" id="renter" value="3" checked>
-                                            <label for="renter">Renter</label>
+                                            <input type="radio" name="role" id="client" value="3" checked>
+                                            <label for="client">Client</label>
                                         </li>
                                         <li>
                                             <input type="radio" name="role" id="lister" value="2">

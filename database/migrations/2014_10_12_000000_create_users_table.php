@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('logo')->nullable();
-            $table->string('role')->default(3)->comment('[1] => Admin, [2] => Lister, [3] => Renter')->nullable();
+            $table->integer('role')->default(3)->comment('[1] => Admin, [2] => Lister, [3] => Client')->nullable();
             $table->string('valid_id')->nullable();
             $table->longText('about')->nullable();
             $table->string('address')->nullable();

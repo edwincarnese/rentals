@@ -51,4 +51,11 @@ class Property extends Model
         
         return null;
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class,'id');
+
+    }
+
 }

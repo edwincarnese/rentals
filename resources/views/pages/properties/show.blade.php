@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="mt-30">
-                                    <a class="btn btn-block" href="#">Book Now</a>
+                                    <a class="btn btn-block" href="">Book Now</a>
                                 </div>
                                 
                             </div>
@@ -215,7 +215,17 @@
                 <div class="sidebar">
                     <h4 class="sidebar-title"><span class="text">Book Property</span><span class="shape"></span></h4>
                     <div class="property-search sidebar-property-search">
-                        <a class="btn btn-block" href="#">Book Now</a>
+
+                       
+                        <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
+                            @csrf                      
+                            <label for="birthdaytime">SELECT (date and time):</label>
+                            <input type="datetime-local" id="reserve" name="reserve_date">
+                            <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                            
+                            <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                        <input type = "submit" class="btn btn-block" value="Book now">
+                    </form>
                     </div>
                 </div>
                 <div class="sidebar">

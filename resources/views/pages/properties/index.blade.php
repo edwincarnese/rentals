@@ -22,6 +22,7 @@
             <div class="col-lg-8 col-12 order-1 order-lg-2 mb-sm-50 mb-xs-50">
                 <div class="row">
                     @foreach($properties as $property)
+                   
                     <div class="property-item col-md-6 col-12 mb-40">
                         <div class="property-inner">
                             <div class="image">
@@ -60,8 +61,10 @@
                                 </div>
                                 <div class="right">
                                     <div class="type-wrap">
-                                        <span class="price">₱{{ $property->price ?? 0 }}<span>{{ $property->period }}</span></span>
-                                        <span class="type">
+                                        <span class="price">₱{{ $property->price ?? 0 }}</span>
+                                       
+                                        {{-- <span class="price">₱{{ $property->price ?? 0 }}<span>{{ $property->period }}</span></span> --}}
+                                         <span class="type">
                                             {{ $property->property_status }}
                                         </span>
                                     </div>
@@ -73,7 +76,7 @@
                 </div>
                     
                 <div class="row mt-20">
-                    <div class="col">
+                    <div class="col" style = "text-align:center;">
                         {{
                             $properties->appends([
                                 'show' => request()->query('show'), 

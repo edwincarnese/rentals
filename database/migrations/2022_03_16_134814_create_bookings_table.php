@@ -16,9 +16,9 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('owner_id');
-            $table->unsignedBigInteger('renter_id');
+            $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('property_id');
-            $table->dateTime('reserved_at');
+            $table->string('reserved_at');
             $table->timestamps();
         });
     }

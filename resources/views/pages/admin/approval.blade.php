@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row row-25">
            
-            @include('pages.lister._sidebar')
+            @include('pages.admin._sidebar')
             
             <div class="col-lg-8 col-12">
                 <div class="tab-content">
@@ -30,31 +30,32 @@
                             
                            
                             <table class="table table-bordered">
-                                <th class="text-center">Property</th>
-                                <th class="text-center">Type</th>
-                                <th class="text-center">Price</th>
-                                <th class="text-center">Client</th>
-                                <th class="text-center">Date Time</th>
+                                
+                                <th class="text-center">First Name</th>
+                                <th class="text-center">Last Name</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Address</th>
                                 <th class="text-center">Actions</th>
                                 <tr>
                                     
-                                    @foreach ($bookings as $booking) 
-                                    <td class="text-center">
-                                        <a href="" class="link">{{$booking->property->title}}</a>
-                                    </td>
-                                    <td class="text-center">  {{ $booking->property->type }}</td>
-                                    <td class="text-center">{{$booking->property->price}}</td>
-                                    <td class="text-center">{{ $username}}
-                                    </td>   
-                                    <td class="text-center">
-                                        {{$booking->reserved_at}}
-                                    </td> 
-                                    <form action="booking/{{$booking->id}}" method="POST">                                       
-                                        @method('DELETE')
+                                    @foreach ($users as $user) 
+                                    <td class="text-center">    
+                                        <a href="" class="link">{{$user->firstname}}</a></td>
+                                    <td class="text-center"> {{$user->lastname}}</td>
+                                    <td class="text-center">{{$user->email}}</td>
+                                    <td class="text-center">{{$user->address}}</td>   
+                                   
+
+                                    {{-- <td><input type="checkbox" id="bedding" name="amenities[]" value="Bedding">
+                                        <label for="bedding">Approved</label>
+                                     </td> --}}
+                                    <form action="#" method="POST">                                       
+                                        {{-- @method('DELETE') --}}
                                     <td class="text-center">
                                         {{-- <button class="btn-success mr-2">Book</button> --}}
                                         {{-- <button class="btn-danger">Delete</button> --}}
-                                        <button class="btn-danger" onclick="return confirm('Are you sure you want to Delete {{$booking->property->title}}')">  DELETE</button>                  
+                                        <button class="btn-success"onclick="return confirm('Are you sure you want to Approve {{$user->firstname}}')"
+                                        >  Approved</button>                  
                                         @csrf                                        
                                     </td>
                                 </tr>

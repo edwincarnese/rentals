@@ -34,7 +34,7 @@
                                 <div class="property-item col-md-6 col-12 mb-40">
                                     <div class="property-inner">
                                         <div class="image">
-                                            <a href="{{ $property->id }}" target="_blank">
+                                            <a href="{{ route('pages.properties.show', $property->id) }}" target="_blank">
                                                 @if($property->main_photo)
                                                     <img src="{{ asset('storage/'.$property->main_photo) }}">
                                                 @else
@@ -69,7 +69,9 @@
                                             </div>
                                             <div class="right">
                                                 <div class="type-wrap">
-                                                    <span class="price">₱{{ $property->price ?? 0 }}<span>{{ $property->period }}</span></span>
+                                                    <span class="price">₱{{ $property->price ?? 0 }}
+                                                        {{-- <span>{{ $property->period }}</span> --}}
+                                                    </span>
                                                     <span class="type">
                                                         {{ $property->property_status }}
                                                     </span>
@@ -79,15 +81,28 @@
                                         <hr>
                                         <div class="mt-4">
                                             <form action="{{ route('lister.properties.destroy', $property->id) }}" method="POST">
-                                                <a class="btn" style="text-decoration: none;" href="{{ route('lister.properties.create') }}">Edit</a>
+                                                {{-- lister/properties/{id}/edit --}}
+                                                <a class="btn" style="text-decoration: none;" href="{{ route('lister.properties.edit',$property->id ) }}">Edit</a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn float-right" style="background: darkred">Delete</button>
+                                                <button class="btn float-right" style="background: darkred" onclick="return confirm('Are you sure you want to Delete {{$property->title}}')">Delete</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                                 @endforeach
+
+
+                                <div class="row mt-20">
+                                    <div class="col" style = "text-align:center;">
+                                        {{
+                                            $properties->appends([
+                                                'show' => request()->query('show'), 
+                                            ])->links()
+                                        }}
+                                    </div>
+                                </div> 
+
                             @else
                                 <div class="col-12">
                                     <p>You don't have any properties. <a class="btn" href="{{ route('lister.properties.create') }}">Start listing now!</a></p>

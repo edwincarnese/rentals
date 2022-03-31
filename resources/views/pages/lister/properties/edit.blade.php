@@ -34,20 +34,21 @@
                         <li><a href="#detailed_info" data-toggle="tab">3. Detailed Information</a></li>
                     </ul>
 
-                    <form action="{{ route('lister.properties.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('lister.properties.update',$property->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="add-property-form tab-content">
                             <div class="tab-pane show active" id="basic_info">
                                 <div class="tab-body">
                                     <div class="row">
                                         <div class="col-12 mb-30">
                                             <label>Property Title</label>
-                                            <input type="text" name="title">
+                                            <input type="text" name="title" value = "{{$property->title}}">
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Address</label>
-                                            <input type="text" name="address">
+                                            <input type="text" name="address" value = "{{$property->address}}">
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
@@ -82,12 +83,12 @@
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Price</label>
-                                            <input type="text" name="price">
+                                            <input type="text" name="price" value=  "{{$property->price}}">
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Area <span>(SqFt)</span></label>
-                                            <input type="text" name="area">
+                                            <input type="text" name="area" value = "{{$property->area}}">
                                         </div>
 
                                         <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
@@ -122,7 +123,7 @@
                                     <div class="row">
                                         <div class="col-12 mb-30">
                                             <label>Description</label>
-                                            <textarea name="description"></textarea>
+                                            <textarea name="description">  {{$property->description}}</textarea>
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
@@ -225,7 +226,7 @@
                                         </div>
 
                                         <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
-                                            <button class="property-submit btn btn-block">Add Property</button>
+                                            <button class="property-submit btn btn-block">Update Property</button>
                                         </div>
                                     </div>
                                 </div>
