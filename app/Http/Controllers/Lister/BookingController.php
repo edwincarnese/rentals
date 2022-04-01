@@ -31,7 +31,7 @@ class BookingController extends Controller
     }
       
 
-  
+    
     
     // public function destroy1(Booking $id)
     // {

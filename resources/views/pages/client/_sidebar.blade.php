@@ -5,14 +5,14 @@
                 <i class="pe-7s-user"></i>Profile
             </a>
         </li>
-        {{-- <li>
-            <a @if(url()->current() == route('lister.bookings')) class="active" @endif href="{{ route('lister.bookings') }}">
+        <li>
+            <a @if(url()->current() == route('client.bookings')) class="active" @endif href="{{ route('client.bookings') }}">
                 <i class="pe-7s-note2"></i>Bookings
             </a>
-        </li> --}}
+        </li>
         <li>
-            <a @if(url()->current() == route('admin.approval')) class="active" @endif href="{{ route('admin.approval') }}">
-                <i class="pe-7s-photo"></i>Users For Approval
+            <a @if(url()->current() == route('client.show')) class="active" @endif href="{{ route('client.show') }}">
+                <i class="pe-7s-photo"></i>Properties
             </a>
         </li>
         {{-- <li>

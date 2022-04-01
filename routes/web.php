@@ -4,6 +4,7 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Lister\PropertyController as ListerPropertyController;
 use App\Http\Controllers\Lister\ProfileController as ListerProfileController;
 use App\Http\Controllers\Lister\BookingController as ListerBookingController;
@@ -19,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', [PageController::class, 'home']);
 
 Route::get('home', [PageController::class, 'home'])->name('pages.home');
@@ -33,28 +33,34 @@ Route::get('owners', [OwnerController::class, 'index'])->name('pages.owners.inde
 Route::get('owners/{id}', [OwnerController::class, 'show'])->name('pages.owners.show');
 
 Route::group(['middleware' => ['auth']], function() {
-Route::post('lister/profile', [ListerProfileController::class, 'updateProfile'])->name('lister.profile.update');
-Route::get('lister/profile', [ListerProfileController::class, 'index'])->name('lister.profile');
-Route::post('lister/change-password', [ListerProfileController::class, 'updatePassword'])->name('lister.update.password');
-Route::get('lister/change-password', [ListerProfileController::class, 'changePassword'])->name('lister.change.password');
+    Route::post('lister/profile', [ListerProfileController::class, 'updateProfile'])->name('lister.profile.update');
+    Route::get('lister/profile', [ListerProfileController::class, 'index'])->name('lister.profile');
+    Route::post('lister/change-password', [ListerProfileController::class, 'updatePassword'])->name('lister.update.password');
+    Route::get('lister/change-password', [ListerProfileController::class, 'changePassword'])->name('lister.change.password');
+        
+    Route::get('lister/bookings', [ListerBookingController::class, 'index'])->name('lister.bookings');
+
+    Route::post('lister/properties', [ListerPropertyController::class, 'store'])->name('lister.properties.store');
+    Route::get('lister/properties', [ListerPropertyController::class, 'index'])->name('lister.properties.index');
+    Route::get('lister/properties/create', [ListerPropertyController::class, 'create'])->name('lister.properties.create');
+    Route::get('lister/properties/{id}/edit', [ListerPropertyController::class, 'edit'])->name('lister.properties.edit');
+    Route::put('lister/properties/{id}', [ListerPropertyController::class, 'update'])->name('lister.properties.update');
     
-Route::get('lister/bookings', [ListerBookingController::class, 'index'])->name('lister.bookings');
+    Route::delete('lister/properties/{id}', [ListerPropertyController::class, 'destroy'])->name('lister.properties.destroy');
+    
+    Route::get('booking/{id}', [PropertyController::class, 'stored'])->name('pages.lister.show');
+    // Route::GET('booking/{id}', [PropertyController::class, 'stored'])->name('pages.lister.show');
+    Route::delete('lister/booking/{id}', [ListerBookingController::class, 'destroy']);
 
-Route::post('lister/properties', [ListerPropertyController::class, 'store'])->name('lister.properties.store');
-Route::get('lister/properties', [ListerPropertyController::class, 'index'])->name('lister.properties.index');
-Route::get('lister/properties/create', [ListerPropertyController::class, 'create'])->name('lister.properties.create');
-Route::get('lister/properties/{id}/edit', [ListerPropertyController::class, 'edit'])->name('lister.properties.edit');
-Route::put('lister/properties/{id}', [ListerPropertyController::class, 'update'])->name('lister.properties.update');
+    Route::get('admin', [AdminController::class, 'index'])->name('pages.admin.index');
+    Route::get('admin/approval', [AdminController::class, 'show'])->name('admin.approval');
+    Route::put('admin/approval/{id}', [AdminController::class, 'update'])->name('admin.approve');
+    
+    Route::get('client/bookings', [ClientController::class, 'index'])->name('client.bookings');
+    Route::get('client/properties', [ClientController::class, 'show'])->name('client.show');
+    Route::get('client/properties/{id}', [ClientController::class, 'display'])->name('client.display');
+    Route::post('client/properties', [ClientController::class, 'store'])->name('client.store');
    
-Route::delete('lister/properties/{id}', [ListerPropertyController::class, 'destroy'])->name('lister.properties.destroy');
-   
-Route::get('booking/{id}', [PropertyController::class, 'stored'])->name('pages.lister.show');
-// Route::GET('booking/{id}', [PropertyController::class, 'stored'])->name('pages.lister.show');
-Route::delete('lister/booking/{id}', [ListerBookingController::class, 'destroy']);
-
-Route::get('admin', [AdminController::class, 'index'])->name('pages.admin.index');
-Route::get('admin/approval', [AdminController::class, 'show'])->name('admin.approval');
-
 });
 
 Auth::routes();

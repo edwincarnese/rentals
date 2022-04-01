@@ -54,7 +54,7 @@ class AdminController extends Controller
         $user_id = $user->id;
         $username = $user->firstname;
         $users = User::all();
-
+        //$properties = Property::where('user_id', $id)->paginate(3);
       return view('pages.admin.approval',compact('users'));
         //
     }
@@ -79,7 +79,14 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $approve = User::find($id); 
+       $current_date = date('Y-m-d H:i:s');
+
+      // dd($current_date);
+        $approve->approved_at = $current_date;
+        $approve->update();
+        return redirect()->back()->with('success', 'Your Account has been successfully Approved');
+      
     }
 
     /**

@@ -20,7 +20,7 @@
     <div class="container">
         <div class="row row-25">
 
-            @include('pages.lister._sidebar')
+            @include('pages.client._sidebar')
             
             <div class="col-lg-8 col-12">
                 <div class="tab-content">
@@ -34,7 +34,7 @@
                                 <div class="property-item col-md-6 col-12 mb-40">
                                     <div class="property-inner">
                                         <div class="image">
-                                            <a href="{{ route('pages.properties.show', $property->id) }}" target="_blank">
+                                            <a href="{{ route('client.display', $property->id) }}" target="_blank">
                                                 @if($property->main_photo)
                                                     <img src="{{ asset('storage/'.$property->main_photo) }}">
                                                 @else
@@ -79,15 +79,18 @@
                                             </div>
                                         </div>
                                         <hr>
-                                        <div class="mt-4">
+                                        {{-- <div class="mt-4">
                                             <form action="{{ route('lister.properties.destroy', $property->id) }}" method="POST">
+                                                 --}}
+                                                
+                                                
                                                 {{-- lister/properties/{id}/edit --}}
-                                                <a class="btn" style="text-decoration: none;" href="{{ route('lister.properties.edit',$property->id ) }}">Edit</a>
+                                                {{-- <a class="btn" style="text-decoration: none;" href="{{ route('lister.properties.edit',$property->id ) }}">Edit</a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn float-right" style="background: darkred" onclick="return confirm('Are you sure you want to Delete {{$property->title}}')">Delete</button>
                                             </form>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 @endforeach

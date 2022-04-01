@@ -37,6 +37,7 @@ class CreateUsersTable extends Migration
             $table->string('pinterest')->nullable();
             $table->string('skype')->nullable();
             $table->string('tumblr')->nullable();
+            $table->string('status')->nullable();
             $table->dateTime('approved_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

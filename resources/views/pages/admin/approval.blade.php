@@ -26,11 +26,9 @@
                 <div class="tab-content">
                     <div class="row">
                         <div class="property-item col-md-12 col-12 mb-40">
-                            <a href = ""> <h3 class="mb-30">Bookings</h3> </a>
-                            
+                            <a href = ""> <h3 class="mb-30">Pending for Approval</h3> </a>                           
                            
-                            <table class="table table-bordered">
-                                
+                            <table class="table table-bordered">                                
                                 <th class="text-center">First Name</th>
                                 <th class="text-center">Last Name</th>
                                 <th class="text-center">Email</th>
@@ -39,27 +37,25 @@
                                 <tr>
                                     
                                     @foreach ($users as $user) 
+                                    @if(empty($user->approved_at))
+                                    
+                               
                                     <td class="text-center">    
                                         <a href="" class="link">{{$user->firstname}}</a></td>
                                     <td class="text-center"> {{$user->lastname}}</td>
                                     <td class="text-center">{{$user->email}}</td>
-                                    <td class="text-center">{{$user->address}}</td>   
-                                   
-
-                                    {{-- <td><input type="checkbox" id="bedding" name="amenities[]" value="Bedding">
-                                        <label for="bedding">Approved</label>
-                                     </td> --}}
-                                    <form action="#" method="POST">                                       
-                                        {{-- @method('DELETE') --}}
+                                    <td class="text-center">{{$user->address}}</td>                                   
+                                    <form action="{{route('admin.approve',$user->id)}}" method="POST"> 
+                                        @csrf
+                                        @method('PUT')  
                                     <td class="text-center">
-                                        {{-- <button class="btn-success mr-2">Book</button> --}}
-                                        {{-- <button class="btn-danger">Delete</button> --}}
-                                        <button class="btn-success"onclick="return confirm('Are you sure you want to Approve {{$user->firstname}}')"
-                                        >  Approved</button>                  
+                                      <button class="btn-success"onclick="return confirm('Are you sure you want to Approve &nbsp {{$user->firstname}} ?')">
+                                         Pending...</button>                  
                                         @csrf                                        
                                     </td>
                                 </tr>
                              </form>
+                             @endif
                                 @endforeach
                             </table>
                         </div>
