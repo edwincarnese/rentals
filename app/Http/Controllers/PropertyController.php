@@ -10,11 +10,51 @@ use Auth;
 
 class PropertyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $properties = Property::latest()->paginate(3);
-        $featured_properties = Property::inRandomOrder()->limit(5)->get();
-        $featured_owners = User::withCount('properties')->where('role', 2)->inRandomOrder()->limit(5)->get();
+        $address = $request->address;
+        $bathroom = $request->bathroom;
+        $bedroom = $request->bedroom;
+        $type = $request->type;
+        $status = $request->status;
+
+        $properties = Property::query()
+            ->when($address, function($q) use($address) {
+                $q->where('address', 'LIKE', '%'.$address.'%');
+            })
+            ->when($bathroom, function($q) use($bathroom) {
+                $q->where('bathroom', $bathroom);
+            })
+            ->when($bedroom, function($q) use($bedroom) {
+                $q->where('bedroom', $bedroom);
+            })
+            ->when($type, function($q) use($type) {
+                $q->where('type', $type);
+            })
+            ->when($status, function($q) use($status) {
+                if($status == 'for-rent') {
+                    $q->where('status', 1);
+                } else {
+                    $q->where('status', 2);
+                }
+            })
+            ->where('is_approved', 1)
+            ->latest()
+            ->paginate(10);
+
+        $featured_properties = Property::query()
+            ->where('is_approved', 1)
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
+
+        $featured_owners = User::query()
+            ->withCount('properties')
+            ->where('role', 2)
+            ->whereNotNull('approved_at')
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
         return view('pages.properties.index', 
             compact(
@@ -27,9 +67,20 @@ class PropertyController extends Controller
 
     public function show($id)
     {
-        $property = Property::where('id', $id)->firstOrFail();
-        $featured_properties = Property::inRandomOrder()->limit(5)->get();
-        $featured_owners = User::withCount('properties')->where('role', 2)->inRandomOrder()->limit(5)->get();
+        $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail();
+        
+        $featured_properties = Property::query()
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
+
+        $featured_owners = User::query()
+            ->withCount('properties')
+            ->where('role', 2)
+            ->whereNotNull('approved_at')
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
         return view('pages.properties.show', 
             compact(
@@ -40,11 +91,9 @@ class PropertyController extends Controller
         );
     }
 
-     public function stored (Request $request)
+    public function stored (Request $request)
     {         
-        // dd($request);
-      //  $user = $request->user_id;
-      $user = Auth::user();        
+        $user = Auth::user();        
         $booking = new booking();         
         $booking->owner_id =$request->input('owners_id');  
         $booking->client_id = $user->id;

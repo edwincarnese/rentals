@@ -33,18 +33,15 @@
                                 <th class="text-center">Property</th>
                                 <th class="text-center">Type</th>
                                 <th class="text-center">Price</th>
-                                <th class="text-center">Client</th>
                                 <th class="text-center">Date Time</th>
                                 <th class="text-center">Actions</th>
                                 <tr>
-                                    
                                     @foreach ($bookings as $booking) 
                                     <td class="text-center">
-                                        <a href="" class="link">{{$booking->property->title}}</a>
+                                        <a href="{{ route('pages.properties.show', $booking->property_id) }}" target="_blank" class="link">{{$booking->property->title}}</a>
                                     </td>
                                     <td class="text-center">  {{ $booking->property->type }}</td>
                                     <td class="text-center">{{$booking->property->price}}</td>
-                                    <td class="text-center">{{ $username}}
                                     </td>   
                                     <td class="text-center">
                                         {{$booking->reserved_at}}
@@ -64,7 +61,7 @@
                             <div class="row mt-20">
                                 <div class="col" style = "text-align:center;">
                                     {{
-                                        $property->appends([
+                                        $bookings->appends([
                                             'show' => request()->query('show'), 
                                         ])->links()
                                     }}

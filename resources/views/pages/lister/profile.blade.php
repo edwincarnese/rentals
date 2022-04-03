@@ -42,6 +42,17 @@
                                     <input type="text" name="lastname" value="{{ Auth::user()->lastname }}">
                                 </div>
 
+                                <div class="@if(Auth::user()->valid_id) col-6 @else col-12 @endif mb-30">
+                                    <label>Valid ID</label>
+                                    <input type="file" name="valid_id" accept="image/*">
+                                </div>
+
+                                @if(Auth::user()->valid_id)
+                                    <div class="col-6 mb-30 text-center">
+                                        <img src="{{ asset('storage/'.Auth::user()->valid_id) }}" height="150" class="text-center">
+                                    </div>
+                                @endif
+
                                 <div class="col-12 mb-30">
                                     <label>Company</label>
                                     <input type="text" name="company" value="{{ Auth::user()->company }}">
@@ -58,8 +69,8 @@
                                 </div>
 
                                 @if(Auth::user()->logo)
-                                    <div class="col-6 mb-30">
-                                        <img src="{{ asset('storage/'.Auth::user()->logo) }}" class="text-center">
+                                    <div class="col-6 mb-30 text-center">
+                                        <img src="{{ asset('storage/'.Auth::user()->logo) }}" height="150" class="text-center">
                                     </div>
                                 @endif
 

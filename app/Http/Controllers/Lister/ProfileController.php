@@ -51,6 +51,15 @@ class ProfileController extends Controller
             $data['logo'] = $logoPath;
         }
 
+        if($request->valid_id) {
+            $validId = time().'.'.$request->valid_id->getClientOriginalExtension();  
+            $request->valid_id->storeAs('attachment', $validId, 'public');
+
+            $validIdPath = 'attachment/'.$validId;
+
+            $data['valid_id'] = $validIdPath;
+        }
+
         $user->update($data);
 
         return redirect()->back()->with('success', 'Your profile has been successfully updated');

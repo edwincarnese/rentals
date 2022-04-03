@@ -47,25 +47,6 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         $property = property::find($id);
-        //  dd($property);
-        $property->	title = $request->input('title');
-        $property->description = $request->input('description');
-        $property->price = $request->input('price');
-        $property->address = $request->input('address');
-        $property->status = $request->input('status');
-        $property->period = $request->input('period');
-        $property->type = $request->input('type');
-        $property->area = $request->input('area');
-        $property->bedroom = $request->input('bedroom');
-        $property->bathroom = $request->input('bathroom');
-        $property->kitchen = $request->input('kitchen');
-        $property->images = $request->input('images');
-        $property->videos = $request->input('videos');
-        $property->amenities = $request->input('amenities');
-        $property->latitude = $request->input('latitude');
-        $property->longitude = $request->input('longitude');
-        $property->availability_at = $request->input('availability_at');
-      
       
         $data = $request->all();
 
@@ -105,10 +86,9 @@ class PropertyController extends Controller
             $data['videos'] = json_encode($uploaded_videos);
         }
        
-        //$user->properties()->create($data);
         $property->update($data);
+        
         return redirect()->back()->with('success', 'Your property has been successfully updated.');
-  
     }
 
 
@@ -155,6 +135,10 @@ class PropertyController extends Controller
             }
 
             $data['videos'] = json_encode($uploaded_videos);
+        }
+
+        if($user->approved_at) {
+            $data['is_approved'] = 1;
         }
 
         $user->properties()->create($data);

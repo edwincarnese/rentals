@@ -50,7 +50,7 @@ class LoginController extends Controller
     {
         if($user->role == 1) {
             // admin
-            return redirect()->route('pages.admin.index');
+            return redirect()->route('admin.approval.list');
         }
         else if($user->role == 2) {
             // lister
@@ -58,7 +58,7 @@ class LoginController extends Controller
         }
         else if($user->role == 3) {
             // client
-             return redirect()->route('client.booking');
+             return redirect()->route('client.bookings');
         }
     }
 }

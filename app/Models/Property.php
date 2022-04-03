@@ -9,6 +9,10 @@ class Property extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'main_photo'
+    ];
+
     protected $fillable = [
         'user_id',
         'title',
@@ -58,4 +62,8 @@ class Property extends Model
 
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -47,16 +47,11 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */ 
-    public function show()
+    public function show($id)
     {
+        $user = User::where('id', $id)->firstOrFail();
 
-        $user = Auth::user();  
-        $user_id = $user->id;
-        $username = $user->firstname;
-        $users = User::all();
-        //$properties = Property::where('user_id', $id)->paginate(3);
-      return view('pages.admin.approval',compact('users'));
-        //
+        return view('pages.admin.approval-profile',compact('user'));
     }
 
     /**
@@ -79,14 +74,15 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $approve = User::find($id); 
-       $current_date = date('Y-m-d H:i:s');
+        $user = User::find($id); 
+        $current_date = date('Y-m-d H:i:s');
 
-      // dd($current_date);
-        $approve->approved_at = $current_date;
-        $approve->update();
+        $user->approved_at = $current_date;
+        $user->update();
+
+        Property::where('user_id', $user->id)->update(['is_approved' => 1]);
+
         return redirect()->back()->with('success', 'Your Account has been successfully Approved');
-      
     }
 
     /**
@@ -98,5 +94,12 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function list()
+    {
+        $users = User::whereNull('approved_at')->latest()->get();
+
+        return view('pages.admin.approval',compact('users'));
     }
 }

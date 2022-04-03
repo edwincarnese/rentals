@@ -13,16 +13,11 @@ class ClientController extends Controller
     public function index()
     {
         $user = Auth::user();  
-        $user_id = $user->id;
-        $username = $user->firstname;
-        // $bookings = Booking:: all();
-        $bookings = Booking::with('property')->where('owner_id', $user_id)->paginate(3);
-        $property = Property::with('bookings')->paginate(3);
-        // dd($property);                             
-        return view('pages.client.bookings',compact('bookings','property','username'));
+
+        $bookings = Booking::with('property')->where('client_id', $user->id)->paginate(15);
+
+        return view('pages.client.bookings',compact('bookings'));
     }
-      
-    
 
     public function show()
     {

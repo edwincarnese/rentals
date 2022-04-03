@@ -67,55 +67,54 @@
 
 <div class="agency-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
     <div class="container">
- 
+        <h1>List of Properties</h1>
         <div class="row row-25">
-                    @foreach($properties as $property)
-             
-                    <div class="property-item col-md-4 col-12 mb-40">
-                        <div class="property-inner">
-                            <div class="image">
-                                <a href="{{ route('pages.properties.show', $property->id) }}">
-                                    @if($property->main_photo)
-                                        <img src="{{ asset('storage/'.$property->main_photo) }}">
-                                    @else
-                                        <img src="{{ asset('assets/images/property/property-1.jpg') }}">
-                                    @endif
-                                </a>                  
+            @foreach($properties as $property)
+                <div class="property-item col-md-4 col-12 mb-40">
+                    <div class="property-inner">
+                        <div class="image">
+                            <a href="{{ route('pages.properties.show', $property->id) }}">
+                                @if($property->main_photo)
+                                    <img src="{{ asset('storage/'.$property->main_photo) }}">
+                                @else
+                                    <img src="{{ asset('assets/images/property/property-1.jpg') }}">
+                                @endif
+                            </a>                  
+                        </div>
+                        <div class="content">
+                            <div class="left">
+                                <h3 class="title">
+                                    <a href="{{ route('pages.properties.show', 1) }}">
+                                    {{ $property->title }}
+                                    </a>
+                                </h3>
+                                <span class="location">
+                                    <img src="{{ asset('assets/images/icons/marker.png') }}">{{ $property->address }}
+                                </span>
                             </div>
-                            <div class="content">
-                                <div class="left">
-                                    <h3 class="title">
-                                        <a href="{{ route('pages.properties.show', 1) }}">
-                                        {{ $property->title }}
-                                        </a>
-                                    </h3>
-                                    <span class="location">
-                                        <img src="{{ asset('assets/images/icons/marker.png') }}">{{ $property->address }}
+                            <div class="right">
+                                <div class="type-wrap">
+                                    <span class="price">₱{{ $property->price ?? 0 }}</span>
+                                    <span class="type">
+                                        {{ $property->property_status }}
                                     </span>
-                                </div>
-                                <div class="right">
-                                    <div class="type-wrap">
-                                        <span class="price">₱{{ $property->price ?? 0 }}</span>
-                                        <span class="type">
-                                            {{ $property->property_status }}
-                                        </span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endforeach 
-                    
                 </div>
-                <div class="row mt-20">
-                    <div class="col" style = "text-align:center;">
-                        {{
-                            $properties->appends([
-                                'show' => request()->query('show'), 
-                            ])->links()
-                        }}
-                    </div>
-                </div>               
+            @endforeach 
+        </div>
+
+        <div class="row mt-20">
+            <div class="col" style = "text-align:center;">
+                {{
+                    $properties->appends([
+                        'show' => request()->query('show'), 
+                    ])->links()
+                }}
+            </div>
+        </div>               
     </div>
 </div>
 @endsection

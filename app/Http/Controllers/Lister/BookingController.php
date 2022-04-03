@@ -16,18 +16,13 @@ class BookingController extends Controller
 
     // }
 
-
-
     public function index()
     {   
         $user = Auth::user();  
-        $user_id = $user->id;
-        $username = $user->firstname;
-        // $bookings = Booking:: all();
-        $bookings = Booking::with('property')->where('owner_id', $user_id)->get();
-        $property = Property::with('bookings')->get();
-        // dd($property);                             
-        return view('pages.lister.bookings',compact('bookings','property','username'));
+
+        $bookings = Booking::with('cient')->with('property')->where('owner_id', $user->id)->get();
+        
+        return view('pages.lister.bookings', compact('bookings'));
     }
       
 

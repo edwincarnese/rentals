@@ -33,6 +33,7 @@ class CreatePropertiesTable extends Migration
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->dateTime('availability_at')->nullable();
+            $table->boolean('is_approved')->nullable()->default(0);
             $table->timestamps();
         });
     }

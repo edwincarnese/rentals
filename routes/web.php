@@ -53,7 +53,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('lister/booking/{id}', [ListerBookingController::class, 'destroy']);
 
     Route::get('admin', [AdminController::class, 'index'])->name('pages.admin.index');
-    Route::get('admin/approval', [AdminController::class, 'show'])->name('admin.approval');
+    Route::get('admin/approval/profile/{id}', [AdminController::class, 'show'])->name('admin.lister.approval');
+    Route::get('admin/approval', [AdminController::class, 'list'])->name('admin.approval.list');
     Route::put('admin/approval/{id}', [AdminController::class, 'update'])->name('admin.approve');
     
     Route::get('client/bookings', [ClientController::class, 'index'])->name('client.bookings');

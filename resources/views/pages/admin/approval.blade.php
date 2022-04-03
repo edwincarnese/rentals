@@ -29,34 +29,37 @@
                             <a href = ""> <h3 class="mb-30">Pending for Approval</h3> </a>                           
                            
                             <table class="table table-bordered">                                
-                                <th class="text-center">First Name</th>
-                                <th class="text-center">Last Name</th>
+                                <th class="text-center">Full Name</th>
                                 <th class="text-center">Email</th>
-                                <th class="text-center">Address</th>
+                                <th class="text-center">Valid ID</th>
+                                <th class="text-center">Date Registered</th>
                                 <th class="text-center">Actions</th>
                                 <tr>
-                                    
                                     @foreach ($users as $user) 
-                                    @if(empty($user->approved_at))
-                                    
-                               
-                                    <td class="text-center">    
-                                        <a href="" class="link">{{$user->firstname}}</a></td>
-                                    <td class="text-center"> {{$user->lastname}}</td>
-                                    <td class="text-center">{{$user->email}}</td>
-                                    <td class="text-center">{{$user->address}}</td>                                   
-                                    <form action="{{route('admin.approve',$user->id)}}" method="POST"> 
-                                        @csrf
-                                        @method('PUT')  
-                                    <td class="text-center">
-                                      <button class="btn-success"onclick="return confirm('Are you sure you want to Approve &nbsp {{$user->firstname}} ?')">
-                                         Pending...</button>                  
-                                        @csrf                                        
-                                    </td>
+                                        <td class="text-center">{{$user->firstname}} {{$user->lastname}}</td>
+                                        <td class="text-center">{{$user->email}}</td>
+                                        <td class="text-center">
+                                            @if($user->valid_id)
+                                            <a href="{{ asset('storage/'.$user->valid_id) }}" target="_blank">
+                                                <img src="{{ asset('storage/'.$user->valid_id) }}" height="50" class="text-center">
+                                            </a>
+                                            @endif
+                                        </td>                                   
+                                        <td class="text-center">
+                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)->format('M. d, Y') }}
+                                        </td>
+                                        <td class="text-center">
+                                            <button onclick="window.open('{{ route('admin.lister.approval', $user->id) }}', '_blank')" class="btn-primary btn-block mb-2">View Profile</button>
+                                            <form action="{{route('admin.approve',$user->id)}}" method="POST"> 
+                                                @csrf
+                                                @method('PUT')  
+                                                <button class="btn-success btn-block" onclick="return confirm('Are you sure you want to Approve &nbsp {{$user->firstname}} ?')">
+                                                    Approve
+                                                </button>   
+                                            </form>               
+                                        </td>
+                                    @endforeach
                                 </tr>
-                             </form>
-                             @endif
-                                @endforeach
                             </table>
                         </div>
                     </div>

@@ -29,13 +29,13 @@
                                 <a href="{{ route('pages.owners.index') }}">Property Owners</a>
                             </li>
                             <li class="has-dropdown">
-                                <a href="{{ route('pages.properties.index') }}">Property Listings</a>
+                                <a href="#">Property Listings</a>
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="{{ route('pages.properties.index') }}">For Rent</a>
+                                        <a href="{{ route('pages.properties.index', ['status' => 'for-rent']) }}">For Rent</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('pages.properties.index') }}">For Sale</a>
+                                        <a href="{{ route('pages.properties.index', ['status' => 'for-sale']) }}">For Sale</a>
                                     </li>
                                 </ul>
                             </li>
@@ -51,7 +51,13 @@
                             <a href="{{ route('login') }}" class="user-toggle"><i class="pe-7s-user"></i><span>Login or Register</span></a>
                         @endguest
                         @auth()
-                            <a href="{{ route('lister.profile') }}" class="user-toggle"><i class="pe-7s-user"></i><span>My Account</span></a>
+                            @if(Auth::user()->role == 1)
+                                <a href="{{ route('admin.approval.list') }}" class="user-toggle"><i class="pe-7s-user"></i><span>My Account</span></a>
+                            @elseif(Auth::user()->role == 2)
+                                <a href="{{ route('lister.profile') }}" class="user-toggle"><i class="pe-7s-user"></i><span>My Account</span></a>
+                            @elseif(Auth::user()->role == 3)
+                                <a href="{{ route('client.bookings') }}" class="user-toggle"><i class="pe-7s-user"></i><span>My Account</span></a>
+                            @endif
                         @endauth
                     </div>
                 </div>

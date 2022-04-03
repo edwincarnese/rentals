@@ -130,7 +130,20 @@
                                 </div>
 
                                 <div class="mt-30">
-                                    <a class="btn btn-block" href="">Book Now</a>
+                                    @guest()
+                                        <a class="btn" href="{{ route('register') }}">Register To Book This Property</a>
+                                    @endguest
+                                    @auth()
+                                        <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
+                                            @csrf                      
+                                            <label for="birthdaytime">SELECT (date and time):</label>
+                                            <input type="datetime-local" id="reserve" name="reserve_date" required>
+                                            <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                                            
+                                            <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                                            <input type = "submit" class="btn btn-block" value="Book now">
+                                        </form>
+                                    @endauth
                                 </div>
                                 
                             </div>
@@ -213,20 +226,23 @@
             <div class="col-lg-4 col-12 order-2 pl-30 pl-sm-15 pl-xs-15">
                 
                 <div class="sidebar">
-                    <h4 class="sidebar-title"><span class="text">Book Property</span><span class="shape"></span></h4>
-                    <div class="property-search sidebar-property-search">
-
-                       
-                        <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
-                            @csrf                      
-                            <label for="birthdaytime">SELECT (date and time):</label>
-                            <input type="datetime-local" id="reserve" name="reserve_date">
-                            <input type = "hidden" name = "property_id" value ={{$property->id}}>
-                            
-                            <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
-                        <input type = "submit" class="btn btn-block" value="Book now">
-                    </form>
-                    </div>
+                    @guest()
+                        <a class="btn" href="{{ route('register') }}">Register To Book This Property</a>
+                    @endguest
+                    @auth()
+                        <h4 class="sidebar-title"><span class="text">Book Property</span><span class="shape"></span></h4>
+                        <div class="property-search sidebar-property-search">
+                            <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
+                                @csrf                      
+                                <label for="birthdaytime">SELECT (date and time):</label>
+                                <input type="datetime-local" id="reserve" name="reserve_date" required>
+                                <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                                
+                                <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                                <input type = "submit" class="btn btn-block" value="Book now">
+                            </form>
+                        </div>
+                    @endauth
                 </div>
                 <div class="sidebar">
                     <h4 class="sidebar-title"><span class="text">Featured Property</span><span class="shape"></span></h4>

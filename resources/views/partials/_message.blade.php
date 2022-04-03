@@ -1,5 +1,5 @@
 @auth()
-    @if(!Auth::user()->approved_at)
+    @if(!Auth::user()->approved_at && Auth::user()->role == 2)
         <div>
             <h3 class="text-center text-success font-weight-bold">Your Profile Is Under Review</h3>
             <p class="text-center mb-30">

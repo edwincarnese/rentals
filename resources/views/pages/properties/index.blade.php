@@ -102,57 +102,57 @@
                 
                     <div class="property-search sidebar-property-search">
 
-                        <form action="#" method="GET">
+                        <form action="{{ route('pages.properties.index') }}" method="GET">
 
                             <div>
-                                <input type="text" placeholder="Location">
-                            </div>
-
-                            <div>
-                                <select class="nice-select">
-                                    <option>For Rent</option>
-                                    <option>For Sale</option>
+                                <select class="nice-select" name="status">
+                                    <option value="for-rent" {{ Request::get('status') == 'for-rent' ? 'selected' : ''  }}>For Rent</option>
+                                    <option value="for-sale" {{ Request::get('status') == 'for-sale' ? 'selected' : ''  }}>For Sale</option>
                                 </select>
                             </div>
 
                             <div>
-                                <select class="nice-select">
-                                    <option>Type</option>
-                                    <option>Apartment</option>
-                                    <option>Cafe</option>
-                                    <option>House</option>
-                                    <option>Restaurant</option>
-                                    <option>Store</option>
-                                    <option>Villa</option>
+                                <select class="nice-select" name="type">
+                                    <option value="">Type</option>
+                                    <option value="Apartment" {{ Request::get('type') == 'Apartment' ? 'selected' : ''  }}>Apartment</option>
+                                    <option value="Cafe" {{ Request::get('type') == 'Cafe' ? 'selected' : ''  }}>Cafe</option>
+                                    <option value="House" {{ Request::get('type') == 'House' ? 'selected' : ''  }}>House</option>
+                                    <option value="Restaurant" {{ Request::get('type') == 'Restaurant' ? 'selected' : ''  }}>Restaurant</option>
+                                    <option value="Store" {{ Request::get('type') == 'Store' ? 'selected' : ''  }}>Store</option>
+                                    <option value="Villa" {{ Request::get('type') == 'Villa' ? 'selected' : ''  }}>Villa</option>
                                 </select>
                             </div>
 
                             <div>
-                                <select class="nice-select">
-                                    <option>Bedrooms</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
+                                <select class="nice-select" name="bedroom">
+                                    <option value="">Bedrooms</option>
+                                    <option value="1" {{ Request::get('bedroom') == 1 ? 'selected' : ''  }}>1</option>
+                                    <option value="2" {{ Request::get('bedroom') == 2 ? 'selected' : ''  }}>2</option>
+                                    <option value="3" {{ Request::get('bedroom') == 3 ? 'selected' : ''  }}>3</option>
+                                    <option value="4" {{ Request::get('bedroom') == 4 ? 'selected' : ''  }}>4</option>
+                                    <option value="5" {{ Request::get('bedroom') == 5 ? 'selected' : ''  }}>5</option>
+                                    <option value="6" {{ Request::get('bedroom') == 6 ? 'selected' : ''  }}>6</option>
                                 </select>
                             </div>
 
                             <div>
-                                <select class="nice-select">
-                                    <option>Bathrooms</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
+                                <select class="nice-select" name="bathroom">
+                                    <option value="">Bathrooms</option>
+                                    <option value="1" {{ Request::get('bathroom') == 1 ? 'selected' : ''  }}>1</option>
+                                    <option value="2" {{ Request::get('bathroom') == 2 ? 'selected' : ''  }}>2</option>
+                                    <option value="3" {{ Request::get('bathroom') == 3 ? 'selected' : ''  }}>3</option>
+                                    <option value="4" {{ Request::get('bathroom') == 4 ? 'selected' : ''  }}>4</option>
+                                    <option value="5" {{ Request::get('bathroom') == 5 ? 'selected' : ''  }}>5</option>
+                                    <option value="6" {{ Request::get('bathroom') == 6 ? 'selected' : ''  }}>6</option>
                                 </select>
                             </div>
 
-                            <div>
+                            {{-- <div>
                                 <div id="search-price-range"></div>
+                            </div> --}}
+
+                            <div>
+                                <input type="text" value="{{ Request::get('address') }}" name="address" placeholder="Location">
                             </div>
 
                             <div>

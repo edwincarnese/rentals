@@ -16,6 +16,7 @@ class OwnerController extends Controller
                 $q->where('company', 'LIKE', '%'.$search.'%');
             })
             ->where('role', '2')
+            ->whereNotNull('approved_at')
             ->get();     
             
         return view('pages.owners.index',compact('owners') );        
