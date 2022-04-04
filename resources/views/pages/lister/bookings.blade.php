@@ -34,6 +34,7 @@
                                 <th class="text-center">Type</th>
                                 <th class="text-center">Price</th>
                                 <th class="text-center">Client</th>
+                                <th class="text-center">Phone Number</th>
                                 <th class="text-center">Date Time</th>
                                 <th class="text-center">Actions</th>
                                 <tr>
@@ -47,9 +48,15 @@
                                             @if($booking->cient)
                                                 {{ $booking->cient->firstname }} {{ $booking->cient->lastname }}
                                             @endif
-                                        </td>   
+                                        </td>  
                                         <td class="text-center">
-                                            {{$booking->reserved_at}}
+                                            {{$userphone}}
+                                        </td>  
+                                        <td class="text-center">
+
+                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->reserved_at)->format('M. d, Y - h:i:s a') }}
+
+                                            {{-- {{$booking->reserved_at}} --}}
                                         </td> 
                                         <td class="text-center">
                                             <form action="booking/{{$booking->id}}" method="POST">                                       
@@ -60,6 +67,7 @@
                                                 @csrf    
                                             </form>                                    
                                         </td>
+                                    </tr>
                                 @endforeach
                             </table>
                         </div>

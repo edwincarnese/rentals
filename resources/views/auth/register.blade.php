@@ -54,9 +54,15 @@
                                 <div class="col-6 mb-30">
                                     <input name="lastname" type="text" placeholder="Last Name" required>
                                 </div>
-                                <div class="col-12 mb-30">
+                                {{-- <div class="col-12 mb-30">
+                                    <input name="email" type="email" placeholder="Email" required>
+                                </div> --}}
+                                <div class="col-6 mb-30">
                                     <input name="email" type="email" placeholder="Email" required>
                                 </div>
+                                <div class="col-6 mb-30">
+                                    <input name="phone" type="text" placeholder="Phone Number" required>
+                                </div>                                
                                 <div class="col-6 mb-30">
                                     <input name="password" type="password" placeholder="Password" required>
                                 </div>

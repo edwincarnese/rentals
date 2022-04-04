@@ -209,18 +209,21 @@
 
                                         <div class="col-12">
                                             <h4>Map Information</h4>
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <div id="single-property-map" class="embed-responsive-item google-map" data-lat="40.740178" data-Long="-74.190194"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 mt-4">
+                                            <h4>Position</h4>
                                             <div class="row mt-20">
-                                                <div class="col-lg-6 col-12 mb-30">
-                                                    <label for="map_address">Google Maps Address</label>
-                                                    <input type="text" id="map_address">
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12 mb-30">
+                                                <div class="col-lg-6 col-md-6 col-12 mb-30">
                                                     <label for="map_lan">Latitude</label>
-                                                    <input type="text" id="map_lan" name="latitude">
+                                                    <input type="text" id="map_lan" name="latitude" value="{{$property->latitude}}">
                                                 </div>
-                                                <div class="col-lg-3 col-md-6 col-12 mb-30">
+                                                <div class="col-lg-6 col-md-6 col-12 mb-30">
                                                     <label for="map_long">Longitude</label>
-                                                    <input type="text" id="map_long" name="longitude">
+                                                    <input type="text" id="map_long" name="longitude" value="{{$property->longitude}}">
                                                 </div>
                                             </div>
                                         </div>

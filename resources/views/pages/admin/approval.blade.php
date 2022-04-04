@@ -58,8 +58,9 @@
                                                 </button>   
                                             </form>               
                                         </td>
+                                    </tr>
                                     @endforeach
-                                </tr>
+                               
                             </table>
                         </div>
                     </div>

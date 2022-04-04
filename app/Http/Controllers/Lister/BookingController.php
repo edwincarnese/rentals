@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Booking; 
 use App\Models\Property;
 use Auth;
+use Carbon\Carbon;
+
 
 class BookingController extends Controller
 {
@@ -19,20 +21,12 @@ class BookingController extends Controller
     public function index()
     {   
         $user = Auth::user();  
-
-        $bookings = Booking::with('cient')->with('property')->where('owner_id', $user->id)->get();
-        
-        return view('pages.lister.bookings', compact('bookings'));
-    }
-      
-
-    
-    
-    // public function destroy1(Booking $id)
-    // {
-    //     $id->delete();
-    //     return redirect('pages.lister.bookings');
-    // }
+        $userphone=$user->phone;
+        $bookings = Booking::with('cient')->with('property')->where('client_id', $user->id)->get();     
+        // dd($bookings);     
+        return view('pages.lister.bookings', compact('bookings','userphone'));
+    }  
+   
     public function destroy($id)
     {
         $user = Auth::user(); 

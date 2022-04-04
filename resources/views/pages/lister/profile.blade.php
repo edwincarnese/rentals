@@ -84,10 +84,10 @@
                                             <label>Phone Number</label>
                                             <input type="text" name="phone" value="{{ Auth::user()->phone }}">
                                         </div>
-                                        <div class="col-md-6 col-12 mb-30">
+                                        {{-- <div class="col-md-6 col-12 mb-30">
                                             <label>Email</label>
                                             <input type="text" name="email" value="{{ Auth::user()->email }}">
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-6 col-12 mb-30">
                                             <label>Website</label>
                                             <input type="text" name="website" value="{{ Auth::user()->website }}">

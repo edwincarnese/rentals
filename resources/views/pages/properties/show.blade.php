@@ -141,6 +141,8 @@
                                             <input type = "hidden" name = "property_id" value ={{$property->id}}>
                                             
                                             <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                                        
+                                          
                                             <input type = "submit" class="btn btn-block" value="Book now">
                                         </form>
                                     @endauth
@@ -239,7 +241,20 @@
                                 <input type = "hidden" name = "property_id" value ={{$property->id}}>
                                 
                                 <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                                @if($booking ==0  )
+                                          
                                 <input type = "submit" class="btn btn-block" value="Book now">
+                                {{-- @elseif($status == 2)                                          --}}
+                                @elseif($booking==1)                                             
+                                <label  class="btn btn-block"> "YOU ONLY BOOK ONCE" </label>
+                                
+                                @else
+                                <label  class="btn btn-block"> "YOU ONLY BOOK ONCE" </label>
+                             
+                                @endif
+                             
+                             
+                                {{-- <input type = "submit" class="btn btn-block" value="Book now"> --}}
                             </form>
                         </div>
                     @endauth

@@ -67,40 +67,103 @@ class PropertyController extends Controller
 
     public function show($id)
     {
-        $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail();
-        
-        $featured_properties = Property::query()
-            ->inRandomOrder()
-            ->limit(5)
-            ->get();
 
-        $featured_owners = User::query()
-            ->withCount('properties')
-            ->where('role', 2)
-            ->whereNotNull('approved_at')
-            ->inRandomOrder()
-            ->limit(5)
-            ->get();
+        $user = Auth::user(); 
+        if($user == null)
+        {
+            $user =1;
+            $userID = $user;
+            $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail();
+            $getProperty_id = $property->id;
+            $booking = Booking::where('client_id', $userID)->where('property_id', $id)->count();      
+        }
+        else
+        {                  
+            $userID = $user->id;
+            $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail();
+            $getProperty_id = $property->id;
+            $booking = Booking::where('client_id', $userID)->where('property_id', $id)->count();      
+                
+        }
+        // dd($booking);
+        //check if any subscription plan exists
+        if($booking ==0)
+        {  
+                   
+            $featured_properties = Property::query()
+                ->inRandomOrder()
+                ->limit(5)
+                ->get();
 
-        return view('pages.properties.show', 
-            compact(
-                'property',
-                'featured_properties', 
-                'featured_owners'
-            )
-        );
-    }
+            $featured_owners = User::query()
+                ->withCount('properties')
+                ->where('role', 2)
+                ->whereNotNull('approved_at')
+                ->inRandomOrder()
+                ->limit(5)
+                ->get();
+
+            return view('pages.properties.show', 
+                compact(
+                    'property',
+                    'featured_properties', 
+                    'featured_owners',
+                    'booking'
+                )
+            );
+         
+        }
+        else
+        {        
+            
+            $featured_properties = Property::query()
+                ->inRandomOrder()
+                ->limit(5)
+                ->get();
+
+            $featured_owners = User::query()
+                ->withCount('properties')
+                ->where('role', 2)
+                ->whereNotNull('approved_at')
+                ->inRandomOrder()
+                ->limit(5)
+                ->get();
+
+            return view('pages.properties.show', 
+                compact(
+                    'property',
+                    'featured_properties', 
+                    'featured_owners',
+                    'booking'
+                )
+                );
+        }
+    }   
 
     public function stored (Request $request)
-    {         
-        $user = Auth::user();        
-        $booking = new booking();         
+    {                
+
+        $user = Auth::user();
+        $booking = new booking();   
         $booking->owner_id =$request->input('owners_id');  
         $booking->client_id = $user->id;
         $booking->property_id = $request->input('property_id');  
         $booking->reserved_at = $request->input('reserve_date');  
         $booking->save();         
-        return redirect('properties');   
+        return redirect('lister/bookings');   
+
+
+        // $user = Auth::user();
+
+        // $property = Property::where('id', $id)->where('user_id', $user->id)->firstOrFail()->delete();
+        // $p_id = $property->id;       
+        // $booking = Booking::where('property_id', $p_id)->where('owner_id', $user->id)->firstOrFail()->delete();
+        // // dd($p_id);       
+        //  return redirect()->back()->with('success', 'Your property has been successfully deleted.');
+
+
+
+
     }
 
     public function display_bookings($id)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lister;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Models\Booking;
 use Auth;
 
 class PropertyController extends Controller
@@ -16,7 +17,6 @@ class PropertyController extends Controller
         $properties = Property::where('user_id', $user->id)->paginate(2);
         // $user = User::withCount('properties')-> where('id', $id)->firstOrFail();          
         //     $properties = Property::where('user_id', $id)->paginate(3);
-
         return view('pages.lister.properties.index', compact('properties'));
     }
 
@@ -151,7 +151,9 @@ class PropertyController extends Controller
         $user = Auth::user();
 
         $property = Property::where('id', $id)->where('user_id', $user->id)->firstOrFail()->delete();
-        
-        return redirect()->back()->with('success', 'Your property has been successfully deleted.');
+        $p_id = $property->id;       
+        $booking = Booking::where('property_id', $p_id)->where('owner_id', $user->id)->firstOrFail()->delete();
+        // dd($p_id);       
+         return redirect()->back()->with('success', 'Your property has been successfully deleted.');
     }
 }
