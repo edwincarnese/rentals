@@ -13,26 +13,15 @@ class PropertyController extends Controller
     public function index()
     {
         $user = Auth::user();
-
         $properties = Property::where('user_id', $user->id)->paginate(2);
-        // $user = User::withCount('properties')-> where('id', $id)->firstOrFail();          
-        //     $properties = Property::where('user_id', $id)->paginate(3);
+      
         return view('pages.lister.properties.index', compact('properties'));
     }
 
     public function create()
     {
         return view('pages.lister.properties.create');
-    }
-
-    // public function edit($id)
-    // {
-    //     $user = Auth::user();       
-
-    //     $property = Property::where('id', $id)->where('user', $user->id)->firstOrFail();
-
-    //     return view('pages.lister.properties.edit', compact('property'));
-    // }
+    }    
 
     public function edit($id)
     {
@@ -46,8 +35,7 @@ class PropertyController extends Controller
 
     public function update(Request $request, $id)
     {
-        $property = property::find($id);
-      
+        $property = property::find($id);      
         $data = $request->all();
 
         if($request->amenities) {
@@ -91,14 +79,9 @@ class PropertyController extends Controller
         return redirect()->back()->with('success', 'Your property has been successfully updated.');
     }
 
-
-
-
-
     public function store(Request $request)
     {
         $user = Auth::user();
-
         $data = $request->all();
 
         if($request->amenities) {
@@ -151,9 +134,11 @@ class PropertyController extends Controller
         $user = Auth::user();
 
         $property = Property::where('id', $id)->where('user_id', $user->id)->firstOrFail()->delete();
-        $p_id = $property->id;       
-        $booking = Booking::where('property_id', $p_id)->where('owner_id', $user->id)->firstOrFail()->delete();
-        // dd($p_id);       
-         return redirect()->back()->with('success', 'Your property has been successfully deleted.');
+        $property1 = $user->id;
+    
+        
+        $booking = Booking::where('property_id', $id)->where('owner_id', $user->id)->orwhere('owner_id', $user->id)->firstOrFail()->delete();
+               
+        return redirect()->back()->with('success', 'Your property has been successfully deleted.');
     }
 }

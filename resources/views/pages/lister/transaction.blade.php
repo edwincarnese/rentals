@@ -26,7 +26,7 @@
                 <div class="tab-content">
                     <div class="row">
                         <div class="property-item col-md-12 col-12 mb-40">
-                            <a href = ""> <h3 class="mb-30">Bookings</h3> </a>
+                            <a href = ""> <h3 class="mb-30">Transaction History</h3> </a>
                             
                            
                             <table class="table table-bordered">
@@ -36,57 +36,45 @@
                                 <th class="text-center">Client</th>
                                 <th class="text-center">Phone Number</th>
                                 <th class="text-center">Date Time</th>
-                                <th class="text-center">Actions</th>
+                                {{-- <th class="text-center">Actions</th> --}}
                                 <tr>
-                                    @foreach ($bookings as $booking) 
+                                    @foreach ($transactions as $transaction) 
                                         <td class="text-center">
-                                            {{-- <a href="" class="link">{{$booking->property->title}}</a> --}}
-                                              <a href="{{ route('pages.properties.show', $booking->property_id) }}" target="_blank" class="link">{{$booking->property->title}}</a>
+                                            <a href="" class="link">{{$transaction->property->title ?? ''}}</a>
+                                             
+                                            {{-- <a href="{{ route('pages.properties.show', $transactions->property->property_id) }}" target="_blank" class="link">{{$transactions->property->title}}</a> --}}
                                       
                                             {{-- <a href="{{ route('lister.properties.index', $booking->property_id) }}" >{{$booking->property->title}}</a> --}}
                                            
                                         
                                         </td>
-                                        <td class="text-center">{{ $booking->property->type }}</td>
-                                        <td class="text-center">{{ $booking->property->price }}</td>
+                                        <td class="text-center">{{ $transaction->property->type ?? '' }}</td>
+                                        <td class="text-center">{{ $transaction->property->price }}</td>
                                         <td class="text-center">
-                                            @if($booking->cient)
-                                                {{ $booking->cient->firstname }} {{ $booking->cient->lastname }}
-                                            @endif
+                                             {{$user->firstname}} &nbsp; {{$user->lastname}}
                                         </td>  
                                         <td class="text-center">
                                             {{$userphone}}
                                         </td>  
                                         <td class="text-center">
 
-                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->reserved_at)->format('M. d, Y - h:i:s a') }}
+                                            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->format('M. d, Y - h:i:s a') }} 
 
-                                            {{-- {{$booking->reserved_at}} --}}
                                         </td> 
-                                        <td class="text-center">
-                                            <form action="approve/{{$booking->id }}" method="get">                                       
-                                                {{-- @csrf   
-                                                @method('delete')  --}}
-                                                <button class="btn-success" onclick="return confirm('Are you sure you want to Approve {{$booking->property->title }}')">  Approve</button>                  
-                                               {{-- <button class="btn-success mr-2">Book</button> --}}
-                                                
-                                            </form> 
-                                             <form action="booking/{{$booking->id}}" method="POST">
-                                                @method('DELETE')                                               
-                                                <button class="btn-danger" onclick="return confirm('Are you sure you want to Delete {{$booking->property->title}}')">  Decline</button> 
-                                                {{-- <button class="btn-success mr-2">Book</button> --}}
-                                                 @csrf    
-                                            </form>    
-                                        </td>
+                                        {{-- <td class="text-center">
+                                            <form action="booking/{{$transaction->id}}" method="POST">                                       
+                                                @method('DELETE')
+                                                <button class="btn-danger" onclick="return confirm('Are you sure you want to Delete {{$transaction->owner_id}}')">  Delete</button>                  
+                                                @csrf    
+                                            </form>                                            
+                                        </td> --}}
                                     </tr>
-
-                                    
                                 @endforeach
                             </table>
                             <div class="row mt-20">
                                 <div class="col" style = "text-align:center;">
                                     {{
-                                        $bookings->appends([
+                                        $transactions->appends([
                                             'show' => request()->query('show'), 
                                         ])->links()
                                     }}

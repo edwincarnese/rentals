@@ -68,4 +68,17 @@ class Property extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function Messages()
+    {
+        return $this->hasMany(Message::class,'id');
+
+    }
+    public function transaction()
+    {
+        return $this->hasMany(transaction::class,'id');
+
+    }
+    
+    
 }

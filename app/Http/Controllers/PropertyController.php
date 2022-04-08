@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\Message;
 use Auth;
+use Carbon\Carbon;
 
 class PropertyController extends Controller
 {
@@ -67,113 +69,77 @@ class PropertyController extends Controller
 
     public function show($id)
     {
-
         $user = Auth::user(); 
-        if($user == null)
-        {
-            $user =1;
-            $userID = $user;
-            $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail();
-            $getProperty_id = $property->id;
-            $booking = Booking::where('client_id', $userID)->where('property_id', $id)->count();      
-        }
-        else
-        {                  
-            $userID = $user->id;
-            $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail();
-            $getProperty_id = $property->id;
-            $booking = Booking::where('client_id', $userID)->where('property_id', $id)->count();      
-                
-        }
-        // dd($booking);
-        //check if any subscription plan exists
-        if($booking ==0)
-        {  
-                   
-            $featured_properties = Property::query()
-                ->inRandomOrder()
-                ->limit(5)
-                ->get();
 
-            $featured_owners = User::query()
-                ->withCount('properties')
-                ->where('role', 2)
-                ->whereNotNull('approved_at')
-                ->inRandomOrder()
-                ->limit(5)
-                ->get();
-
-            return view('pages.properties.show', 
-                compact(
-                    'property',
-                    'featured_properties', 
-                    'featured_owners',
-                    'booking'
-                )
-            );
-         
+        $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail(); 
+       
+        $is_booked = false;
+        
+        if($user) {
+            $is_booked = Booking::where('client_id', $user->id)->where('property_id', $property->id)->first();  
         }
-        else
-        {        
             
-            $featured_properties = Property::query()
-                ->inRandomOrder()
-                ->limit(5)
-                ->get();
+        $featured_properties = Property::query()
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
-            $featured_owners = User::query()
-                ->withCount('properties')
-                ->where('role', 2)
-                ->whereNotNull('approved_at')
-                ->inRandomOrder()
-                ->limit(5)
-                ->get();
+        $featured_owners = User::query()
+            ->withCount('properties')
+            ->where('role', 2)
+            ->whereNotNull('approved_at')
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
-            return view('pages.properties.show', 
-                compact(
-                    'property',
-                    'featured_properties', 
-                    'featured_owners',
-                    'booking'
-                )
-                );
-        }
+        $current_date = Carbon::now();
+         $get_message = Message::with('user')->with('property')->where('property_id', $id)->limit(10)->get();  
+         $count_feedback= (count($get_message));
+        
+        return view('pages.properties.show', compact(
+            'property',
+            'featured_properties', 
+            'featured_owners',
+            'is_booked',
+            'get_message',
+            'count_feedback',
+            'current_date',
+            'user',
+        ));
     }   
 
     public function stored (Request $request)
-    {                
-
+    {  
         $user = Auth::user();
-        $booking = new booking();   
+        $user_role = $user->role;
+
+        $booking = new booking();
         $booking->owner_id =$request->input('owners_id');  
         $booking->client_id = $user->id;
         $booking->property_id = $request->input('property_id');  
         $booking->reserved_at = $request->input('reserve_date');  
-        $booking->save();         
-        return redirect('lister/bookings');   
+        $booking->save();  
 
-
-        // $user = Auth::user();
-
-        // $property = Property::where('id', $id)->where('user_id', $user->id)->firstOrFail()->delete();
-        // $p_id = $property->id;       
-        // $booking = Booking::where('property_id', $p_id)->where('owner_id', $user->id)->firstOrFail()->delete();
-        // // dd($p_id);       
-        //  return redirect()->back()->with('success', 'Your property has been successfully deleted.');
-
-
-
-
+        if ($user_role ==3)
+        {
+            return redirect('client/bookings'); 
+        }
+        elseif($user_role ==2)
+        {           
+            return redirect('lister/bookings');          
+        }
+        else
+        {
+            return redirect('admin/bookings');      
+        }
+       
     }
 
     public function display_bookings($id)
     {
         $user = Auth::user();    
         $bookings = Booking::where('id', $user->id)->firstOrFail();
-        
-        // $featured_properties = Property::inRandomOrder()->limit(5)->get();
-        // $featured_owners = User::withCount('properties')->where('role', 2)->inRandomOrder()->limit(5)->get();
-
+      
         return view('owners', 
             compact('bookings'));
     }

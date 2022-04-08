@@ -23,4 +23,10 @@ class PageController extends Controller
     {
         return view('pages.contact');
     }
+    public function index()
+    {
+        return redirect()->route('pages.contact')->with('success', 'Message send');
+       // return view('pages.contact')->with('success', 'Message send');
+        
+    }
 }

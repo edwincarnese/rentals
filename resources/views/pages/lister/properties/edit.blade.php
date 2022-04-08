@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="page-banner-section section">
+{{-- <div class="page-banner-section section"> --}}
     <div class="container">
         <div class="row">
             <div class="col">
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 
 <div class="login-register-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
     @include('partials._message')
@@ -26,7 +26,7 @@
             <div class="col-lg-8 col-12">
                 
                 <div class="add-property-wrap col">
-                    <h3 class="mb-30">New Property</h3>
+                    <h3 class="mb-30">Edit Property</h3>
                                 
                     <ul class="add-property-tab-list nav mb-50">
                         <li class="working"><a href="#basic_info" data-toggle="tab">1. Basic Information</a></li>
@@ -46,7 +46,7 @@
                                             <input type="text" name="title" value = "{{$property->title}}">
                                         </div>
 
-                                        <div class="col-md-4 col-12 mb-30">
+                                        <div class="col-12 mb-30">
                                             <label>Address</label>
                                             <input type="text" name="address" value = "{{$property->address}}">
                                         </div>
@@ -54,30 +54,38 @@
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Status</label>
                                             <select class="nice-select" name="status">
-                                                <option value="1" seleted>For Rent</option>
-                                                <option value="2">For Sale</option>
+                                                <option value="1"@if($property->status == "1") selected @endif >For Rent</option>
+                                                <option value="2"@if($property->status == "2") selected @endif>For Sale</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Period</label>
                                             <select class="nice-select" name="period">
-                                                <option value="Daily">Daily</option>
-                                                <option value="Weekly">Weekly</option>
-                                                <option value="Monthly" selected>Monthly</option>
-                                                <option value="Yearly">Yearly</option>
+                                                <option value="Daily"@if($property->period == "Daily") selected @endif >Daily</option>
+                                                <option value="Weekly" @if($property->period == "Weekly") selected @endif >Weekly</option>
+                                                {{-- <option value="Monthly" selected>Monthly</option> --}}
+                                                <option value="Monthly" @if($property->period == "Monthly") selected @endif>Monthly</option>
+                                                <option value="Yearly" @if($property->period == "Yearly") selected @endif >Yearly</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-12 mb-30">
+                                            <label>Availability</label>
+                                            <select class="nice-select" name="availability_at">
+                                                <option value="1"@if($property->availability_at == "1") selected @endif>Yes</option>
+                                                <option value="0" @if($property->availability_at == "0") selected @endif>No</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Type</label>
                                             <select class="nice-select" name="type">
-                                                <option value="Apartment">Apartment</option>
-                                                <option value="Cafe">Cafe</option>
-                                                <option value="House">House</option>
-                                                <option value="Restaurant">Restaurant</option>
-                                                <option value="Store">Store</option>
-                                                <option value="Villa">Villa</option>
+                                                <option value="Apartment" @if($property->type == "Apartment") selected @endif>Apartment</option>
+                                                <option value="Cafe" @if($property->type == "Cafe") selected @endif>Cafe</option>
+                                                <option value="House" @if($property->type == "House") selected @endif>House</option>
+                                                <option value="Restaurant" @if($property->type == "Restaurant") selected @endif>Restaurant</option>
+                                                <option value="Store"@if($property->type == "Store") selected @endif>Store</option>
+                                                <option value="Villa"@if($property->type == "Villa") selected @endif>Villa</option>
                                             </select>
                                         </div>
 
@@ -128,7 +136,7 @@
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Bedrooms</label>
-                                            <select class="nice-select" name="bedroom">
+                                            <select class="nice-select" name="bedroom" value="{{$property->bedroom}}">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>

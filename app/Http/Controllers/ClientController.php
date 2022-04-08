@@ -7,16 +7,21 @@ use App\Models\Property;
 use App\Models\User;
 use App\Models\Booking;
 use Auth;
+use Carbon\Carbon;
+
 
 class ClientController extends Controller
 {
     public function index()
     {
         $user = Auth::user();  
+        $userphone=$user->phone;
+        $date = Carbon::now()->subDays(7);  
 
-        $bookings = Booking::with('property')->where('client_id', $user->id)->paginate(15);
-
-        return view('pages.client.bookings',compact('bookings'));
+        Booking::where('reserved_at', '<=', $date)->where('client_id', $user->id)->delete();      
+        $bookings = Booking::with('cient')->with('property')->where('client_id', $user->id)->paginate(15);
+       
+        return view('pages.client.bookings',compact('bookings','userphone'));       
     }
 
     public function show()
@@ -27,16 +32,17 @@ class ClientController extends Controller
 
         return view('pages.client.show', compact('properties'));
     }
+
      public function stored (Request $request)
-    {        
-       
-      $user = Auth::user();        
+    {  
+        $user = Auth::user();        
         $booking = new booking();         
         $booking->owner_id =$request->input('owners_id');  
         $booking->client_id = $user->id;
         $booking->property_id = $request->input('property_id');  
         $booking->reserved_at = $request->input('reserve_date');  
-        $booking->save();         
+        $booking->save(); 
+
         return redirect('properties');   
     }
  
@@ -71,7 +77,7 @@ class ClientController extends Controller
             $data['videos'] = json_encode($uploaded_videos);
         }
         $user->properties()->create($data);
-        // return redirect('pages.client.bookings');  
+       
          return redirect()->back()->with('success', 'Your property has been successfully created.');
     }
 
@@ -88,5 +94,12 @@ class ClientController extends Controller
                 'featured_owners'
             )
         );
+    }
+    public function destroy($id)    
+    {
+        $user = Auth::user(); 
+        $booking = Booking::where('id', $id)->where('client_id', $user->id)->firstOrFail()->delete();     
+     
+        return redirect()->back()->with('success', 'Your property has been successfully deleted.');
     }
 }

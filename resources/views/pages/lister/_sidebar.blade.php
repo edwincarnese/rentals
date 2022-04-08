@@ -11,6 +11,18 @@
             </a>
         </li>
         <li>
+            {{-- <a @if(url()->current() == route('lister.approve')) class="active" @endif href="{{ route('lister.approve') }}">
+                <i class="pe-7s-note2"></i>Payment form
+            </a> --}}
+            
+        </li>
+        <li>
+            <a @if(url()->current() == route('lister.transaction')) class="active" @endif href="{{ route('lister.transaction') }}">
+                <i class="pe-7s-note2"></i>Transactions
+            </a>
+            
+        </li>         
+        <li>
             <a @if(url()->current() == route('lister.properties.index')) class="active" @endif href="{{ route('lister.properties.index') }}">
                 <i class="pe-7s-photo"></i>Properties
             </a>

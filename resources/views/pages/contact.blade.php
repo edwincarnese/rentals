@@ -2,7 +2,7 @@
 
 @section('content')
 <!--Page Banner Section start-->
-<div class="page-banner-section section">
+{{-- <div class="page-banner-section section"> --}}
     <div class="container">
         <div class="row">
             <div class="col">
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 <!--Page Banner Section end-->
 
 <!--New property section start-->
@@ -49,7 +49,11 @@
     </div>
 </div>
 <!--New property section end-->
-
+@if(Session::has('success'))
+<div class="mb-30">
+    <h3 class="text-center text-success font-weight-bold">{{ Session::get('success') }}</h3>
+</div>
+@endif
 <!--New property section start-->
 <div class="contact-section section bg-gray pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
     <div class="container">
@@ -68,7 +72,7 @@
             
             <div class="contact-form-wrap col-12">
                 <div class="contact-form">
-                    <form id="contact-form" action="assets/php/mail.php">
+                    <form id="" action="{{route('pages.index')}}">
                         <div class="row">
                             <div class="col-md-6 col-12 mb-30"><input name="name" type="text" placeholder="Name"></div>
                             <div class="col-md-6 col-12 mb-30"><input name="email" type="email" placeholder="Email"></div>

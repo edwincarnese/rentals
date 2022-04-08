@@ -5,9 +5,11 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\Lister\PropertyController as ListerPropertyController;
 use App\Http\Controllers\Lister\ProfileController as ListerProfileController;
 use App\Http\Controllers\Lister\BookingController as ListerBookingController;
+use App\Http\Controllers\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +27,7 @@ Route::get('/', [PageController::class, 'home']);
 Route::get('home', [PageController::class, 'home'])->name('pages.home');
 Route::get('about', [PageController::class, 'about'])->name('pages.about');
 Route::get('contact', [PageController::class, 'contact'])->name('pages.contact');
+Route::get('contact/send', [PageController::class, 'index'])->name('pages.index');
 
 Route::get('properties', [PropertyController::class, 'index'])->name('pages.properties.index');
 Route::get('properties/{id}', [PropertyController::class, 'show'])->name('pages.properties.show');
@@ -56,11 +59,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('admin/approval/profile/{id}', [AdminController::class, 'show'])->name('admin.lister.approval');
     Route::get('admin/approval', [AdminController::class, 'list'])->name('admin.approval.list');
     Route::put('admin/approval/{id}', [AdminController::class, 'update'])->name('admin.approve');
-    
+    // Route::get('admin/message/', [AdminController::class, 'display'])->name('admin.message.list');
+   
     Route::get('client/bookings', [ClientController::class, 'index'])->name('client.bookings');
     Route::get('client/properties', [ClientController::class, 'show'])->name('client.show');
     Route::get('client/properties/{id}', [ClientController::class, 'display'])->name('client.display');
     Route::post('client/properties', [ClientController::class, 'store'])->name('client.store');
+    Route::delete('client/bookings/{id}', [ClientController::class, 'destroy']);
+   
+    Route::get('messages/{id}', [MessageController::class, 'stored'])->name('pages.feedback.store');
+
+    Route::get('lister/transaction', [TransactionsController::class, 'show'])->name('lister.transaction');
+    Route::get('lister/approve/{id}', [TransactionsController::class, 'index'])->name('lister.approve');
+    Route::delete('lister/bokdelete/{id}', [TransactionsController::class, 'destroy'])->name('booking.lister.destroy');
    
 });
 

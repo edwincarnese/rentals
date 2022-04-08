@@ -11,6 +11,11 @@
             </a>
         </li>
         {{-- <li>
+            <a @if(url()->current() == route('admin.message.list')) class="active" @endif href="{{ route('admin.message.list') }}">
+                <i class="pe-7s-photo"></i>Messages
+            </a>
+        </li> --}}
+        {{-- <li>
             <a @if(url()->current() == route('lister.change.password')) class="active" @endif href="{{ route('lister.change.password') }}">
                 <i class="pe-7s-lock"></i>Change Password
             </a>

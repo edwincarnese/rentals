@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="page-banner-section section">
+{{-- <div class="page-banner-section section"> --}}
     <div class="container">
         <div class="row">
             <div class="col">
@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 
 <div class="property-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
     <div class="container">

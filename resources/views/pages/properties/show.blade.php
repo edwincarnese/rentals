@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="page-banner-section section">
+{{-- <div class="page-banner-section section"> --}}
     <div class="container">
         <div class="row">
             <div class="col">
@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 
 <div class="property-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
     <div class="container">
@@ -59,6 +59,7 @@
                                     @endif
                                 </div>
                             </div>
+                            
                             
                             <div class="content">
                                 <h3>Description</h3>
@@ -134,17 +135,24 @@
                                         <a class="btn" href="{{ route('register') }}">Register To Book This Property</a>
                                     @endguest
                                     @auth()
-                                        <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
-                                            @csrf                      
-                                            <label for="birthdaytime">SELECT (date and time):</label>
-                                            <input type="datetime-local" id="reserve" name="reserve_date" required>
-                                            <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                                    @if($is_booked)
+                                    <label class="btn btn-block"> "YOU ONLY BOOK ONCE" </label>
+                                    @else
+                                        @if(!$property->availability_at)
+                                            <label class="btn btn-block"> "THIS PROPERTY IS UNAVAILABLE" </label>                                     
+                                        @else                                   
+                                            <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
+                                                @csrf                      
+                                                <label for="birthdaytime">SELECT (date and time):</label>
+                                                <input type="datetime-local" id="reserve" name="reserve_date" required>
+                                                <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                                                
+                                                <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>                                       
                                             
-                                            <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
-                                        
-                                          
-                                            <input type = "submit" class="btn btn-block" value="Book now">
-                                        </form>
+                                                <input type = "submit" class="btn btn-block" value="Book now">
+                                            </form>
+                                            @endif 
+                                        @endif 
                                     @endauth
                                 </div>
                                 
@@ -152,75 +160,65 @@
                         </div>
                     </div>
                     
-                    {{-- <div class="comment-wrap col-12">
-                        <h3>3 Feedback</h3>
+                    <div class="comment-wrap col-12">
+                        <h3>{{$count_feedback}} Feedback</h3>
 
                         <ul class="comment-list">
                             <li>
+                                @foreach($get_message as $feedback)
                                 <div class="comment">
-                                    <div class="image">
+                                    {{-- <div class="image">
                                         <img src="{{ asset('assets/images/review/review-1.jpg') }}">
-                                    </div>
+                                    </div> --}}
+                                    
                                     <div class="content">
-                                        <h5>Alvaro Santos</h5>
+                                     
+                                        <h5>{{$feedback->user->firstname}}  &nbsp; {{$feedback->user->lastname}}</h5>
                                         <div class="d-flex flex-wrap justify-content-between">
-                                            <span class="time">10 August, 2018  |  10 Min ago</span>
-                                            <a href="#" class="reply">reply</a>
+                                            {{-- <span class="time"> {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $booking->reserved_at)->format('M. d, Y - h:i:s a') }} |  10 Min ago</span> --}}
+                                            <span class="time">  {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $feedback->created_at)->format('M. d, Y - h:i:s a') }}  |   {{ \Carbon\Carbon::parse($feedback->created_at)->diffForHumans() }} </span>
+                                       
+                                            {{-- <a href="#" class="reply">reply</a> --}}
                                         </div>
                                         <div class="decs">
-                                            <p>But I must explain to you how all this mistaken idea of denouncing pleasure and ising pain  borand I will give you a complete account of the system</p>
+                                            <p>{{$feedback->message}}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="child-comment">
-                                    <li>
-                                        <div class="comment">
-                                            <div class="image"><img src="{{ asset('assets/images/review/review-2.jpg') }}"></div>
-                                            <div class="content">
-                                                <h5>Silvia Anderson</h5>
-                                                <div class="d-flex flex-wrap justify-content-between">
-                                                    <span class="time">10 August, 2018  |  25 Min ago</span>
-                                                    <a href="#" class="reply">reply</a>
-                                                </div>
-                                                <div class="decs">
-                                                    <p>But I must explain to you how all this mistaken idea of denouncing pleasure and ising pain  borand I will give you a complete account of the system</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                @endforeach
+                                 
                             </li>
                             <li>
-                                <div class="comment">
-                                    <div class="image"><img src="assets/images/review/review-3.jpg"></div>
-                                    <div class="content">
-                                        <h5>Nicolus Christopher</h5>
-                                        <div class="d-flex flex-wrap justify-content-between">
-                                            <span class="time">10 August, 2018  |  35 Min ago</span>
-                                            <a href="#" class="reply">reply</a>
-                                        </div>
-                                        <div class="decs">
-                                            <p>But I must explain to you how all this mistaken idea of denouncing pleasure and ising pain  borand I will give you a complete account of the system</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </li>
                         </ul>
 
-                        <h3>Leave a Feedback</h3>
 
+                        <h3>Leave a Feedback</h3>
+                        @guest()
+                        <a class="btn" href="{{ route('register') }}">sign in</a>
+                        @endguest 
+                        @auth
                         <div class="comment-form">
-                            <form action="#">
+                            <form method = "GET" action="{{route('pages.feedback.store', $property->id) }}">                                       
                                 <div class="row">
-                                    <div class="col-md-6 col-12 mb-30"><input type="text" placeholder="Name"></div>
-                                    <div class="col-md-6 col-12 mb-30"><input type="email" placeholder="Email"></div>
-                                    <div class="col-12 mb-30"><textarea placeholder="Message"></textarea></div>
+                                    <div class="col-md-6 col-12 mb-30"><input type="text" name = "name" value = "{{$user->firstname}} &nbsp;{{$user->lastname}}" readonly required></div>
+                                    <div class="col-md-6 col-12 mb-30"><input type="email" name = "email" placeholder="Email" required></div>
+                                    <div class="col-12 mb-30"><textarea placeholder="Message" name = "message" required></textarea></div>
                                     <div class="col-12"><button class="btn">send now</button></div>
                                 </div>
                             </form>
                         </div>
+                        @endauth
                     
-                    </div> --}}
+                    </div>
+                    
+                   
+
+                            
+
+
+                   
 
                 </div>
             </div>
@@ -230,32 +228,26 @@
                 <div class="sidebar">
                     @guest()
                         <a class="btn" href="{{ route('register') }}">Register To Book This Property</a>
-                    @endguest
+                    @endguest                    
                     @auth()
-                        <h4 class="sidebar-title"><span class="text">Book Property</span><span class="shape"></span></h4>
-                        <div class="property-search sidebar-property-search">
-                            <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
-                                @csrf                      
-                                <label for="birthdaytime">SELECT (date and time):</label>
-                                <input type="datetime-local" id="reserve" name="reserve_date" required>
-                                <input type = "hidden" name = "property_id" value ={{$property->id}}>
-                                
-                                <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
-                                @if($booking ==0  )
-                                          
-                                <input type = "submit" class="btn btn-block" value="Book now">
-                                {{-- @elseif($status == 2)                                          --}}
-                                @elseif($booking==1)                                             
-                                <label  class="btn btn-block"> "YOU ONLY BOOK ONCE" </label>
-                                
-                                @else
-                                <label  class="btn btn-block"> "YOU ONLY BOOK ONCE" </label>
-                             
-                                @endif
-                             
-                             
-                                {{-- <input type = "submit" class="btn btn-block" value="Book now"> --}}
-                            </form>
+                        <div class="property-search sidebar-property-search">   
+                            @if($is_booked)
+                                <label class="btn btn-block"> "YOU ONLY BOOK ONCE" </label>
+                            @else
+                                @if(!$property->availability_at)
+                                    <label class="btn btn-block"> "THIS PROPERTY IS UNAVAILABLE" </label>                                     
+                                @else 
+                                    <h4 class="sidebar-title"><span class="text">Book Property</span><span class="shape"></span></h4>
+                                    <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
+                                        @csrf                      
+                                        <label for="birthdaytime">SELECT (date and time):</label>
+                                        <input type="datetime-local" id="reserve" name="reserve_date" required>
+                                        <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                                        <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                                        <input type = "submit" class="btn btn-block" value="Book now">
+                                    </form>
+                                @endif 
+                            @endif  
                         </div>
                     @endauth
                 </div>
@@ -289,8 +281,61 @@
                         @endforeach
                     </div>
                 </div>
-                
                 <div class="sidebar">
+                    <h4 class="sidebar-title"><span class="text">Featured Owners</span><span class="shape"></span></h4>
+                    
+                    <!--Sidebar Agents start-->
+                    @foreach($featured_owners as $owner)
+                    <div class="sidebar-agent-list">
+                       
+                        <div class="sidebar-agent">
+                            
+                            <div class="image">
+                              
+                                <a href="single-properties.html"><img src="assets/images/agent/agent-1.jpg" alt=""></a>
+                                
+                                <a href="{{ $owner->id }}">
+                                    @if($owner->logo)
+                                        <img src="{{ asset('storage/'.$owner->logo) }}">
+                                    @else
+                                        <img src="{{ asset('assets/images/agent/agent-1.jpg') }}">
+                                    @endif
+                                </a>
+                              
+                            </div>
+                            <div class="content">
+                                <h5 class="title">
+                                    @if($owner->company)
+                                        <a href="{{ $owner->id }}">{{ $owner->company }}</a>
+                                    @else
+                                        <a href="{{ $owner->id }}">{{ $owner->firstname }} {{ $owner->lastname }}</a>
+                                    @endif
+                                </h5>
+                                <a href="#" class="phone">{{ $owner->phone }}</a>
+                                <span class="properties">{{ $owner->properties_count }} Properties</span>
+                                <div class="social">
+                                    @if($owner->facebook)
+                                        <a href="$owner->facebook" class="facebook"><i class="fa fa-facebook"></i></a>
+                                    @endif
+                                    
+                                    @if($owner->twitter)
+                                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                                    @endif
+                                    @if($owner->linkedin)
+                                        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                                    @endif
+                                    @if($owner->google)
+                                        <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div> 
+                        
+                    </div> @endforeach
+                    <!--Sidebar Agents end-->
+                    
+                </div>
+                {{-- <div class="sidebar">
                     <h4 class="sidebar-title"><span class="text">Featured Owners</span><span class="shape"></span></h4>
                     
                     <div class="sidebar-agent-list">
@@ -315,10 +360,12 @@
                                     </h5>
                                     <a href="#" class="phone">{{ $owner->phone }}</a>
                                     <span class="properties">{{ $owner->properties_count }} Properties</span>
+                                   
                                     <div class="social">
                                         @if($owner->facebook)
                                             <a href="$owner->facebook" class="facebook"><i class="fa fa-facebook"></i></a>
                                         @endif
+                                        
                                         @if($owner->twitter)
                                             <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
                                         @endif
@@ -333,7 +380,7 @@
                             @endforeach
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             
         </div>

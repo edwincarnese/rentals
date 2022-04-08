@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="page-banner-section section">
+{{-- <div class="page-banner-section section"> --}}
     <div class="container">
         <div class="row">
             <div class="col">
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 
 <div class="login-register-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-70 pb-lg-50 pb-md-40 pb-sm-30 pb-xs-20">
     @include('partials._message')

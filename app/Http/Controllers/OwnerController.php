@@ -23,13 +23,11 @@ class OwnerController extends Controller
     }
 
     
-        public function show($id)
-        {
-            $user = User::withCount('properties')-> where('id', $id)->firstOrFail();          
-            $properties = Property::where('user_id', $id)->paginate(3);
-            // $featured_properties = Property::inRandomOrder()->limit(5)->get();
-            //  $count_property = User::withCount('properties')->where('role', $id)->get();             
-            return view('pages.owners.show',compact('user','properties'));
-        }
-      //  return view('pages.owners.show');        
-    }
+    public function show($id)
+    {
+        $user = User::withCount('properties')-> where('id', $id)->firstOrFail();          
+        $properties = Property::where('user_id', $id)->paginate(3);
+                   
+        return view('pages.owners.show',compact('user','properties'));
+    }       
+}

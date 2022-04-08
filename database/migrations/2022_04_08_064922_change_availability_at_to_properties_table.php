@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookingsTable extends Migration
+class ChangeAvailabilityAtToPropertiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateBookingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('owner_id');
-            $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('property_id');
-            $table->timestamps();
+        Schema::table('properties', function (Blueprint $table) {
+            $table->boolean('availability_at')->defaul(1)->change();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookings');
+        Schema::table('properties', function (Blueprint $table) {
+            //
+        });
     }
 }

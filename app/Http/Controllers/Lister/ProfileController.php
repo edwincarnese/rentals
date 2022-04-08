@@ -11,6 +11,17 @@ class ProfileController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+        if($user->role == 1) {
+            // admin
+            return redirect()->route('admin.approval.list');
+        }
+        else if($user->role == 3) {
+            // client
+             return redirect()->route('client.bookings');
+        }
+
+
         return view('pages.lister.profile');
     }
 
@@ -19,13 +30,14 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         if(!Hash::check($request->current_password, $user->password)) {
+
             return redirect()->back()->with('error','Your current password is incorrect.');
         }
-
         if($request->new_password != $request->new_confirm_password) {
+
             return redirect()->back()->with('error','Your passwords do not match.');
-        }
-   
+        }   
+
         $user->update(['password'=> Hash::make($request->new_password)]);
 
         return redirect()->back()->with('success', 'Your password has been successfully updated.');
@@ -39,7 +51,6 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-
         $data = $request->all();
 
         if($request->logo) {
@@ -47,7 +58,6 @@ class ProfileController extends Controller
             $request->logo->storeAs('logos', $logoName, 'public');
 
             $logoPath = 'logos/'.$logoName;
-
             $data['logo'] = $logoPath;
         }
 
@@ -56,7 +66,6 @@ class ProfileController extends Controller
             $request->valid_id->storeAs('attachment', $validId, 'public');
 
             $validIdPath = 'attachment/'.$validId;
-
             $data['valid_id'] = $validIdPath;
         }
 

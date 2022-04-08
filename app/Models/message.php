@@ -5,32 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Booking extends Model
+class message extends Model
 {
     use HasFactory;
+
 
     protected $fillable = [
         'owner_id',
         'client_id',
         'property_id',
-        'reserved_at',
+        'name',
+        'email',
+        'message',
+       
     ];
-
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'client_id', 'id');
+    }
     public function property()
     {
         return $this->belongsTo(Property::class);
 
     }
-
-    public function cient()
-    {
-        return $this->belongsTo(User::class, 'client_id', 'id');
-    }
-
-    public function booking()
-    {
-        return $this->belongsTo(booking::class, 'client_id', 'id');
-    }
-
-
+    
 }
