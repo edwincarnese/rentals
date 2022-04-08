@@ -72,7 +72,7 @@
 </div> --}}
 
 <!--Page Banner Section start-->
-<div class="page-banner-section section">
+{{-- <div class="page-banner-section section"> --}}
     <div class="container">
         <div class="row">
             <div class="col">
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 <!--Page Banner Section end-->
 
 <!--Login & Register Section start-->

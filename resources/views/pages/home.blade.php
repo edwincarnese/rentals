@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <!--Hero Section start-->
 <div class="hero-section section position-relative"> 
     <!--Hero Map-->
@@ -8,9 +9,97 @@
 
     <!--Hero Map Property Controler-->
     {{-- <div class="map-property-controls"></div> --}}
+    
 </div>
 <!--Hero Section end-->
-
+<div class="property-section section pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
+    <div class="container">        
+        <!--Section Title start-->
+        <div class="row">
+            <div class="col-md-12 mb-60 mb-xs-30">
+                <div class="section-title center">
+                    <h1>Feature Rent Property</h1>
+                </div>
+            </div>
+        </div>
+        <!--Section Title end-->
+            
+        <div class="row">            
+            <!--Property Slider start-->
+            <div class="property-carousel section">
+                <!--Property start-->  
+                @foreach($properties as $property)
+                    <div class="property-item col">
+                        <div class="property-inner">
+                            <div class="image">
+                                <a href="#"> <span class="location">                                    
+                                    @if($property->main_photo)
+                                    <img src="{{ asset('storage/'.$property->main_photo) }}">
+                                @else
+                                    <img src="{{ asset('assets/images/property/property-1.jpg') }}">
+                                @endif</a>
+                            </div>
+                            <div class="content">
+                                <div class="left">
+                                    <h3 class="title"><a href="#">{{$property->title}}</a></h3>
+                                    <span class="location"> 
+                                        <img src="{{ asset('assets/images/icons/bed.png')}}" alt="">{{$property->address}}</span>
+                                </div>
+                                <div class="right">
+                                    <div class="type-wrap">
+                                        <span class="price">${{$property->price}}</span>
+                                        <span class="type">For Rent</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach               
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-12 mb-60 mb-xs-30">
+                <div class="section-title center">
+                    <h1>Feature Sale Property</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="property-carousel section">
+                @foreach($sale_property as $properties)
+                    <div class="property-item col">
+                        <div class="property-inner">
+                            <div class="image">
+                                {{-- <span class="label">Feature</span> --}}
+                                <a href="#">
+                                    @if($properties->main_photo)
+                                        <img src="{{ asset('storage/'.$properties->main_photo) }}">
+                                    @else
+                                        <img src="{{ asset('assets/images/property/property-1.jpg') }}">
+                                    @endif 
+                                </a>                       
+                            </div>
+                            <div class="content">
+                                <div class="left">
+                                    <h3 class="title"><a href="#">{{$properties->title}}</a></h3>
+                                    <span class="location"><img src="{{ asset('assets/images/icons/bed.png')}}" alt="">{{$properties->address}}</span>
+                                </div>
+                                <div class="right">
+                                    <div class="type-wrap">
+                                        <span class="price">{{$properties->Price}}</span>
+                                        <span class="type">For Sale</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                <!--Property Slider end-->                
+            </div>
+    </div>
+    </div>
+</div>
 <!--CTA Section start-->
 <div class="cta-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50" style="background-image: url(assets/images/bg/cta-bg.jpg)">
     <div class="container">
@@ -30,6 +119,7 @@
     </div>
 </div>
 <!--CTA Section end-->
+
 @endsection
 
 @section('js')
@@ -99,4 +189,5 @@ if($('#hero-map').length) {
     });
 }
 </script>
+
 @endsection

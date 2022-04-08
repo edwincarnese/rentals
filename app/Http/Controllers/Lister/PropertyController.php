@@ -14,6 +14,7 @@ class PropertyController extends Controller
     {
         $user = Auth::user();
         $properties = Property::where('user_id', $user->id)->paginate(2);
+        
       
         return view('pages.lister.properties.index', compact('properties'));
     }

@@ -72,7 +72,7 @@ class PropertyController extends Controller
         $user = Auth::user(); 
 
         $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail(); 
-       
+        // $property->
         $is_booked = false;
         
         if($user) {
