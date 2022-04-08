@@ -30,7 +30,8 @@
     </div>
 
 <!-- All jquery file included here -->
-<script src="https://maps.google.com/maps/api/js?sensor=false&libraries=geometry&v=3.22&key=AIzaSyDAq7MrCR1A2qIShmjbtLHSKjcEIEBEEwM"></script>
+{{-- <script src="https://maps.google.com/maps/api/js?sensor=false&libraries=geometry&v=3.22&key=AIzaSyDAq7MrCR1A2qIShmjbtLHSKjcEIEBEEwM"></script> --}}
+<script src="https://maps.google.com/maps/api/js?sensor=false&libraries=geometry&v=3.22"></script>
 <script src="{{ asset('assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/jquery-migrate-1.4.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
