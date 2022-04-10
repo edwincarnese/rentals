@@ -11,18 +11,16 @@
     {{-- <div class="map-property-controls"></div> --}}
     
 </div>
-<!--Hero Section end-->
 <div class="property-section section pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
     <div class="container">        
         <!--Section Title start-->
         <div class="row">
             <div class="col-md-12 mb-60 mb-xs-30">
                 <div class="section-title center">
-                    <h1>Feature Rent Property</h1>
+                    <h1>Featured For Rent Property</h1>
                 </div>
             </div>
         </div>
-        <!--Section Title end-->
             
         <div class="row">            
             <!--Property Slider start-->
@@ -32,7 +30,7 @@
                     <div class="property-item col">
                         <div class="property-inner">
                             <div class="image">
-                                <a href="#"> <span class="location">                                    
+                                <a href="/properties/{{ $property->id }}"> <span class="location">                                    
                                     @if($property->main_photo)
                                     <img src="{{ asset('storage/'.$property->main_photo) }}">
                                 @else
@@ -41,7 +39,7 @@
                             </div>
                             <div class="content">
                                 <div class="left">
-                                    <h3 class="title"><a href="#">{{$property->title}}</a></h3>
+                                    <h3 class="title"><a href="/properties/{{ $property->id }}">{{$property->title}}</a></h3>
                                     <span class="location"> 
                                         <img src="{{ asset('assets/images/icons/bed.png')}}" alt="">{{$property->address}}</span>
                                 </div>
@@ -61,7 +59,7 @@
         <div class="row">
             <div class="col-md-12 mb-60 mb-xs-30">
                 <div class="section-title center">
-                    <h1>Feature Sale Property</h1>
+                    <h1>Featured For Sale Property</h1>
                 </div>
             </div>
         </div>
@@ -72,7 +70,7 @@
                         <div class="property-inner">
                             <div class="image">
                                 {{-- <span class="label">Feature</span> --}}
-                                <a href="#">
+                                <a href="/properties/{{$properties->id}}">
                                     @if($properties->main_photo)
                                         <img src="{{ asset('storage/'.$properties->main_photo) }}">
                                     @else
@@ -82,7 +80,7 @@
                             </div>
                             <div class="content">
                                 <div class="left">
-                                    <h3 class="title"><a href="#">{{$properties->title}}</a></h3>
+                                    <h3 class="title"><a href="/properties/{{$properties->id}}">{{$properties->title}}</a></h3>
                                     <span class="location"><img src="{{ asset('assets/images/icons/bed.png')}}" alt="">{{$properties->address}}</span>
                                 </div>
                                 <div class="right">
@@ -95,30 +93,10 @@
                         </div>
                     </div>
                 @endforeach
-                <!--Property Slider end-->                
-            </div>
-    </div>
-    </div>
-</div>
-<!--CTA Section start-->
-<div class="cta-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50" style="background-image: url(assets/images/bg/cta-bg.jpg)">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <!--CTA start-->
-                <div class="cta-content text-center">
-                    <h1>Want to <span>Buy</span> New Property or <span>Sell</span> One <br> Do it in Seconds With <span>Khonike</span></h1>
-                    <div class="buttons">
-                        <a href="add-properties.html">Add Property</a>
-                        <a href="properties.html">Browse Properties</a>
-                    </div>
-                </div>
-                <!--CTA end-->
             </div>
         </div>
     </div>
 </div>
-<!--CTA Section end-->
 
 @endsection
 
