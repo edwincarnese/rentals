@@ -15,6 +15,9 @@
     </div>
 {{-- </div> --}}
 
+<input type="hidden" value="{{ $property->latitude }}" id="property-latitude">
+<input type="hidden" value="{{ $property->longitude }}" id="property-longitude">
+
 <div class="property-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
     <div class="container">
         <div class="row">

@@ -227,11 +227,11 @@
                                             <div class="row mt-20">
                                                 <div class="col-lg-6 col-md-6 col-12 mb-30">
                                                     <label for="map_lan">Latitude</label>
-                                                    <input type="text" id="map_lan" name="latitude" value="{{$property->latitude}}">
+                                                    <input type="text" id="map_lan" name="latitude" value="{{$property->latitude}}" required>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12 mb-30">
                                                     <label for="map_long">Longitude</label>
-                                                    <input type="text" id="map_long" name="longitude" value="{{$property->longitude}}">
+                                                    <input type="text" id="map_long" name="longitude" value="{{$property->longitude}}" required>
                                                 </div>
                                             </div>
                                         </div>

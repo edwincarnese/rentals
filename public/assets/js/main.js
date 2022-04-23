@@ -418,7 +418,7 @@ $('.google-map').each(function(){
         var $long = $this.data('long'); 
         function initialize() {
             var mapOptions = {
-                zoom: 14,
+                zoom: 13,
                 scrollwheel: false,
                 // center: new google.maps.LatLng($lat, $long)
                 center: new google.maps.LatLng(8.954232145105257, 125.53326418527058)
@@ -431,12 +431,18 @@ $('.google-map').each(function(){
                 animation: google.maps.Animation.BOUNCE
             });
             
-            google.maps.event.addListener(map, 'click', function(event) {
-                marker = new google.maps.Marker({position: event.latLng, map: map});
-
-                $('#map_lan').val(event.latLng.lat());
-                $('#map_long').val(event.latLng.lng());
-            });
+            if($('#property-latitude').val() && $('#property-longitude').val()) {
+                var CentralPark = new google.maps.LatLng(8.954303347528557, 125.53336350757372);
+                marker = new google.maps.Marker({position: CentralPark, map: map});
+            } else {
+                google.maps.event.addListener(map, 'click', function(event) {
+                    marker.setMap(null);
+                    marker = new google.maps.Marker({position: event.latLng, map: map});
+    
+                    $('#map_lan').val(event.latLng.lat());
+                    $('#map_long').val(event.latLng.lng());
+                });
+            }
 
         }
         google.maps.event.addDomListener(window, 'load', initialize);

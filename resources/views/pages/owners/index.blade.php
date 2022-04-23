@@ -23,7 +23,7 @@
         <!--Section Title start-->
         <div class="row">
             <div class="col-md-12 mb-60 mb-xs-30">
-                <div class="section-title center">
+                <div class="text-center">
                     <h1>Find Your Owner</h1>
                 </div>
             </div>

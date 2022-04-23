@@ -27,19 +27,19 @@
                     <div class="contact-info col-md-4 col-12 mb-30">
                         <i class="pe-7s-map"></i>
                         <h4>address</h4>
-                        <p>256, 1st AVE, Manchester 125, Noth England</p>
+                        <p>Butuan City, Philippines</p>
                     </div>
                     
                     <div class="contact-info col-md-4 col-12 mb-30">
                         <i class="pe-7s-phone"></i>
                         <h4>Phone</h4>
-                        <p><a href="#">+012 345 678 101</a><a href="#">+012 345 678 102</a></p>
+                        <p><a href="#">+63 910 123 4561</a><a href="#">+63 905 987 6543</a></p>
                     </div>
                     
                     <div class="contact-info col-md-4 col-12 mb-30">
                         <i class="pe-7s-global"></i>
                         <h4>Website</h4>
-                        <p><a href="#">info@example.com</a><a href="#">www.example.com</a></p>
+                        <p><a href="#">bxupropertyfinder.com</a></p>
                     </div>
                     
                 </div>
@@ -61,7 +61,7 @@
         <!--Section Title start-->
         <div class="row">
             <div class="col-md-12 mb-60 mb-xs-30">
-                <div class="section-title center">
+                <div class="text-center">
                     <h1>Leave a Message</h1>
                 </div>
             </div>

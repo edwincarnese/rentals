@@ -7,7 +7,8 @@
                 <!--Logo start-->
                 <div class="col mt-10 mb-10">
                     <div class="logo">
-                        <a href="/"><img src="assets/images/logo.png" alt=""></a>
+                        <h5 class="font-weight-bold">BXU Property Finder</h5>
+                        {{-- <a href="/"><img src="assets/images/logo.png" alt=""></a> --}}
                     </div>
                 </div>
                 <!--Logo end-->
@@ -19,9 +20,9 @@
                             <li>
                                 <a href="{{ route('pages.home') }}">Home</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('pages.about') }}">About</a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a href="{{ route('pages.contact') }}">Contact</a>
                             </li>

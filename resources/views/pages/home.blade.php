@@ -11,12 +11,12 @@
     {{-- <div class="map-property-controls"></div> --}}
     
 </div>
-<div class="property-section section pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
+<div class="property-section section pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50 mt-4">
     <div class="container">        
         <!--Section Title start-->
         <div class="row">
             <div class="col-md-12 mb-60 mb-xs-30">
-                <div class="section-title center">
+                <div class="text-center">
                     <h1>Featured For Rent Property</h1>
                 </div>
             </div>
@@ -58,7 +58,7 @@
         <br><br>
         <div class="row">
             <div class="col-md-12 mb-60 mb-xs-30">
-                <div class="section-title center">
+                <div class="text-center">
                     <h1>Featured For Sale Property</h1>
                 </div>
             </div>
@@ -102,6 +102,10 @@
 
 @section('js')
 <script>
+let LocsA = [];
+let USER_LATITUDE = null;
+let USER_LONGITUDE = null;
+
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(showPosition);
   } else { 
@@ -111,6 +115,9 @@ if (navigator.geolocation) {
 function showPosition(position) {
     console.log(position.coords.latitude);
     console.log(position.coords.longitude);
+
+    USER_LATITUDE = position.coords.latitude;
+    USER_LONGITUDE = position.coords.longitude;
 }
 </script>
 
@@ -120,12 +127,25 @@ if($('#hero-map').length) {
 
         const locationData = {!! $properties !!};
 
-        let LocsA = [];
+        //         SJIT
+        // 8.951097684123816
+        // 125.54126008205894
+
+        LocsA.push(
+        {
+            lat: 8.954303347528557,
+            lon: 125.53336350757372,
+            html: '<h3>I am here</h3>',
+            icon: 'assets/images/icons/user.png',
+            animation: google.maps.Animation.BOUNCE,
+            type: 'circle',
+            circle_options: {
+                radius: 1000,
+                fillColor: "#FFFFCC"
+            },
+        });
 
         for(let i = 0; i < locationData.length; i++) {
-            console.log(locationData[i]['title']);
-            console.log(locationData[i]['address']);
-            
             const propertyStatus = locationData[i]['status'] == 1 ? 'For Rent' : 'For Sale';
             const propertyTitle = locationData[i]['title'];
             const propertyAddress = locationData[i]['address'];
@@ -161,6 +181,13 @@ if($('#hero-map').length) {
                 scrollwheel: false,
                 stopover: true
             },
+            start: 1,
+            shared: {
+                zoom: 16,
+                html: '%index'
+            },
+            circleRadiusChanged: function(index, point, marker) {
+            }
         }).Load();
 
         mapPlace.AddLocations(LocsA);
