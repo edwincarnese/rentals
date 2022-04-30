@@ -49,7 +49,14 @@
                 <div class="col mr-sm-50 mr-xs-50">
                     <div class="header-user">
                         @guest()
-                            <a href="{{ route('login') }}" class="user-toggle"><i class="pe-7s-user"></i><span>Login or Register</span></a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="{{ route('login') }}" class="user-toggle"><i class=""></i><span>Login</span></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('login') }}" class="user-toggle"><i class=""></i><span>Submit Property</span></a>
+                                </div>
+                            </div>
                         @endguest
                         @auth()
                             @if(Auth::user()->role == 1)

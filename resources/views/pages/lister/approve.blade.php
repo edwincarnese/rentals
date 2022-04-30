@@ -27,20 +27,19 @@
                     <div class="tab-content">
                         <div id="profile-tab" class="tab-pane show active">
                             @auth()
-                            {{-- @foreach ($bookings as $booking)  --}}
                             <form action="{{route('booking.lister.destroy',$bookings->id)}}" method="POST">
                             @csrf   
                             @method('DELETE') 
                                 <div class="row">
                                     <div class="col-12 mb-25"><h3 class="mb-0">Booking Confirmation</h3></div>
                                     {{-- <div class="col-md-6 col-12 mb-30"><label for="f_name">{{$booking->id}}</label></div><br> --}}
-                                    <div class="col-8 mb-25"><label>Title:</label><input type="text" name="title" value="{{$bookings->property->title}}" readonly></div>
+                                    <div class="col-12 mb-25"><label>Title:</label><input type="text" name="title" value="{{$bookings->property->title}}" readonly></div>
                                    
-                                    <div class="col-8 mb-25"><label>Type:</label><input type="text" name="type" value="{{$bookings->property->type}}" readonly ></div>
-                                    <div class="col-8 mb-25"><label>price:</label><input type="text" name="price" value="{{$bookings->property->price}}" readonly></div>
-                                    <div class="col-8 mb-25"><label>Period:</label><input type="text" name="owner" value="{{$bookings->property->period}}" readonly></div>
+                                    <div class="col-12 mb-25"><label>Type:</label><input type="text" name="type" value="{{$bookings->property->type}}" readonly ></div>
+                                    <div class="col-12 mb-25"><label>price:</label><input type="text" name="price" value="{{$bookings->property->price}}" readonly></div>
+                                    <div class="col-12 mb-25"><label>Period:</label><input type="text" name="owner" value="{{$bookings->property->period}}" readonly></div>
                                     <input type = "hidden" name = "property_id"  value="{{$bookings->property->id }}"   >                                
-                                    <input type = "hidden" name = "owner_id"  value="{{$bookings->cient->id }}"   > 
+                                    <input type = "hidden" name = "client_id"  value="{{$bookings->cient->id }}"   > 
                                     <div class="col-12 mb-30">
                                         <ul class="other-features">
                                             <li>
@@ -53,13 +52,9 @@
                                     <div class="col-12 mb-30"><button class="btn">Save</button></div>
                                 </div>
                             </form>
-                            {{-- @endforeach --}}
                             @endauth
                         </div>                        
-               
-                        
                     </div>
-                    
                 </div>
         </div>
     </div>

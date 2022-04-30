@@ -41,35 +41,31 @@
                                     @foreach ($bookings as $booking) 
                                     <td class="text-center">
                                         {{-- <a href="{{ route('pages.properties.show', $booking->property_id) }}" target="_blank" class="link">{{$booking->property->title}}</a> --}}
-                                        <a href="{{ route('pages.properties.index', $booking->property_id) }}" target="_blank" class="link">{{$booking->property->title}}</a>
-                                     
-                                    
+                                        <a href="{{ route('pages.properties.show', $booking->property_id) }}" target="_blank" class="link">{{$booking->property->title}}</a>
                                     </td>
                                     <td class="text-center">  {{ $booking->property->type }}</td>
                                     <td class="text-center">{{$booking->property->price}}</td>
                                   
                                     <td class="text-center">
                                         @if($booking->cient)
-                                            {{ $booking->cient->firstname }} {{ $booking->cient->lastname }}
+                                            {{ $booking->owner->firstname ?? '' }} {{ $booking->owner->lastname ?? '' }}
                                         @endif
                                     </td> 
                                     </td>
                                     <td class="text-center">
-                                        {{$userphone}}
+                                        {{ $booking->owner->phone ?? '' }}
                                     </td>     
                                     <td class="text-center">
-                                        {{$booking->reserved_at}}
+                                        {{ $booking->reserved_at }}
                                     </td> 
                                     <form action="bookings/{{$booking->id}}" method="POST">                                       
                                         @method('DELETE')
-                                                                          
-                                       
-                                    <td class="text-center">
-                                        <button class="btn-danger" onclick="return confirm('Are you sure you want to Delete {{$booking->property->title}}')">  DELETE</button>                  
-                                        @csrf                                        
-                                    </td>
+                                        <td class="text-center">
+                                            <button class="btn-danger btn-block" onclick="return confirm('Are you sure you want to Cancel {{$booking->property->title}}?')">  Cancel</button>                  
+                                            @csrf                                        
+                                        </td>
+                                    </form>
                                 </tr>
-                             </form>
                                 @endforeach
                             </table>
                             <div class="row mt-20">

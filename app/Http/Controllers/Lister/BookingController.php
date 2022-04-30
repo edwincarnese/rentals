@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lister;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking; 
+use App\Models\User;
 use Auth;
 use Carbon\Carbon;
 
@@ -29,5 +30,12 @@ class BookingController extends Controller
         
         $property = Booking::where('id', $id)->where('owner_id', $user->id)->orwhere('client_id', $user->id)->firstOrFail()->delete();              
         return redirect()->back()->with('success', 'Your property has been successfully deleted.');
+    }
+
+    public function showClient($id)
+    {
+        $user = User::find($id);
+
+        return view('pages.lister.bookings-client', compact('user'));
     }
 }

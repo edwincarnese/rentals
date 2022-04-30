@@ -43,11 +43,13 @@
                             
                             <div class="image mb-30">
                                 <div class="single-property-gallery">
-                                    @foreach(json_decode($property->images) as $image)
-                                        <div class="item">
-                                            <img src="{{ asset('storage/'.$image) }}">
-                                        </div>
-                                    @endforeach
+                                    @if($property->images)
+                                        @foreach(json_decode($property->images) as $image)
+                                            <div class="item">
+                                                <img src="{{ asset('storage/'.$image) }}">
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <div class="single-property-thumb">
                                     @if($property->images)

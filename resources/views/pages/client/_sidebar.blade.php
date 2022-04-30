@@ -1,10 +1,10 @@
 <div class="col-lg-4 col-12 mb-sm-50 mb-xs-50">
     <ul class="myaccount-tab-list nav">
-        {{-- <li>
-            <a @if(url()->current() == route('lister.profile')) class="active" @endif href="{{ route('lister.profile') }}">
+        <li>
+            <a @if(url()->current() == route('client.profile')) class="active" @endif href="{{ route('client.profile') }}">
                 <i class="pe-7s-user"></i>Profile
             </a>
-        </li> --}}
+        </li>
         <li>
             <a @if(url()->current() == route('client.bookings')) class="active" @endif href="{{ route('client.bookings') }}">
                 <i class="pe-7s-note2"></i>Bookings

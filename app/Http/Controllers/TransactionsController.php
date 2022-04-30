@@ -23,7 +23,6 @@ class TransactionsController extends Controller
             ->with('property')
             ->orwhere('owner_id', $user->id)
             ->orwhere('client_id', $user->id)->firstOrFail();  
-        //  dd($id);
         return view('pages.lister.approve', compact('bookings','user'));    
            
     }  
@@ -35,29 +34,24 @@ class TransactionsController extends Controller
         // $date = Carbon::now()->subDays(30);         
         // transaction::where('created_at', '<=', $date)->delete();         
         $transactions = transaction::with('user')->with('property')->where('owner_id', $user->id)->orwhere('client_id', $user->id)->paginate(5);  
-        // dd($transactions);
         return view('pages.lister.transaction', compact('transactions','userphone','user'));
     }  
 
-    public function destroy(Request $request,$id)    
+    public function destroy(Request $request, $id)    
     {   
-        //delete booking table
         $user = Auth::user(); 
-        $booking = Booking::where('id', $id)->where('client_id', $user->id)->firstOrFail()->delete();  
+        $booking = Booking::where('id', $id)->firstOrFail()->delete();  
        
-         //add transaction table
         $transactions = new transaction(); 
-        $transactions->book_id = $id;
-        $transactions->owner_id = $request->input('owner_id'); 
-        $transactions->client_id = $user->id;
-        $transactions->property_id = $request->input('property_id');  
+        $transactions->owner_id = $user->id; 
+        $transactions->client_id = $request->client_id;
+        $transactions->property_id = $request->property_id;  
         $transactions->save(); 
         $getPropertyId = $transactions->property_id;
 
         //update properties availability_at column        
         $Property = property::find($getPropertyId);
-        $Property->availability_at = $request->input('availability');    
-        // $s = $Property->availability_at;     
+        $Property->availability_at = $request->availability;    
         $Property->update();
 
      

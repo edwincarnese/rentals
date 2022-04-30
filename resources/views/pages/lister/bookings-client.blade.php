@@ -29,108 +29,90 @@
                             @csrf
                             <div class="row">
                                 <div class="col-12 mb-30">
-                                    <h3 class="mb-0">Personal Profile</h3>
+                                    <h3 class="mb-0">Client Profile</h3>
                                 </div>
                                 
                                 <div class="col-md-6 col-12 mb-30">
                                     <label>First Name</label>
-                                    <input type="text" name="firstname" value="{{ Auth::user()->firstname }}">
+                                    <input type="text" name="firstname" value="{{ $user->firstname }}" disabled>
                                 </div>
 
                                 <div class="col-md-6 col-12 mb-30">
                                     <label>Last Name</label>
-                                    <input type="text" name="lastname" value="{{ Auth::user()->lastname }}">
+                                    <input type="text" name="lastname" value="{{ $user->lastname }}" disabled>
                                 </div>
 
-                                <div class="@if(Auth::user()->valid_id) col-6 @else col-12 @endif mb-30">
-                                    <label>Valid ID</label>
-                                    <input type="file" name="valid_id" accept="image/*">
-                                </div>
-
-                                @if(Auth::user()->valid_id)
-                                    <div class="col-6 mb-30 text-center">
-                                        <img src="{{ asset('storage/'.Auth::user()->valid_id) }}" height="150" class="text-center">
+                                @if($user->logo)
+                                    <div class="col-12 mb-30 text-center">
+                                        <img src="{{ asset('storage/'.$user->logo) }}" height="150" class="text-center">
                                     </div>
                                 @endif
 
                                 <div class="col-12 mb-30">
                                     <label>Company</label>
-                                    <input type="text" name="company" value="{{ Auth::user()->company }}">
+                                    <input type="text" name="company" value="{{ $user->company }}" disabled>
                                 </div>
 
                                 <div class="col-12 mb-30">
                                     <label>About</label>
-                                    <textarea name="about">{{ Auth::user()->about }}</textarea>
+                                    <textarea name="about" disabled>{{ $user->about }}</textarea>
                                 </div>
-
-                                <div class="@if(Auth::user()->logo) col-6 @else col-12 @endif mb-30">
-                                    <label>Logo</label>
-                                    <input type="file" name="logo" accept="image/*">
-                                </div>
-
-                                @if(Auth::user()->logo)
-                                    <div class="col-6 mb-30 text-center">
-                                        <img src="{{ asset('storage/'.Auth::user()->logo) }}" height="150" class="text-center">
-                                    </div>
-                                @endif
 
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-md-6 col-12 mb-30">
                                             <label>Address</label>
-                                            <input type="text" name="address" value="{{ Auth::user()->address }}">
+                                            <input type="text" name="address" value="{{ $user->address }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label>Phone Number</label>
-                                            <input type="text" name="phone" value="{{ Auth::user()->phone }}">
+                                            <input type="text" name="phone" value="{{ $user->phone }}" disabled>
                                         </div>
                                         {{-- <div class="col-md-6 col-12 mb-30">
                                             <label>Email</label>
-                                            <input type="text" name="email" value="{{ Auth::user()->email }}">
+                                            <input type="text" name="email" value="{{ $user->email }}">
                                         </div> --}}
                                         <div class="col-md-12 col-12 mb-30">
                                             <label>Website</label>
-                                            <input type="text" name="website" value="{{ Auth::user()->website }}">
+                                            <input type="text" name="website" value="{{ $user->website }}" disabled>
                                         </div>
                                     </div>
                                     <h4>Social</h4>
                                     <div class="row">
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_facebook"><i class="fa fa-facebook-official"></i>Facebook</label>
-                                            <input type="text" name="facebook" value="{{ Auth::user()->facebook }}">
+                                            <input type="text" name="facebook" value="{{ $user->facebook }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_twitter"><i class="fa fa-twitter"></i>Twitter</label>
-                                            <input type="text" name="twitter" value="{{ Auth::user()->twitter }}">
+                                            <input type="text" name="twitter" value="{{ $user->twitter }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_linkedin"><i class="fa fa-linkedin"></i>Linkedin</label>
-                                            <input type="text" name="linkedin" value="{{ Auth::user()->linkedin }}">
+                                            <input type="text" name="linkedin" value="{{ $user->linkedin }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_google"><i class="fa fa-google"></i>Google Plus</label>
-                                            <input type="text" name="google" value="{{ Auth::user()->google }}">
+                                            <input type="text" name="google" value="{{ $user->google }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_instagram"><i class="fa fa-instagram"></i>Instagram</label>
-                                            <input type="text" name="instagram" value="{{ Auth::user()->instagram }}">
+                                            <input type="text" name="instagram" value="{{ $user->instagram }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_pinterest"><i class="fa fa-pinterest"></i>Pinterest</label>
-                                            <input type="text" name="pinterest" value="{{ Auth::user()->pinterest }}">
+                                            <input type="text" name="pinterest" value="{{ $user->pinterest }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_skype"><i class="fa fa-skype"></i>Skype</label>
-                                            <input type="text" name="skype" value="{{ Auth::user()->skype }}">
+                                            <input type="text" name="skype" value="{{ $user->skype }}" disabled>
                                         </div>
                                         <div class="col-md-6 col-12 mb-30">
                                             <label for="personal_social_tumblr"><i class="fa fa-tumblr"></i>Tumblr</label>
-                                            <input type="text" name="tumblr" value="{{ Auth::user()->tumblr }}">
+                                            <input type="text" name="tumblr" value="{{ $user->tumblr }}" disabled>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12 mb-30"><button class="btn btn-block">Update Profile</button></div>
                             </div>
                         </form>
                     </div>

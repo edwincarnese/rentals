@@ -40,34 +40,19 @@
                                 <tr>
                                     @foreach ($transactions as $transaction) 
                                         <td class="text-center">
-                                            <a href="" class="link">{{$transaction->property->title ?? ''}}</a>
-                                             
-                                            {{-- <a href="{{ route('pages.properties.show', $transactions->property->property_id) }}" target="_blank" class="link">{{$transactions->property->title}}</a> --}}
-                                      
-                                            {{-- <a href="{{ route('lister.properties.index', $booking->property_id) }}" >{{$booking->property->title}}</a> --}}
-                                           
-                                        
+                                            <a href="{{ route('pages.properties.show', $transaction->property_id) }}" target="_blank" class="link">{{$transaction->property->title ?? ''}}</a>
                                         </td>
                                         <td class="text-center">{{ $transaction->property->type ?? '' }}</td>
-                                        <td class="text-center">{{ $transaction->property->price }}</td>
+                                        <td class="text-center">{{ $transaction->property->price ?? '' }}</td>
                                         <td class="text-center">
-                                             {{$user->firstname}} &nbsp; {{$user->lastname}}
+                                             {{$transaction->user->firstname ?? ''}} &nbsp; {{$transaction->user->lastname ?? ''}}
                                         </td>  
                                         <td class="text-center">
-                                            {{$userphone}}
+                                            {{$transaction->user->phone ?? ''}}
                                         </td>  
                                         <td class="text-center">
-
                                             {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->format('M. d, Y - h:i:s a') }} 
-
                                         </td> 
-                                        {{-- <td class="text-center">
-                                            <form action="booking/{{$transaction->id}}" method="POST">                                       
-                                                @method('DELETE')
-                                                <button class="btn-danger" onclick="return confirm('Are you sure you want to Delete {{$transaction->owner_id}}')">  Delete</button>                  
-                                                @csrf    
-                                            </form>                                            
-                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </table>

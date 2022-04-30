@@ -51,11 +51,11 @@
                                         <td class="text-center">{{ $booking->property->price }}</td>
                                         <td class="text-center">
                                             @if($booking->cient)
-                                                {{ $booking->cient->firstname }} {{ $booking->cient->lastname }}
+                                                {{ $booking->cient->firstname ?? '' }} {{ $booking->cient->lastname ?? '' }}
                                             @endif
                                         </td>  
                                         <td class="text-center">
-                                            {{$userphone}}
+                                            {{ $booking->cient->phone ?? '' }}
                                         </td>  
                                         <td class="text-center">
 
@@ -67,16 +67,17 @@
                                             <form action="approve/{{$booking->id }}" method="get">                                       
                                                 {{-- @csrf   
                                                 @method('delete')  --}}
-                                                <button class="btn-success" onclick="return confirm('Are you sure you want to Approve {{$booking->property->title }}')">  Approve</button>                  
+                                                <button class="btn-success btn-block mb-2" onclick="return confirm('Are you sure you want to Approve {{$booking->property->title }}')">  Approve</button>                  
                                                {{-- <button class="btn-success mr-2">Book</button> --}}
                                                 
                                             </form> 
                                              <form action="booking/{{$booking->id}}" method="POST">
                                                 @method('DELETE')                                               
-                                                <button class="btn-danger" onclick="return confirm('Are you sure you want to Delete {{$booking->property->title}}')">  Decline</button> 
+                                                <button class="btn-danger btn-block mb-2" onclick="return confirm('Are you sure you want to Delete {{$booking->property->title}}')">  Decline</button> 
                                                 {{-- <button class="btn-success mr-2">Book</button> --}}
                                                  @csrf    
-                                            </form>    
+                                            </form>
+                                            <a class="btn-primary btn-block" href="{{ route('pages.lister.booking.client', $booking->cient->id ?? '') }}" target="_blank">View</a>    
                                         </td>
                                     </tr>
 

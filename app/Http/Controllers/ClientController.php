@@ -102,4 +102,35 @@ class ClientController extends Controller
      
         return redirect()->back()->with('success', 'Your property has been successfully deleted.');
     }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->all();
+
+        if($request->logo) {
+            $logoName = time().'.'.$request->logo->getClientOriginalExtension();  
+            $request->logo->storeAs('logos', $logoName, 'public');
+
+            $logoPath = 'logos/'.$logoName;
+            $data['logo'] = $logoPath;
+        }
+
+        if($request->valid_id) {
+            $validId = time().'.'.$request->valid_id->getClientOriginalExtension();  
+            $request->valid_id->storeAs('attachment', $validId, 'public');
+
+            $validIdPath = 'attachment/'.$validId;
+            $data['valid_id'] = $validIdPath;
+        }
+
+        $user->update($data);
+
+        return redirect()->back()->with('success', 'Your profile has been successfully updated');
+    }
+
+    public function profile()
+    {
+        return view('pages.client.profile');
+    }
 }

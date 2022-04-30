@@ -14,11 +14,9 @@ class MessageController extends Controller
   
     public function stored (Request $request,$id)
     {                
-
         $user = Auth::user();
 
-        $property = Property::where('id', $id)->firstOrFail();            
-        $u = User::where('id',$property->user_id)->firstOrFail();       
+        $property = Property::where('id', $id)->firstOrFail();         
         $message = new Message();
 
         $message->owner_id = $property->user_id;;
@@ -27,9 +25,14 @@ class MessageController extends Controller
         $message->name = $request->input('name');  
         $message->email = $request->input('email');  
         $message->message = $request->input('message');  
+        $message->ratings = $request->input('ratings');  
         $message->save();  
 
-        return redirect()->back()->with('success', 'Your Comment has been send.');   
+        $property->ratings = $property->ratings + $request->input('ratings');  
+        $property->ratings_count = 1 + $property->ratings_count;
+        $property->save();
+
+        return redirect()->back()->with('success', 'Your feedback has been added.');   
     } 
     
 }

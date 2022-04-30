@@ -20,12 +20,12 @@
     <div class="container">
         <div class="row row-25">
 
-            @include('pages.lister._sidebar')
+            @include('pages.client._sidebar')
 
             <div class="col-lg-8 col-12">
                 <div class="tab-content">
                     <div id="profile-tab" class="tab-pane show active">
-                        <form action="{{ route('lister.profile.update') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('client.profile.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12 mb-30">

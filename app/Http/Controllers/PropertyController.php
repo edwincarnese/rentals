@@ -72,7 +72,7 @@ class PropertyController extends Controller
         $user = Auth::user(); 
 
         $property = Property::where('id', $id)->where('is_approved', 1)->firstOrFail(); 
-        // $property->
+        $properties = Property::where('id', $id)->where('is_approved', 1)->get(); 
         $is_booked = false;
         
         if($user) {
@@ -93,8 +93,8 @@ class PropertyController extends Controller
             ->get();
 
         $current_date = Carbon::now();
-         $get_message = Message::with('user')->with('property')->where('property_id', $id)->limit(10)->get();  
-         $count_feedback= (count($get_message));
+        $get_message = Message::with('user')->with('property')->where('property_id', $id)->limit(10)->get();  
+        $count_feedback= (count($get_message));
         
         return view('pages.properties.show', compact(
             'property',
@@ -105,6 +105,7 @@ class PropertyController extends Controller
             'count_feedback',
             'current_date',
             'user',
+            'properties',
         ));
     }   
 
@@ -117,7 +118,7 @@ class PropertyController extends Controller
         $booking->owner_id =$request->input('owners_id');  
         $booking->client_id = $user->id;
         $booking->property_id = $request->input('property_id');  
-        $booking->reserved_at = $request->input('reserve_date');  
+        $booking->reserved_at = date("Y-m-d h:i:s", strtotime($request->input('reserve_date')));
         $booking->save();  
 
         if ($user_role ==3)

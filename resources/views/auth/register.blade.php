@@ -69,16 +69,16 @@
                                 <div class="col-6 mb-30">
                                     <input name="password_confirmation" type="password" placeholder="Confirm Password" required>
                                 </div>
-                                <div class="col-12 mb-30">
+                                <div class="col-12 mb-30" style=>
                                     <ul>
                                         <li>
                                             <input type="radio" name="role" id="client" value="3" checked>
                                             <label for="client">Client</label>
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <input type="radio" name="role" id="lister" value="2">
                                             <label for="lister">Lister</label>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                                 <div class="col-12">

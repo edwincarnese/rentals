@@ -40,9 +40,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('lister/profile', [ListerProfileController::class, 'index'])->name('lister.profile');
     Route::post('lister/change-password', [ListerProfileController::class, 'updatePassword'])->name('lister.update.password');
     Route::get('lister/change-password', [ListerProfileController::class, 'changePassword'])->name('lister.change.password');
-        
+    
     Route::get('lister/bookings', [ListerBookingController::class, 'index'])->name('lister.bookings');
-
+    
     Route::post('lister/properties', [ListerPropertyController::class, 'store'])->name('lister.properties.store');
     Route::get('lister/properties', [ListerPropertyController::class, 'index'])->name('lister.properties.index');
     Route::get('lister/properties/create', [ListerPropertyController::class, 'create'])->name('lister.properties.create');
@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('booking/{id}', [PropertyController::class, 'stored'])->name('pages.lister.show');
     // Route::GET('booking/{id}', [PropertyController::class, 'stored'])->name('pages.lister.show');
     Route::delete('lister/booking/{id}', [ListerBookingController::class, 'destroy']);
+    Route::get('lister/booking/client/{id}', [ListerBookingController::class, 'showClient'])->name('pages.lister.booking.client');
 
     Route::get('admin', [AdminController::class, 'index'])->name('pages.admin.index');
     Route::get('admin/approval/profile/{id}', [AdminController::class, 'show'])->name('admin.lister.approval');
@@ -61,6 +62,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('admin/approval/{id}', [AdminController::class, 'update'])->name('admin.approve');
     // Route::get('admin/message/', [AdminController::class, 'display'])->name('admin.message.list');
    
+    Route::post('client/profile', [ClientController::class, 'updateProfile'])->name('client.profile.update');
+    Route::get('client/profile', [ClientController::class, 'profile'])->name('client.profile');
     Route::get('client/bookings', [ClientController::class, 'index'])->name('client.bookings');
     Route::get('client/properties', [ClientController::class, 'show'])->name('client.show');
     Route::get('client/properties/{id}', [ClientController::class, 'display'])->name('client.display');
@@ -76,4 +79,3 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Auth::routes();
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
