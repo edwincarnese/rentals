@@ -131,37 +131,37 @@
                                     <div class="row">
                                         <div class="col-12 mb-30">
                                             <label>Description</label>
-                                            <textarea name="description">  {{$property->description}}</textarea>
+                                            <textarea name="description">{{$property->description}}</textarea>
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Bedrooms</label>
-                                            <select class="nice-select" name="bedroom" value="{{$property->bedroom}}">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
+                                            <select class="nice-select" name="bedroom">
+                                                <option value="1" @if($property->bedroom == 1) selected @endif>1</option>
+                                                <option value="2" @if($property->bedroom == 2) selected @endif>2</option>
+                                                <option value="3" @if($property->bedroom == 3) selected @endif>3</option>
+                                                <option value="4" @if($property->bedroom == 4) selected @endif>4</option>
+                                                <option value="5" @if($property->bedroom == 5) selected @endif>5</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Bathrooms</label>
                                             <select class="nice-select" name="bathroom">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
+                                                <option value="1" @if($property->bathroom == 1) selected @endif>1</option>
+                                                <option value="2" @if($property->bathroom == 2) selected @endif>2</option>
+                                                <option value="3" @if($property->bathroom == 3) selected @endif>3</option>
+                                                <option value="4" @if($property->bathroom == 4) selected @endif>4</option>
+                                                <option value="5" @if($property->bathroom == 5) selected @endif>5</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Kitchen</label>
                                             <select class="nice-select" name="kitchen">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
+                                                <option value="1" @if($property->kitchen == 1) selected @endif>1</option>
+                                                <option value="2" @if($property->kitchen == 2) selected @endif>2</option>
+                                                <option value="3" @if($property->kitchen == 3) selected @endif>3</option>
                                             </select>
                                         </div>
 

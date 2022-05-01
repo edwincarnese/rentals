@@ -24,7 +24,7 @@ function showPosition(position) {
     document.cookie = "USER_LATITUDE="+USER_LATITUDE+"; max-age=864000;";
     document.cookie = "USER_LONGITUDE="+USER_LONGITUDE+"; max-age=864000;";
 
-    window.location.href = $('#pages-home').val(); //one level up
+    window.location.href = $('#pages-home').val();
 }
 
 if(getCookie("USER_LATITUDE") || getCookie("USER_LATITUDE")) {
@@ -48,8 +48,6 @@ if(USER_LATITUDE || USER_LONGITUDE) {
         },
     );
 }
-
-
 
 for(let i = 0; i < locationData.length; i++) {
     LocsA.push(

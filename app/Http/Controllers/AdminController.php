@@ -59,4 +59,18 @@ class AdminController extends Controller
 
         return view('pages.admin.approval',compact('users'));
     }
+
+    public function clients()
+    {
+        $users = User::where('role', 3)->latest()->get();
+
+        return view('pages.admin.clients',compact('users'));
+    }
+
+    public function listers()
+    {
+        $users = User::where('role', 2)->latest()->get();
+
+        return view('pages.admin.listers',compact('users'));
+    }
 }

@@ -10,6 +10,16 @@
                 <i class="pe-7s-photo"></i>Users For Approval
             </a>
         </li>
+        <li>
+            <a @if(url()->current() == route('pages.admin.listers')) class="active" @endif href="{{ route('pages.admin.listers') }}">
+                <i class="pe-7s-user"></i>All Listers
+            </a>
+        </li>
+        <li>
+            <a @if(url()->current() == route('pages.admin.clients')) class="active" @endif href="{{ route('pages.admin.clients') }}">
+                <i class="pe-7s-user"></i>All Clients
+            </a>
+        </li>
         {{-- <li>
             <a @if(url()->current() == route('admin.message.list')) class="active" @endif href="{{ route('admin.message.list') }}">
                 <i class="pe-7s-photo"></i>Messages

@@ -71,14 +71,17 @@
                                 </div>
                                 <div class="col-12 mb-30" style=>
                                     <ul>
-                                        <li>
-                                            <input type="radio" name="role" id="client" value="3" checked>
-                                            <label for="client">Client</label>
-                                        </li>
-                                        {{-- <li>
-                                            <input type="radio" name="role" id="lister" value="2">
-                                            <label for="lister">Lister</label>
-                                        </li> --}}
+                                        @if(Request::get('lister'))
+                                            <li>
+                                                <input type="radio" name="role" id="lister" value="2" checked>
+                                                <label for="lister">Lister</label>
+                                            </li>
+                                        @else
+                                            <li>
+                                                <input type="radio" name="role" id="client" value="3" checked>
+                                                <label for="client">Client</label>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                                 <div class="col-12">

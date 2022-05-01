@@ -54,7 +54,7 @@
                                     <a href="{{ route('login') }}" class="user-toggle"><i class=""></i><span>Login</span></a>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('login') }}" class="user-toggle"><i class=""></i><span>Submit Property</span></a>
+                                    <a href="{{ route('register', ['lister' => true]) }}" class="user-toggle"><i class=""></i><span>Submit Property</span></a>
                                 </div>
                             </div>
                         @endguest

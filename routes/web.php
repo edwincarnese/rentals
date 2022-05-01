@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('admin/approval', [AdminController::class, 'list'])->name('admin.approval.list');
     Route::put('admin/approval/{id}', [AdminController::class, 'update'])->name('admin.approve');
     // Route::get('admin/message/', [AdminController::class, 'display'])->name('admin.message.list');
+    Route::get('admin/clients/list', [AdminController::class, 'clients'])->name('pages.admin.clients');
+    Route::get('admin/lister/list', [AdminController::class, 'listers'])->name('pages.admin.listers');
    
     Route::post('client/profile', [ClientController::class, 'updateProfile'])->name('client.profile.update');
     Route::get('client/profile', [ClientController::class, 'profile'])->name('client.profile');
