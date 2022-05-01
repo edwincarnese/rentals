@@ -35,6 +35,9 @@ Route::get('properties/{id}', [PropertyController::class, 'show'])->name('pages.
 Route::get('owners', [OwnerController::class, 'index'])->name('pages.owners.index');
 Route::get('owners/{id}', [OwnerController::class, 'show'])->name('pages.owners.show');
 
+Route::post('property-login', [PropertyController::class, 'login']);
+Route::post('property-register', [PropertyController::class, 'register']);
+
 Route::group(['middleware' => ['auth']], function() {
     Route::post('lister/profile', [ListerProfileController::class, 'updateProfile'])->name('lister.profile.update');
     Route::get('lister/profile', [ListerProfileController::class, 'index'])->name('lister.profile');

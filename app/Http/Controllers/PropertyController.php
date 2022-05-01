@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Models\Message;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class PropertyController extends Controller
 {
@@ -144,5 +145,42 @@ class PropertyController extends Controller
         return view('owners', 
             compact('bookings'));
     }
-       
+ 
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+   
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            return 'Success';
+        }
+
+        return 'Failed';
+    }
+
+    public function register(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if($user) {
+            return 'Email';
+        }
+
+        $user = User::create([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 3,
+            'phone' => $request->phone,
+        ]);
+
+        Auth::loginUsingId($user->id);
+
+        return 'Success';
+    }
 }

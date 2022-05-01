@@ -189,14 +189,6 @@
                         @endauth
                     
                     </div>
-                    
-                   
-
-                            
-
-
-                   
-
                 </div>
             </div>
             
@@ -204,7 +196,26 @@
                 
                 <div class="sidebar">
                     @guest()
-                        <a class="btn" href="{{ route('register') }}">Register To Book This Property</a>
+                        <form style="display: none;" id="formRegister">
+                            <input class="mb-2" type="text" id="firstname" placeholder="First Name" required>
+                            <input class="mb-2" type="text" id="lastname" placeholder="Last Name" required>
+                            <input class="mb-2" type="text" id="phone" placeholder="Phone Number" required>
+                            <input class="mb-2" type="text" id="email" placeholder="Email" required>
+                            <input class="mb-2" type="password" id="password" placeholder="Password" required>
+                            <button type="button" onclick="submitRegister()" class="btn btn-block btn-secondary">Register</button>
+                        </form>
+
+                        <div class="btn btn-block" onclick="formRegister()" id="btnRegister">Register To Book This Property</div>
+                        
+                        <h4 class="text-center m-2">OR</h4>
+
+                        <form style="display: none;" id="formLogin">
+                            <input class="mb-2" type="text" id="email" placeholder="Email" required>
+                            <input class="mb-2" type="password" id="password" placeholder="Password" required>
+                            <button type="button" onclick="submitLogin()" class="btn btn-block btn-secondary">Login</button>
+                        </form>
+
+                        <div class="btn btn-block" onclick="formLogin()" id="btnLogin">Login To Book This Property</div>
                     @endguest                    
                     @auth()
                         <div class="property-search sidebar-property-search">   
@@ -323,6 +334,86 @@
 <script>
     const urlEndpoint = '/properties/';
     const locationData = {!! $properties !!};
+
+    function formLogin()
+    {
+        $('#formLogin').show();
+        $('#btnLogin').hide();
+    }
+
+    function submitLogin()
+    {
+        const email = $('#email').val();
+        const password = $('#password').val();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: '/property-login',
+            data: {
+                'email': email,
+                'password': password,
+            },
+            success: function (data) {
+                if(data == 'Success') {
+                    location.reload();
+                } 
+                else {
+                    alert('Incorrect Email or Password');
+                }
+            },
+            error: function (data) {
+                alert('Wrong password');
+            }
+        });
+    }
+
+    function formRegister()
+    {
+        $('#formRegister').show();
+        $('#btnRegister').hide();
+    }
+
+    function submitRegister()
+    {
+        const email = $('#email').val();
+        const firstname = $('#firstname').val();
+        const lastname = $('#lastname').val();
+        const phone = $('#phone').val();
+        const password = $('#password').val();
+
+        if(!email || !firstname || !lastname || !phone || !password) {
+            alert('Please fill up the emtpy fields.');
+        } else {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: '/property-register',
+                data: {
+                    'email': email,
+                    'password': password,
+                    'firstname': firstname,
+                    'lastname': lastname,
+                    'phone': phone,
+                },
+                success: function (data) {
+                    if(data == 'Success') {
+                        location.reload();
+                    } 
+                    else {
+                        alert('Email is already exists');
+                    }
+                },
+                error: function (data) {
+                    
+                }
+            });
+        }
+    }
 </script>
 <script type="text/javascript" src="{{ asset('assets/js/infobox.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/app/location.js') }}"></script>
