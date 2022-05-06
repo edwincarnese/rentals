@@ -27,6 +27,11 @@ class Booking extends Model
         return $this->belongsTo(User::class, 'client_id', 'id');
     }
 
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id', 'id');
+    }
+
     public function booking()
     {
         return $this->belongsTo(booking::class, 'client_id', 'id');

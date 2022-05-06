@@ -17,10 +17,17 @@ class Transaction extends Model
    
        
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'client_id', 'id');
     }
+    
+    public function lister()
+    {
+        return $this->belongsTo(User::class, 'owner_id', 'id');
+    }
+
     public function property()
     {
         return $this->belongsTo(Property::class);

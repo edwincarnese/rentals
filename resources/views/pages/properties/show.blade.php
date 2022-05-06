@@ -161,31 +161,32 @@
                             </li>
                         </ul>
 
-
                         <h3>Leave a Feedback</h3>
                         @guest()
                         <a class="btn" href="{{ route('login') }}">sign in</a>
                         @endguest 
                         @auth
-                        <div class="comment-form">
-                            <form method = "GET" action="{{route('pages.feedback.store', $property->id) }}">                                       
-                                <div class="row">
-                                    <div class="col-md-6 col-12 mb-30"><input type="text" name = "name" value = "{{$user->firstname}} &nbsp;{{$user->lastname}}" readonly required></div>
-                                    <div class="col-md-6 col-12 mb-30"><input type="email" name = "email" value="{{$user->email}}" placeholder="Email" readonly required></div>
-                                    <div class="col-md-12 col-12 mb-30">
-                                        <select class="form-control" name="ratings" required>
-                                            <option value="5">5 Stars</option>
-                                            <option value="4">4 Stars</option>
-                                            <option value="3">3 Stars</option>
-                                            <option value="2">2 Stars</option>
-                                            <option value="1">1 Star</option>
-                                        </select>
+                            @if($property->user_id != Auth::user()->id)
+                            <div class="comment-form">
+                                <form method = "GET" action="{{route('pages.feedback.store', $property->id) }}">                                       
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-30"><input type="text" name = "name" value = "{{$user->firstname}} &nbsp;{{$user->lastname}}" readonly required></div>
+                                        <div class="col-md-6 col-12 mb-30"><input type="email" name = "email" value="{{$user->email}}" placeholder="Email" readonly required></div>
+                                        <div class="col-md-12 col-12 mb-30">
+                                            <select class="form-control" name="ratings" required>
+                                                <option value="5">5 Stars</option>
+                                                <option value="4">4 Stars</option>
+                                                <option value="3">3 Stars</option>
+                                                <option value="2">2 Stars</option>
+                                                <option value="1">1 Star</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mb-30"><textarea placeholder="Message" name = "message" required></textarea></div>
+                                        <div class="col-12"><button class="btn">Send Feedback Now</button></div>
                                     </div>
-                                    <div class="col-12 mb-30"><textarea placeholder="Message" name = "message" required></textarea></div>
-                                    <div class="col-12"><button class="btn">Send Feedback Now</button></div>
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div>
+                            @endif
                         @endauth
                     
                     </div>

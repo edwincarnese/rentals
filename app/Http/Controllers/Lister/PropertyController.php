@@ -13,7 +13,7 @@ class PropertyController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $properties = Property::where('user_id', $user->id)->paginate(2);
+        $properties = Property::where('user_id', $user->id)->paginate(6);
         
       
         return view('pages.lister.properties.index', compact('properties'));
@@ -135,8 +135,6 @@ class PropertyController extends Controller
         $user = Auth::user();
 
         $property = Property::where('id', $id)->where('user_id', $user->id)->firstOrFail()->delete();
-        $property1 = $user->id;
-    
         
         $booking = Booking::where('property_id', $id)->where('owner_id', $user->id)->orwhere('owner_id', $user->id)->firstOrFail()->delete();
                

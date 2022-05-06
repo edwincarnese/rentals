@@ -147,9 +147,12 @@
                                 </select>
                             </div>
 
-                            {{-- <div>
-                                <div id="search-price-range"></div>
-                            </div> --}}
+                            <div>
+                                <input type="text" value="{{ Request::get('min_price') }}" name="min_price" placeholder="₱ MIN">
+                            </div>
+                            <div>
+                                <input type="text" value="{{ Request::get('max_price') }}" name="max_price" placeholder="₱ MAX">
+                            </div>
 
                             <div>
                                 <input type="text" value="{{ Request::get('address') }}" name="address" placeholder="Location">
@@ -201,44 +204,44 @@
                     <h4 class="sidebar-title"><span class="text">Featured Owners</span><span class="shape"></span></h4>
                     
                     <div class="sidebar-agent-list">
+                        @foreach($featured_owners as $owner)
                         <div class="sidebar-agent">
-                            @foreach($featured_owners as $owner)
-                                <div class="image">
-                                    <a href="{{ route('pages.owners.index') }}">
-                                        @if($owner->logo)
-                                            <img src="{{ asset('storage/'.$owner->logo) }}">
-                                        @else
-                                            <img src="{{ asset('assets/images/agent/agent-1.jpg') }}">
-                                        @endif
-                                    </a>
+                            <div class="image">
+                                <a href="{{ route('pages.owners.index') }}">
+                                    @if($owner->logo)
+                                        <img src="{{ asset('storage/'.$owner->logo) }}">
+                                    @else
+                                        <img src="{{ asset('assets/images/agent/agent-1.jpg') }}">
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="content">
+                                <h5 class="title">
+                                    @if($owner->company)
+                                        <a href="{{ $owner->id }}">{{ $owner->company }}</a>
+                                    @else
+                                        <a href="{{ $owner->id }}">{{ $owner->firstname }} {{ $owner->lastname }}</a>
+                                    @endif
+                                </h5>
+                                <a href="#" class="phone">{{ $owner->phone }}</a>
+                                <span class="properties">{{ $owner->properties_count }} Properties</span>
+                                <div class="social">
+                                    @if($owner->facebook)
+                                        <a href="$owner->facebook" class="facebook"><i class="fa fa-facebook"></i></a>
+                                    @endif
+                                    @if($owner->twitter)
+                                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                                    @endif
+                                    @if($owner->linkedin)
+                                        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                                    @endif
+                                    @if($owner->google)
+                                        <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                                    @endif
                                 </div>
-                                <div class="content">
-                                    <h5 class="title">
-                                        @if($owner->company)
-                                            <a href="{{ $owner->id }}">{{ $owner->company }}</a>
-                                        @else
-                                            <a href="{{ $owner->id }}">{{ $owner->firstname }} {{ $owner->lastname }}</a>
-                                        @endif
-                                    </h5>
-                                    <a href="#" class="phone">{{ $owner->phone }}</a>
-                                    <span class="properties">{{ $owner->properties_count }} Properties</span>
-                                    <div class="social">
-                                        @if($owner->facebook)
-                                            <a href="$owner->facebook" class="facebook"><i class="fa fa-facebook"></i></a>
-                                        @endif
-                                        @if($owner->twitter)
-                                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                        @endif
-                                        @if($owner->linkedin)
-                                            <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                                        @endif
-                                        @if($owner->google)
-                                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
+                            </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

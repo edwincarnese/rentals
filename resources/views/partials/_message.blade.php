@@ -19,7 +19,7 @@
 
 @if(Session::has('error'))
     <div class="mb-30">
-        <h3 class="text-center text-danger font-weight-bold">{{ Session::get('success') }}</h3>
+        <h3 class="text-center text-danger font-weight-bold">{{ Session::get('error') }}</h3>
     </div>
 @elseif($errors->any())
     <div class="mb-30">

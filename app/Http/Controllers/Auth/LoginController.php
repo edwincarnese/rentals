@@ -61,4 +61,19 @@ class LoginController extends Controller
              return redirect()->route('client.bookings');
         }
     }
+
+    public function logout(Request $request)
+    {
+        \Cookie::queue(\Cookie::forget('USER_LATITUDE'));
+        \Cookie::queue(\Cookie::forget('USER_LONGITUDE'));
+        \Cookie::queue(\Cookie::forget('USER_REFRESH'));
+
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect('/');
+    }
 }

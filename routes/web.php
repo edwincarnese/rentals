@@ -6,6 +6,8 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Admin\PropertyController as AdminPropertyController;
+use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
 use App\Http\Controllers\Lister\PropertyController as ListerPropertyController;
 use App\Http\Controllers\Lister\ProfileController as ListerProfileController;
 use App\Http\Controllers\Lister\BookingController as ListerBookingController;
@@ -63,9 +65,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('admin/approval/profile/{id}', [AdminController::class, 'show'])->name('admin.lister.approval');
     Route::get('admin/approval', [AdminController::class, 'list'])->name('admin.approval.list');
     Route::put('admin/approval/{id}', [AdminController::class, 'update'])->name('admin.approve');
-    // Route::get('admin/message/', [AdminController::class, 'display'])->name('admin.message.list');
     Route::get('admin/clients/list', [AdminController::class, 'clients'])->name('pages.admin.clients');
     Route::get('admin/lister/list', [AdminController::class, 'listers'])->name('pages.admin.listers');
+    Route::post('admin/change-password', [AdminController::class, 'updatePassword'])->name('admin.update.password');
+    Route::get('admin/change-password', [AdminController::class, 'changePassword'])->name('admin.change.password');
+    Route::get('admin/transaction', [AdminTransactionController::class, 'show'])->name('admin.transaction');
+
+    Route::post('admin/properties', [AdminPropertyController::class, 'store'])->name('admin.properties.store');
+    Route::get('admin/properties', [AdminPropertyController::class, 'index'])->name('admin.properties.index');
+    Route::get('admin/properties/{id}/edit', [AdminPropertyController::class, 'edit'])->name('admin.properties.edit');
+    Route::put('admin/properties/{id}', [AdminPropertyController::class, 'update'])->name('admin.properties.update');
+    Route::delete('admin/properties/{id}', [AdminPropertyController::class, 'destroy'])->name('admin.properties.destroy');
    
     Route::post('client/profile', [ClientController::class, 'updateProfile'])->name('client.profile.update');
     Route::get('client/profile', [ClientController::class, 'profile'])->name('client.profile');
@@ -74,6 +84,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('client/properties/{id}', [ClientController::class, 'display'])->name('client.display');
     Route::post('client/properties', [ClientController::class, 'store'])->name('client.store');
     Route::delete('client/bookings/{id}', [ClientController::class, 'destroy']);
+    Route::post('client/change-password', [ClientController::class, 'updatePassword'])->name('client.update.password');
+    Route::get('client/change-password', [ClientController::class, 'changePassword'])->name('client.change.password');
+    Route::get('client/transaction', [ClientController::class, 'transactions'])->name('client.transaction');
    
     Route::get('messages/{id}', [MessageController::class, 'stored'])->name('pages.feedback.store');
 

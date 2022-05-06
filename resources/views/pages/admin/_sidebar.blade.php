@@ -20,16 +20,21 @@
                 <i class="pe-7s-user"></i>All Clients
             </a>
         </li>
-        {{-- <li>
-            <a @if(url()->current() == route('admin.message.list')) class="active" @endif href="{{ route('admin.message.list') }}">
-                <i class="pe-7s-photo"></i>Messages
+        <li>
+            <a @if(url()->current() == route('admin.properties.index')) class="active" @endif href="{{ route('admin.properties.index') }}">
+                <i class="pe-7s-photo"></i>All Properties
             </a>
-        </li> --}}
-        {{-- <li>
-            <a @if(url()->current() == route('lister.change.password')) class="active" @endif href="{{ route('lister.change.password') }}">
+        </li>
+        <li>
+            <a @if(url()->current() == route('admin.transaction')) class="active" @endif href="{{ route('admin.transaction') }}">
+                <i class="pe-7s-note2"></i>All Transactions
+            </a>
+        </li>   
+        <li>
+            <a @if(url()->current() == route('admin.change.password')) class="active" @endif href="{{ route('admin.change.password') }}">
                 <i class="pe-7s-lock"></i>Change Password
             </a>
-        </li> --}}
+        </li>
         <li>
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="pe-7s-power"></i>Log Out

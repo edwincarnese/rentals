@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Property;
-use App\Models\booking;
-use App\Models\message;
 use Auth;
-use carbon\carbon;
 
 class AdminController extends Controller
 {
@@ -72,5 +70,27 @@ class AdminController extends Controller
         $users = User::where('role', 2)->latest()->get();
 
         return view('pages.admin.listers',compact('users'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        if(!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->with('error', 'Your current password is incorrect.');
+        }
+        if($request->new_password != $request->new_confirm_password) {
+
+            return redirect()->back()->with('error', 'Your passwords do not match.');
+        }   
+
+        $user->update(['password'=> Hash::make($request->new_password)]);
+
+        return redirect()->back()->with('success', 'Your password has been successfully updated.');
+    }
+
+    public function changePassword()
+    {
+        return view('pages.admin.change-password');
     }
 }

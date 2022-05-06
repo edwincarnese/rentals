@@ -10,11 +10,16 @@
                 <i class="pe-7s-note2"></i>Bookings
             </a>
         </li>
-        {{-- <li>
-            <a @if(url()->current() == route('lister.change.password')) class="active" @endif href="{{ route('lister.change.password') }}">
+        <li>
+            <a @if(url()->current() == route('client.transaction')) class="active" @endif href="{{ route('client.transaction') }}">
+                <i class="pe-7s-note2"></i>Transactions
+            </a>
+        </li> 
+        <li>
+            <a @if(url()->current() == route('client.change.password')) class="active" @endif href="{{ route('client.change.password') }}">
                 <i class="pe-7s-lock"></i>Change Password
             </a>
-        </li> --}}
+        </li>
         <li>
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="pe-7s-power"></i>Log Out

@@ -33,7 +33,7 @@
                                 <th class="text-center">Property</th>
                                 <th class="text-center">Type</th>
                                 <th class="text-center">Price</th>
-                                <th class="text-center">Client</th>
+                                <th class="text-center">Property Owner</th>
                                 <th class="text-center">Phone Number</th>
                                 <th class="text-center">Date Time</th>
                                 <th class="text-center">Actions</th>

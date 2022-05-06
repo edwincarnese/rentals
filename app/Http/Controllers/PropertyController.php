@@ -20,6 +20,8 @@ class PropertyController extends Controller
         $bedroom = $request->bedroom;
         $type = $request->type;
         $status = $request->status;
+        $min_price = $request->min_price;
+        $max_price = $request->max_price;
 
         $properties = Property::query()
             ->when($address, function($q) use($address) {
@@ -33,6 +35,9 @@ class PropertyController extends Controller
             })
             ->when($type, function($q) use($type) {
                 $q->where('type', $type);
+            })
+            ->when($min_price && $max_price, function($q) use($min_price, $max_price) {
+                $q->whereBetween('price', [(int)$min_price, (int)$max_price]);
             })
             ->when($status, function($q) use($status) {
                 if($status == 'for-rent') {

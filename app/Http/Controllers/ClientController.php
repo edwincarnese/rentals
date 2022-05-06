@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Property;
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\Transaction;
 use Auth;
 use Carbon\Carbon;
 
@@ -19,7 +21,7 @@ class ClientController extends Controller
         $date = Carbon::now()->subDays(7);  
 
         Booking::where('reserved_at', '<=', $date)->where('client_id', $user->id)->delete();      
-        $bookings = Booking::with('cient')->with('property')->where('client_id', $user->id)->paginate(15);
+        $bookings = Booking::with('cient')->with('owner')->with('property')->where('client_id', $user->id)->paginate(15);
        
         return view('pages.client.bookings',compact('bookings','userphone'));       
     }
@@ -133,4 +135,34 @@ class ClientController extends Controller
     {
         return view('pages.client.profile');
     }
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        if(!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->with('error', 'Your current password is incorrect.');
+        }
+        if($request->new_password != $request->new_confirm_password) {
+
+            return redirect()->back()->with('error', 'Your passwords do not match.');
+        }   
+
+        $user->update(['password'=> Hash::make($request->new_password)]);
+
+        return redirect()->back()->with('success', 'Your password has been successfully updated.');
+    }
+
+    public function changePassword()
+    {
+        return view('pages.client.change-password');
+    }
+
+    public function transactions()
+    {   
+        $user = Auth::user();
+        $transactions = transaction::with('user')->with('property')->where('client_id', $user->id)->paginate(5);  
+       
+        return view('pages.client.transaction', compact('transactions'));
+    }  
 }
