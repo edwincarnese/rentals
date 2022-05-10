@@ -23,9 +23,9 @@
                             {{-- <li>
                                 <a href="{{ route('pages.about') }}">About</a>
                             </li> --}}
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('pages.contact') }}">Contact</a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a href="{{ route('pages.owners.index') }}">Property Owners</a>
                             </li>

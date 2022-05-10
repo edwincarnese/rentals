@@ -63,7 +63,7 @@
                     <div class="agency">
                         <div class="image">
                             <a class="img" href="{{ route('pages.owners.show',$owner->id) }}">
-                                <img src="{{asset('storage/'.$owner->logo)}}">
+                                <img style="max-height: 275px;" src="{{asset('storage/'.$owner->logo)}}">
                             </a>
                         </div> 
                         <div class="content">
@@ -73,24 +73,7 @@
                     </div>
                 </div>
                 @endforeach
-            
             </div>
-            {{-- {{ $Users->links() }}       --}}
-            
-            {{-- <div class="row mt-20">
-                <div class="col">
-                    <ul class="page-pagination">
-                        <li><a href="#"><i class="fa fa-angle-left"></i> Prev</a></li>
-                        <li class="active"><a href="#">01</a></li>
-                        <li><a href="#">02</a></li>
-                        <li><a href="#">03</a></li>
-                        <li><a href="#">04</a></li>
-                        <li><a href="#">05</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i> Next</a></li>
-                    </ul>
-                </div>
-            </div> --}}
-        
             </div>
         </div> 
 @endsection
