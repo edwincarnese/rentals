@@ -10,6 +10,8 @@ use App\Models\Message;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\BookingMail;
+use Illuminate\Support\Facades\Mail;
 
 class PropertyController extends Controller
 {
@@ -120,12 +122,27 @@ class PropertyController extends Controller
         $user = Auth::user();
         $user_role = $user->role;
 
+        $owner = User::find($request->input('owners_id'));
+        $property = Property::find($request->input('property_id'));
+
         $booking = new booking();
         $booking->owner_id =$request->input('owners_id');  
         $booking->client_id = $user->id;
         $booking->property_id = $request->input('property_id');  
         $booking->reserved_at = date("Y-m-d h:i:s", strtotime($request->input('reserve_date')));
         $booking->save();  
+
+        $booking_info = array(
+            'full_name' => Auth::user()->firstname . ' ' . Auth::user()->lastname,
+            'email' => Auth::user()->email,
+            'phone' => Auth::user()->phone,
+            'reserverd_at' => $booking->reserved_at,
+            'property' => $property->title,
+            'price' => $property->price,
+            'type' => $property->type,
+        );
+
+        Mail::to($owner->email)->send(new BookingMail($booking_info));
 
         if ($user_role ==3)
         {

@@ -39,17 +39,17 @@
                         <div class="property-inner">
                             <div class="image">
                                 <a href="{{ route('pages.properties.show', $property->id) }}"> <span class="location">                                    
-                                    @if($property->main_photo)
-                                    <img src="{{ asset('storage/'.$property->main_photo) }}">
+                                @if($property->main_photo)
+                                    <img style="max-height: 275px;" src="{{ asset('storage/'.$property->main_photo) }}">
                                 @else
-                                    <img src="{{ asset('assets/images/property/property-1.jpg') }}">
+                                    <img style="max-height: 275px;" src="{{ asset('assets/images/property/property-1.jpg') }}">
                                 @endif</a>
                             </div>
                             <div class="content">
                                 <div class="left">
                                     <h3 class="title"><a href="{{ route('pages.properties.show', $property->id) }}">{{$property->title}}</a></h3>
                                     <span class="location"> 
-                                        <img src="{{ asset('assets/images/icons/bed.png')}}" alt="">{{$property->address}}</span>
+                                        <img style="max-height: 275px;" src="{{ asset('assets/images/icons/bed.png')}}" alt="">{{$property->address}}</span>
                                 </div>
                                 <div class="right">
                                     <div class="type-wrap">
@@ -80,9 +80,9 @@
                                 {{-- <span class="label">Feature</span> --}}
                                 <a href="{{ route('pages.properties.show', $properties->id) }}">
                                     @if($properties->main_photo)
-                                        <img src="{{ asset('storage/'.$properties->main_photo) }}">
+                                        <img style="max-height: 275px;" src="{{ asset('storage/'.$properties->main_photo) }}">
                                     @else
-                                        <img src="{{ asset('assets/images/property/property-1.jpg') }}">
+                                        <img style="max-height: 275px;" src="{{ asset('assets/images/property/property-1.jpg') }}">
                                     @endif 
                                 </a>                       
                             </div>

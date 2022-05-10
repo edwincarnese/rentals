@@ -36,9 +36,9 @@
                                         <div class="image">
                                             <a href="{{ route('pages.properties.show', $property->id) }}" target="_blank">
                                                 @if($property->main_photo)
-                                                    <img src="{{ asset('storage/'.$property->main_photo) }}">
+                                                    <img style="max-height: 275px;" src="{{ asset('storage/'.$property->main_photo) }}">
                                                 @else
-                                                    <img src="{{ asset('assets/images/property/property-1.jpg') }}">
+                                                    <img style="max-height: 275px;" src="{{ asset('assets/images/property/property-1.jpg') }}">
                                                 @endif
                                             </a>
                                             {{-- <ul class="property-feature">

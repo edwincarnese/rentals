@@ -40,7 +40,7 @@ Route::get('owners/{id}', [OwnerController::class, 'show'])->name('pages.owners.
 Route::post('property-login', [PropertyController::class, 'login']);
 Route::post('property-register', [PropertyController::class, 'register']);
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::post('lister/profile', [ListerProfileController::class, 'updateProfile'])->name('lister.profile.update');
     Route::get('lister/profile', [ListerProfileController::class, 'index'])->name('lister.profile');
     Route::post('lister/change-password', [ListerProfileController::class, 'updatePassword'])->name('lister.update.password');
@@ -93,7 +93,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('lister/transaction', [TransactionsController::class, 'show'])->name('lister.transaction');
     Route::get('lister/approve/{id}', [TransactionsController::class, 'index'])->name('lister.approve');
     Route::delete('lister/bokdelete/{id}', [TransactionsController::class, 'destroy'])->name('booking.lister.destroy');
-   
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);

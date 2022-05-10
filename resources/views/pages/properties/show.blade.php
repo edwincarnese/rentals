@@ -211,8 +211,8 @@
                         <h4 class="text-center m-2">OR</h4>
 
                         <form style="display: none;" id="formLogin">
-                            <input class="mb-2" type="text" id="email" placeholder="Email" required>
-                            <input class="mb-2" type="password" id="password" placeholder="Password" required>
+                            <input class="mb-2" type="text" id="user_email" placeholder="Email" required>
+                            <input class="mb-2" type="password" id="user_password" placeholder="Password" required>
                             <button type="button" onclick="submitLogin()" class="btn btn-block btn-secondary">Login</button>
                         </form>
 
@@ -344,8 +344,8 @@
 
     function submitLogin()
     {
-        const email = $('#email').val();
-        const password = $('#password').val();
+        const email = $('#user_email').val();
+        const password = $('#user_password').val();
 
         $.ajax({
             headers: {
