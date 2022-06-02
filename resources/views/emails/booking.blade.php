@@ -1,6 +1,8 @@
 @component('mail::message')
 <strong>Property:</strong> {{ $data['property'] }}
 
+<strong>Room:</strong> {{ $data['room'] }}
+
 <strong>Type:</strong> {{ $data['type'] }}
 
 <strong>Price:</strong> {{ $data['price'] }}

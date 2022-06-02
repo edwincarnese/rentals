@@ -32,6 +32,7 @@
                             <table class="table table-bordered">
                                 <th class="text-center">Property</th>
                                 <th class="text-center">Type</th>
+                                <th class="text-center">Room</th>
                                 <th class="text-center">Price</th>
                                 <th class="text-center">Client</th>
                                 <th class="text-center">Phone Number</th>
@@ -43,6 +44,7 @@
                                             <a href="{{ route('pages.properties.show', $transaction->property_id) }}" target="_blank" class="link">{{$transaction->property->title ?? ''}}</a>
                                         </td>
                                         <td class="text-center">{{ $transaction->property->type ?? '' }}</td>
+                                        <td class="text-center">{{ $transaction->room->name ?? '' }}</td>
                                         <td class="text-center">{{ $transaction->property->price ?? '' }}</td>
                                         <td class="text-center">
                                              {{$transaction->user->firstname ?? ''}} &nbsp; {{$transaction->user->lastname ?? ''}}

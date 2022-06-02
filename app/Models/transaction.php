@@ -9,14 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'book_id',
-        'owner_id',
-        'client_id',
-        'property_id',
-   
-       
-    ];
+    protected $guarded = [];
 
     public function user()
     {
@@ -44,6 +37,9 @@ class Transaction extends Model
         return $this->belongsTo(transaction::class);
     }
 
-
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
     
 }

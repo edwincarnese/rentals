@@ -9,12 +9,7 @@ class Booking extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'owner_id',
-        'client_id',
-        'property_id',
-        'reserved_at',
-    ];
+    protected $guarded = [];
 
     public function property()
     {
@@ -37,5 +32,8 @@ class Booking extends Model
         return $this->belongsTo(booking::class, 'client_id', 'id');
     }
 
-
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }

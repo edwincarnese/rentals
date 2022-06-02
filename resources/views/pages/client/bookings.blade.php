@@ -32,6 +32,7 @@
                             <table class="table table-bordered">
                                 <th class="text-center">Property</th>
                                 <th class="text-center">Type</th>
+                                <th class="text-center">Room</th>
                                 <th class="text-center">Price</th>
                                 <th class="text-center">Property Owner</th>
                                 <th class="text-center">Phone Number</th>
@@ -44,6 +45,7 @@
                                         <a href="{{ route('pages.properties.show', $booking->property_id) }}" target="_blank" class="link">{{$booking->property->title}}</a>
                                     </td>
                                     <td class="text-center">  {{ $booking->property->type }}</td>
+                                    <td class="text-center">{{ $booking->room->name ?? '' }}</td>
                                     <td class="text-center">{{$booking->property->price}}</td>
                                   
                                     <td class="text-center">

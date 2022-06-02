@@ -27,7 +27,7 @@
                            
                             <div class="head">
                                 <div class="left">
-                                    <h1 class="title">{{ $property->title }}</h1>
+                                    <h1 class="title">{{ $property->title }} - {{ $property->type }}</h1>
                                     <span class="location">
                                         <img src="{{ asset('assets/images/icons/marker.png') }}">
                                         {{ $property->address }}
@@ -120,6 +120,83 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @if(count($rooms) > 0)
+                                @guest()
+                                    <div class="mt-4">
+                                        <form style="display: none;" id="formRegister">
+                                            <input class="mb-2" type="text" id="firstname" placeholder="First Name" required>
+                                            <input class="mb-2" type="text" id="lastname" placeholder="Last Name" required>
+                                            <input class="mb-2" type="text" id="phone" placeholder="Phone Number" required>
+                                            <input class="mb-2" type="text" id="email" placeholder="Email" required>
+                                            <input class="mb-2" type="password" id="password" placeholder="Password" required>
+                                            <button type="button" onclick="submitRegister()" class="btn btn-block btn-secondary">Register</button>
+                                        </form>
+        
+                                        <div class="btn btn-block" onclick="formRegister()" id="btnRegister">Register To Book This Property</div>
+                                        
+                                        <h4 class="text-center m-2">OR</h4>
+        
+                                        <form style="display: none;" id="formLogin">
+                                            <input class="mb-2" type="text" id="user_email" placeholder="Email" required>
+                                            <input class="mb-2" type="password" id="user_password" placeholder="Password" required>
+                                            <button type="button" onclick="submitLogin()" class="btn btn-block btn-secondary">Login</button>
+                                        </form>
+        
+                                        <div class="btn btn-block" onclick="formLogin()" id="btnLogin">Login To Book This Property</div>
+                                    </div>
+                                @endguest
+
+                                <h3 class="mt-4">Available Rooms</h3>
+                                <div class="row mt-4">
+                                    @foreach($rooms as $room)
+                                    <div class="col-md-6" style="margin-top: 50px;">
+                                        <div class="image">
+                                            <span class="type">{{ $room->property_status }}</span>
+                                            @if($room->images)
+                                                <img style="max-height: 275px;" src="{{ asset('storage/'.$room->images) }}">
+                                            @else
+                                                <img style="max-height: 275px;" src="{{ asset('assets/images/property/sidebar-property-1.jpg') }}">
+                                            @endif
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="title mt-1 text-center">
+                                                {{ $room->name }}
+                                            </h2>
+                                            <h4 class="location mt-1 text-center">
+                                                Capacity: {{ $room->capacity }}
+                                            </h4>
+                                            <h4 class="price mt-1 text-center">
+                                                Price: ₱{{ $room->price ?? 0 }}</span>
+                                            </h4>
+                                        </div>
+                                        <div class="content">
+                                            @auth()
+                                                <div class="property-search sidebar-property-search">   
+                                                    @if(count($room->bookings) > 0)
+                                                        <label class="btn btn-block">YOU HAVE BOOKED THIS PROPERTY</label>
+                                                    @else
+                                                        @if(!$room->status)
+                                                            <label class="btn btn-block">PROPERTY IS UNAVAILABLE</label>                                     
+                                                        @else 
+                                                            <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
+                                                                @csrf                      
+                                                                <label for="birthdaytime">SELECT (date and time):</label>
+                                                                <input type="datetime-local" id="reserve" name="reserve_date" required>
+                                                                <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                                                                <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                                                                <input type = "hidden" name = "room_id" value ={{$room->id}}>
+                                                                <input type = "submit" class="btn btn-block" value="Book now">
+                                                            </form>
+                                                        @endif 
+                                                    @endif  
+                                                </div>
+                                            @endauth
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     </div>
                     
@@ -195,51 +272,54 @@
             
             <div class="col-lg-4 col-12 order-2 pl-30 pl-sm-15 pl-xs-15">
                 
-                <div class="sidebar">
-                    @guest()
-                        <form style="display: none;" id="formRegister">
-                            <input class="mb-2" type="text" id="firstname" placeholder="First Name" required>
-                            <input class="mb-2" type="text" id="lastname" placeholder="Last Name" required>
-                            <input class="mb-2" type="text" id="phone" placeholder="Phone Number" required>
-                            <input class="mb-2" type="text" id="email" placeholder="Email" required>
-                            <input class="mb-2" type="password" id="password" placeholder="Password" required>
-                            <button type="button" onclick="submitRegister()" class="btn btn-block btn-secondary">Register</button>
-                        </form>
+                @if(count($rooms) == 0)
+                    <div class="sidebar">
+                        @guest()
+                            <form style="display: none;" id="formRegister">
+                                <input class="mb-2" type="text" id="firstname" placeholder="First Name" required>
+                                <input class="mb-2" type="text" id="lastname" placeholder="Last Name" required>
+                                <input class="mb-2" type="text" id="phone" placeholder="Phone Number" required>
+                                <input class="mb-2" type="text" id="email" placeholder="Email" required>
+                                <input class="mb-2" type="password" id="password" placeholder="Password" required>
+                                <button type="button" onclick="submitRegister()" class="btn btn-block btn-secondary">Register</button>
+                            </form>
 
-                        <div class="btn btn-block" onclick="formRegister()" id="btnRegister">Register To Book This Property</div>
-                        
-                        <h4 class="text-center m-2">OR</h4>
+                            <div class="btn btn-block" onclick="formRegister()" id="btnRegister">Register To Book This Property</div>
+                            
+                            <h4 class="text-center m-2">OR</h4>
 
-                        <form style="display: none;" id="formLogin">
-                            <input class="mb-2" type="text" id="user_email" placeholder="Email" required>
-                            <input class="mb-2" type="password" id="user_password" placeholder="Password" required>
-                            <button type="button" onclick="submitLogin()" class="btn btn-block btn-secondary">Login</button>
-                        </form>
+                            <form style="display: none;" id="formLogin">
+                                <input class="mb-2" type="text" id="user_email" placeholder="Email" required>
+                                <input class="mb-2" type="password" id="user_password" placeholder="Password" required>
+                                <button type="button" onclick="submitLogin()" class="btn btn-block btn-secondary">Login</button>
+                            </form>
 
-                        <div class="btn btn-block" onclick="formLogin()" id="btnLogin">Login To Book This Property</div>
-                    @endguest                    
-                    @auth()
-                        <div class="property-search sidebar-property-search">   
-                            @if($is_booked)
-                                <label class="btn btn-block">YOU HAVE BOOKED THIS PROPERTY</label>
-                            @else
-                                @if(!$property->availability_at)
-                                    <label class="btn btn-block">PROPERTY IS UNAVAILABLE</label>                                     
-                                @else 
-                                    <h4 class="sidebar-title"><span class="text">Book Property</span><span class="shape"></span></h4>
-                                    <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
-                                        @csrf                      
-                                        <label for="birthdaytime">SELECT (date and time):</label>
-                                        <input type="datetime-local" id="reserve" name="reserve_date" required>
-                                        <input type = "hidden" name = "property_id" value ={{$property->id}}>
-                                        <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
-                                        <input type = "submit" class="btn btn-block" value="Book now">
-                                    </form>
-                                @endif 
-                            @endif  
-                        </div>
-                    @endauth
-                </div>
+                            <div class="btn btn-block" onclick="formLogin()" id="btnLogin">Login To Book This Property</div>
+                        @endguest                    
+                        @auth()
+                            <div class="property-search sidebar-property-search">   
+                                @if($is_booked)
+                                    <label class="btn btn-block">YOU HAVE BOOKED THIS PROPERTY</label>
+                                @else
+                                    @if(!$property->availability_at)
+                                        <label class="btn btn-block">PROPERTY IS UNAVAILABLE</label>                                     
+                                    @else 
+                                        <h4 class="sidebar-title"><span class="text">Book Property</span><span class="shape"></span></h4>
+                                        <form method = "GET" action="{{route('pages.lister.show', $property->id) }}">
+                                            @csrf                      
+                                            <label for="birthdaytime">SELECT (date and time):</label>
+                                            <input type="datetime-local" id="reserve" name="reserve_date" required>
+                                            <input type = "hidden" name = "property_id" value ={{$property->id}}>
+                                            <input type = "hidden" name = "owners_id" value ={{$property->user_id}}>
+                                            <input type = "submit" class="btn btn-block" value="Book now">
+                                        </form>
+                                    @endif 
+                                @endif  
+                            </div>
+                        @endauth
+                    </div>
+                @endif
+
                 <div class="sidebar">
                     <h4 class="sidebar-title"><span class="text">Featured Property</span><span class="shape"></span></h4>
                     <div class="sidebar-property-list">

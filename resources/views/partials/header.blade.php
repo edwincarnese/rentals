@@ -38,6 +38,15 @@
                                     <li>
                                         <a href="{{ route('pages.properties.index', ['status' => 'for-sale']) }}">For Sale</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('pages.home', ['status' => 'apartment']) }}">Apartment</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('pages.home', ['status' => 'boarding-house']) }}">Boarding House</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('pages.home', ['status' => 'for-sale-for-rent']) }}">For Sale / For Rent</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

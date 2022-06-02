@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\Booking;
+use App\Models\Room;
 use Auth;
 
 class PropertyController extends Controller
@@ -25,8 +26,9 @@ class PropertyController extends Controller
     public function edit($id)
     {
         $property = Property::where('id', $id)->firstOrFail();
+        $rooms = Room::where('property_id', $property->id)->get();
 
-        return view('pages.admin.properties.edit', compact('property'));
+        return view('pages.admin.properties.edit', compact('property', 'rooms'));
     }
 
 

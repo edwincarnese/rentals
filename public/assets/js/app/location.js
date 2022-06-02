@@ -27,6 +27,9 @@ function showPosition(position) {
 if(getCookie("USER_LATITUDE") || getCookie("USER_LATITUDE")) {
     USER_LATITUDE = getCookie("USER_LATITUDE");
     USER_LONGITUDE = getCookie("USER_LONGITUDE");
+
+    $('#userLatitude').val(originLat);
+    $('#userLongitude').val(originLong);
 } 
 else {
     USER_LATITUDE = null;

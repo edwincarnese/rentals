@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\Booking;
+use App\Models\Room;
 use Auth;
 
 class PropertyController extends Controller
@@ -29,8 +30,9 @@ class PropertyController extends Controller
         $user = Auth::user();       
 
         $property = Property::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        $rooms = Room::where('property_id', $property->id)->get();
 
-        return view('pages.lister.properties.edit', compact('property'));
+        return view('pages.lister.properties.edit', compact('property','rooms'));
     }
 
 
@@ -76,6 +78,37 @@ class PropertyController extends Controller
         }
        
         $property->update($data);
+
+        if(isset($data['room_name'])) {
+            Room::where('property_id', $property->id)->delete();
+
+            $total_rooms = count($data['room_name']);
+
+            $room_index = 1;
+
+            for($i = 0; $i < $total_rooms; $i++) {
+                $room = new Room();
+
+                if(isset($data['room_images'])) {
+                    $room_image = $data['room_images'][$i];
+                    $imageName = $room_index.time().'.'.$room_image->getClientOriginalExtension();  
+                    $room_image->storeAs('images', $imageName, 'public');
+                    $imagePath = 'images/'.$imageName;
+                    $room->images = $imagePath;
+                }
+                
+                $room->user_id = $property->user_id;
+                $room->property_id = $property->id;
+                $room->name = $data['room_name'][$i];
+                $room->number = $data['room_number'][$i];
+                $room->price = $data['room_price'][$i];
+                $room->capacity = $data['room_capacity'][$i];
+                $room->status = $data['room_status'][$i];
+                $room->save();
+
+                $room_index++;
+            }
+        }
         
         return redirect()->back()->with('success', 'Your property has been successfully updated.');
     }
@@ -86,7 +119,7 @@ class PropertyController extends Controller
         $data = $request->all();
 
         if($request->amenities) {
-            $data['amenities'] = json_encode($request->amenities);
+            $request['amenities'] = json_encode($request->amenities);
         }
 
         if($request->images) {
@@ -122,10 +155,41 @@ class PropertyController extends Controller
         }
 
         if($user->approved_at) {
-            $data['is_approved'] = 1;
+            $request['is_approved'] = 1;
         }
 
-        $user->properties()->create($data);
+        $property = $user->properties()->create($data);
+
+        if(isset($data['room_name'])) {
+            $total_rooms = count($data['room_name']);
+
+            $room_index = 1;
+
+            for($i = 0; $i < $total_rooms; $i++) {
+                $room = new Room();
+
+                $imagePath = null;
+
+                if(isset($data['room_images'])) {
+                    $room_image = $data['room_images'][$i];
+                    $imageName = $room_index.time().'.'.$room_image->getClientOriginalExtension();  
+                    $room_image->storeAs('images', $imageName, 'public');
+                    $imagePath = 'images/'.$imageName;
+                }
+
+                $room->user_id = $property->user_id;
+                $room->property_id = $property->id;
+                $room->name = $data['room_name'][$i];
+                $room->number = $data['room_number'][$i];
+                $room->price = $data['room_price'][$i];
+                $room->capacity = $data['room_capacity'][$i];
+                $room->status = $data['room_status'][$i];
+                $room->images = $imagePath;
+                $room->save();
+
+                $room_index++;
+            }
+        }
 
         return redirect()->back()->with('success', 'Your property has been successfully created.');
     }

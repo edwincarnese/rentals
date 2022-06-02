@@ -7,6 +7,7 @@ use App\Models\Property;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Transaction;
+use App\Models\Room;
 use Auth;
 use Carbon\Carbon;
 
@@ -40,13 +41,16 @@ class TransactionsController extends Controller
     public function destroy(Request $request, $id)    
     {   
         $user = Auth::user(); 
-        $booking = Booking::where('id', $id)->firstOrFail()->delete();  
+        Booking::where('id', $id)->firstOrFail()->delete();  
+        $room = Room::where('property_id', $request->property_id)->first();
        
         $transactions = new transaction(); 
         $transactions->owner_id = $user->id; 
         $transactions->client_id = $request->client_id;
         $transactions->property_id = $request->property_id;  
+        $transactions->room_id = $room->id;  
         $transactions->save(); 
+
         $getPropertyId = $transactions->property_id;
 
         //update properties availability_at column        
@@ -55,7 +59,7 @@ class TransactionsController extends Controller
         $Property->update();
 
      
-     return redirect()->route('lister.transaction')->with('success', 'Payment has been send');
+     return redirect()->route('lister.transaction')->with('success', 'Transactions has been successfully saved.');
 
     }  
     // $availability_at = Carbon::now();

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Property;
 use App\Models\User;
 use App\Models\Booking;
+use App\Models\Room;
 use App\Models\Message;
 use Auth;
 use Carbon\Carbon;
@@ -25,32 +26,70 @@ class PropertyController extends Controller
         $min_price = $request->min_price;
         $max_price = $request->max_price;
 
-        $properties = Property::query()
-            ->when($address, function($q) use($address) {
-                $q->where('address', 'LIKE', '%'.$address.'%');
-            })
-            ->when($bathroom, function($q) use($bathroom) {
-                $q->where('bathroom', $bathroom);
-            })
-            ->when($bedroom, function($q) use($bedroom) {
-                $q->where('bedroom', $bedroom);
-            })
-            ->when($type, function($q) use($type) {
-                $q->where('type', $type);
-            })
-            ->when($min_price && $max_price, function($q) use($min_price, $max_price) {
-                $q->whereBetween('price', [(int)$min_price, (int)$max_price]);
-            })
-            ->when($status, function($q) use($status) {
-                if($status == 'for-rent') {
-                    $q->where('status', 1);
-                } else {
-                    $q->where('status', 2);
-                }
-            })
-            ->where('is_approved', 1)
-            ->latest()
-            ->paginate(10);
+        $distance = $request->distance;
+        $user_latitude = $request->latitude;
+        $user_longitude = $request->longitude;
+
+        if($distance && $user_latitude && $user_longitude) {
+            $properties = Property::query()
+                ->when($address, function($q) use($address) {
+                    $q->where('address', 'LIKE', '%'.$address.'%');
+                })
+                ->when($bathroom, function($q) use($bathroom) {
+                    $q->where('bathroom', $bathroom);
+                })
+                ->when($bedroom, function($q) use($bedroom) {
+                    $q->where('bedroom', $bedroom);
+                })
+                ->when($type, function($q) use($type) {
+                    $q->where('type', $type);
+                })
+                ->when($min_price && $max_price, function($q) use($min_price, $max_price) {
+                    $q->whereBetween('price', [(int)$min_price, (int)$max_price]);
+                })
+                ->when($status, function($q) use($status) {
+                    if($status == 'for-rent') {
+                        $q->where('status', 1);
+                    } else {
+                        $q->where('status', 2);
+                    }
+                })
+                ->selectRaw("
+                    id,user_id,title,description,price,address,status,period,type,area,bedroom,bathroom,kitchen,images,videos,amenities,latitude,longitude,availability_at,is_approved,created_at,updated_at,ratings,ratings_count,
+                    ( FLOOR(6371 * ACOS( COS( RADIANS( ".$user_latitude." ) ) * COS( RADIANS( latitude ) ) * COS( RADIANS( longitude ) - RADIANS( ".$user_longitude." ) ) + SIN( RADIANS( ".$user_latitude." ) ) * SIN( RADIANS( latitude ) ) )) ) distance")
+                ->havingRaw("distance <= " . $distance)
+                ->where('is_approved', 1)
+                ->latest()
+                ->paginate(10);
+        } 
+        else {
+            $properties = Property::query()
+                ->when($address, function($q) use($address) {
+                    $q->where('address', 'LIKE', '%'.$address.'%');
+                })
+                ->when($bathroom, function($q) use($bathroom) {
+                    $q->where('bathroom', $bathroom);
+                })
+                ->when($bedroom, function($q) use($bedroom) {
+                    $q->where('bedroom', $bedroom);
+                })
+                ->when($type, function($q) use($type) {
+                    $q->where('type', $type);
+                })
+                ->when($min_price && $max_price, function($q) use($min_price, $max_price) {
+                    $q->whereBetween('price', [(int)$min_price, (int)$max_price]);
+                })
+                ->when($status, function($q) use($status) {
+                    if($status == 'for-rent') {
+                        $q->where('status', 1);
+                    } else {
+                        $q->where('status', 2);
+                    }
+                })
+                ->where('is_approved', 1)
+                ->latest()
+                ->paginate(10);
+        }
 
         $featured_properties = Property::query()
             ->where('is_approved', 1)
@@ -103,6 +142,8 @@ class PropertyController extends Controller
         $current_date = Carbon::now();
         $get_message = Message::with('user')->with('property')->where('property_id', $id)->limit(10)->get();  
         $count_feedback= (count($get_message));
+
+        $rooms = Room::where('property_id', $id)->get();
         
         return view('pages.properties.show', compact(
             'property',
@@ -114,6 +155,7 @@ class PropertyController extends Controller
             'current_date',
             'user',
             'properties',
+            'rooms',
         ));
     }   
 
@@ -124,10 +166,12 @@ class PropertyController extends Controller
 
         $owner = User::find($request->input('owners_id'));
         $property = Property::find($request->input('property_id'));
+        $room = Room::where('property_id', $property->id)->first();
 
         $booking = new booking();
-        $booking->owner_id =$request->input('owners_id');  
+        $booking->owner_id = $request->input('owners_id');  
         $booking->client_id = $user->id;
+        $booking->room_id = $room->id ?? null;
         $booking->property_id = $request->input('property_id');  
         $booking->reserved_at = date("Y-m-d h:i:s", strtotime($request->input('reserve_date')));
         $booking->save();  
@@ -138,7 +182,8 @@ class PropertyController extends Controller
             'phone' => Auth::user()->phone,
             'reserverd_at' => $booking->reserved_at,
             'property' => $property->title,
-            'price' => $property->price,
+            'room' => $room->name ?? 'N/A',
+            'price' => $room->price ?? $property->price,
             'type' => $property->type,
         );
 

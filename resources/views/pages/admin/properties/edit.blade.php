@@ -29,9 +29,10 @@
                     <h3 class="mb-30">Edit Property</h3>
                                 
                     <ul class="add-property-tab-list nav mb-50">
-                        <li class="working"><a href="#basic_info" data-toggle="tab">1. Basic Information</a></li>
+                        <li class="working"><a href="#basic_info" data-toggle="tab">1. Property</a></li>
                         <li><a href="#image_video" data-toggle="tab">2. Images & Video</a></li>
-                        <li><a href="#detailed_info" data-toggle="tab">3. Detailed Information</a></li>
+                        <li><a href="#detailed_info" data-toggle="tab">3. Information</a></li>
+                        <li><a href="#property_rooms" data-toggle="tab">4. Rooms</a></li>
                     </ul>
 
                     <form action="{{ route('admin.properties.update',$property->id) }}" method="POST" enctype="multipart/form-data">
@@ -81,11 +82,11 @@
                                             <label>Type</label>
                                             <select class="nice-select" name="type">
                                                 <option value="Apartment" @if($property->type == "Apartment") selected @endif>Apartment</option>
-                                                <option value="Cafe" @if($property->type == "Cafe") selected @endif>Cafe</option>
-                                                <option value="House" @if($property->type == "House") selected @endif>House</option>
-                                                <option value="Restaurant" @if($property->type == "Restaurant") selected @endif>Restaurant</option>
+                                                <option value="Boarding House" @if($property->type == "Boarding House") selected @endif>Boarding House</option>
+                                                {{-- <option value="Cafe" @if($property->type == "Cafe") selected @endif>Cafe</option> --}}
+                                                {{-- <option value="Restaurant" @if($property->type == "Restaurant") selected @endif>Restaurant</option>
                                                 <option value="Store"@if($property->type == "Store") selected @endif>Store</option>
-                                                <option value="Villa"@if($property->type == "Villa") selected @endif>Villa</option>
+                                                <option value="Villa"@if($property->type == "Villa") selected @endif>Villa</option> --}}
                                             </select>
                                         </div>
 
@@ -235,6 +236,61 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
+                                            <a href="#property_rooms" data-toggle="tab" class="btn btn-block">Next</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="property_rooms">
+                                <div class="tab-body">
+                                    <div class="rooms">
+                                        @foreach($rooms as $room)
+                                            <div class="row room-{{ $room->id }}-">
+                                                <div class="col-6 mb-30">
+                                                    <label>Room Name</label>
+                                                    <input name="room_name[]" value="{{ $room->name }}" type="text" required>
+                                                </div>
+                                    
+                                                <div class="col-6 mb-30">
+                                                    <label>Room Number</label>
+                                                    <input name="room_number[]" value="{{ $room->number }}" type="text" required>
+                                                </div>
+                                    
+                                                <div class="col-6 mb-30">
+                                                    <label>Room Price</label>
+                                                    <input name="room_price[]" value="{{ $room->price }}" type="text" required>
+                                                </div>
+                                                
+                                                <div class="col-3 mb-30">
+                                                    <label>Room Capacity</label>
+                                                    <input name="room_capacity[]" value="{{ $room->capacity }}" type="text" required>
+                                                </div>
+                                                
+                                                <div class="col-md-3 col-12 mb-30">
+                                                    <label>Status</label>
+                                                    <select class="nice-select" style="padding: 14px;" name="room_status[]">
+                                                        <option value="1" @if($room->status == 1) selected @endif>Available</option>
+                                                        <option value="2" @if($room->status == 0) selected @endif>Not Available</option>
+                                                    </select>
+                                                </div>
+                                    
+                                                <div class="col-12 mb-30">
+                                                    <label>Images</label>
+                                                    <input type="file" name="room_images[]" accept="image/*">
+                                                </div>
+                                                
+                                                <div class="col-12 mb-30">
+                                                    <button type="button" onclick="deleteRoom('room-{{ $room->id }}-')" class="btn btn-danger float-right" style="background-color: red">Delete Room</button>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="row">
+                                        <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
+                                            <button type="button" onclick="addRoom()" class="property-submit btn btn-block">Add Room</button>
+                                        </div>
 
                                         <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
                                             <button class="property-submit btn btn-block">Update Property</button>
@@ -249,4 +305,58 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    let room_id = 0;
+
+    function addRoom() {
+        room_id++;
+
+        $(".rooms").append(`<div class="row room-${room_id}">
+            <div class="col-6 mb-30">
+                <label>Room Name</label>
+                <input name="room_name[]" type="text" required>
+            </div>
+
+            <div class="col-6 mb-30">
+                <label>Room Number</label>
+                <input name="room_number[]" type="text" required>
+            </div>
+
+            <div class="col-6 mb-30">
+                <label>Room Price</label>
+                <input name="room_price[]" type="text" required>
+            </div>
+            
+            <div class="col-3 mb-30">
+                <label>Room Capacity</label>
+                <input name="room_capacity[]" type="text" required>
+            </div>
+            
+            <div class="col-md-3 col-12 mb-30">
+                <label>Status</label>
+                <select class="nice-select" style="padding: 14px;" name="room_status[]">
+                    <option value="1" seleted>Available</option>
+                    <option value="2">Not Available</option>
+                </select>
+            </div>
+
+            <div class="col-12 mb-30">
+                <label>Images</label>
+                <input type="file" name="room_images[]" accept="image/*">
+            </div>
+            
+            <div class="col-12 mb-30">
+                <button type="button" onclick="deleteRoom('room-${room_id}')" class="btn btn-danger float-right" style="background-color: red">Delete Room</button>
+            </div>
+        </div>`);
+    }
+
+    function deleteRoom(id)
+    {
+        $('.'+id).remove();
+    }
+</script>
 @endsection

@@ -34,7 +34,6 @@ class Property extends Model
         'longitude',
         'availability_at',
         'is_approved',
-
     ];
 
     public function getPropertyStatusAttribute()

@@ -52,7 +52,7 @@
                                 <div class="left">
                                     <h3 class="title">
                                         <a href="{{ route('pages.properties.show', 1) }}">
-                                        {{ $property->title }}
+                                            {{ $property->title }} - {{ $property->type }}
                                         </a>
                                     </h3>
                                     <span class="location">
@@ -82,15 +82,6 @@
                                 'show' => request()->query('show'), 
                             ])->links()
                         }}
-                        {{-- <ul class="page-pagination">
-                            <li><a href="#"><i class="fa fa-angle-left"></i> Prev</a></li>
-                            <li class="active"><a href="#">01</a></li>
-                            <li><a href="#">02</a></li>
-                            <li><a href="#">03</a></li>
-                            <li><a href="#">04</a></li>
-                            <li><a href="#">05</a></li>
-                            <li><a href="#"><i class="fa fa-angle-right"></i> Next</a></li>
-                        </ul> --}}
                     </div>
                 </div>
             </div>
@@ -102,8 +93,10 @@
                 
                     <div class="property-search sidebar-property-search">
 
-                        <form action="{{ route('pages.properties.index') }}" method="GET">
-
+                        <form action="{{ route('pages.properties.index') }}" method="GET" onsubmit="return searchFields()">
+                            <input type="text" name="latitude" id="userLatitude" placeholder="User Latitude" hidden>
+                            <input type="text" name="longitude" id="userLongitude" placeholder="User Longitude" hidden>
+                            
                             <div>
                                 <select class="nice-select" name="status">
                                     <option value="for-rent" {{ Request::get('status') == 'for-rent' ? 'selected' : ''  }}>For Rent</option>
@@ -115,11 +108,11 @@
                                 <select class="nice-select" name="type">
                                     <option value="">Type</option>
                                     <option value="Apartment" {{ Request::get('type') == 'Apartment' ? 'selected' : ''  }}>Apartment</option>
-                                    <option value="Cafe" {{ Request::get('type') == 'Cafe' ? 'selected' : ''  }}>Cafe</option>
-                                    <option value="House" {{ Request::get('type') == 'House' ? 'selected' : ''  }}>House</option>
+                                    <option value="Boarding House" {{ Request::get('type') == 'Boarding House' ? 'selected' : ''  }}>Boarding House</option>
+                                    {{-- <option value="Cafe" {{ Request::get('type') == 'Cafe' ? 'selected' : ''  }}>Cafe</option>
                                     <option value="Restaurant" {{ Request::get('type') == 'Restaurant' ? 'selected' : ''  }}>Restaurant</option>
                                     <option value="Store" {{ Request::get('type') == 'Store' ? 'selected' : ''  }}>Store</option>
-                                    <option value="Villa" {{ Request::get('type') == 'Villa' ? 'selected' : ''  }}>Villa</option>
+                                    <option value="Villa" {{ Request::get('type') == 'Villa' ? 'selected' : ''  }}>Villa</option> --}}
                                 </select>
                             </div>
 
@@ -156,6 +149,19 @@
 
                             <div>
                                 <input type="text" value="{{ Request::get('address') }}" name="address" placeholder="Location">
+                            </div>
+
+                            <div>
+                                <select class="nice-select" name="distance" id="distance">
+                                    <option value="">Distance</option>
+                                    <option value="1" {{ Request::get('distance') == 1 ? 'selected' : ''  }}>1 KM</option>
+                                    <option value="3" {{ Request::get('distance') == 3 ? 'selected' : ''  }}>3 KM</option>
+                                    <option value="5" {{ Request::get('distance') == 5 ? 'selected' : ''  }}>5 KM</option>
+                                    <option value="10" {{ Request::get('distance') == 10 ? 'selected' : ''  }}>10 KM</option>
+                                    <option value="15" {{ Request::get('distance') == 15 ? 'selected' : ''  }}>15 KM</option>
+                                    <option value="20" {{ Request::get('distance') == 20 ? 'selected' : ''  }}>20 KM</option>
+                                    <option value="30" {{ Request::get('distance') == 30 ? 'selected' : ''  }}>30 KM</option>
+                                </select>
                             </div>
 
                             <div>
@@ -249,4 +255,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('js')
+<script type="text/javascript" src="{{ asset('assets/js/app/location.js') }}"></script>
+
+<script>
+function searchFields() {
+    if(!$('#userLatitude').val() && !$('#userLongitude').val() && $('#distance').val()) {
+        alert('Please turn on your location to use the distance features!');
+        return false;
+    }
+}
+</script>
 @endsection

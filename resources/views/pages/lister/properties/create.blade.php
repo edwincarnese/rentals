@@ -29,9 +29,10 @@
                     <h3 class="mb-30">New Property</h3>
                                 
                     <ul class="add-property-tab-list nav mb-50">
-                        <li class="working"><a href="#basic_info" data-toggle="tab">1. Basic Information</a></li>
+                        <li class="working"><a href="#basic_info" data-toggle="tab">1. Property</a></li>
                         <li><a href="#image_video" data-toggle="tab">2. Images & Video</a></li>
-                        <li><a href="#detailed_info" data-toggle="tab">3. Detailed Information</a></li>
+                        <li><a href="#detailed_info" data-toggle="tab">3. Information</a></li>
+                        <li><a href="#property_rooms" data-toggle="tab">4. Rooms</a></li>
                     </ul>
 
                     <form action="{{ route('lister.properties.store') }}" method="POST" enctype="multipart/form-data">
@@ -72,11 +73,11 @@
                                             <label>Type</label>
                                             <select class="nice-select" name="type">
                                                 <option value="Apartment">Apartment</option>
-                                                <option value="Cafe">Cafe</option>
-                                                <option value="House">House</option>
-                                                <option value="Restaurant">Restaurant</option>
-                                                <option value="Store">Store</option>
-                                                <option value="Villa">Villa</option>
+                                                <option value="Boarding House">Boarding House</option>
+                                                {{-- <option value="Cafe">Cafe</option> --}}
+                                                {{-- <option value="Restaurant">Restaurant</option> --}}
+                                                {{-- <option value="Store">Store</option> --}}
+                                                {{-- <option value="Villa">Villa</option> --}}
                                             </select>
                                         </div>
 
@@ -128,7 +129,8 @@
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Bedrooms</label>
                                             <select class="nice-select" name="bedroom">
-                                                <option value="1">1</option>
+                                                <option value="0">0</option>
+                                                <option value="1" selected>1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
@@ -139,7 +141,8 @@
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Bathrooms</label>
                                             <select class="nice-select" name="bathroom">
-                                                <option value="1">1</option>
+                                                <option value="0">0</option>
+                                                <option value="1" selected>1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
@@ -150,7 +153,8 @@
                                         <div class="col-md-4 col-12 mb-30">
                                             <label>Kitchen</label>
                                             <select class="nice-select" name="kitchen">
-                                                <option value="1">1</option>
+                                                <option value="0">0</option>
+                                                <option value="1" selected>1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                             </select>
@@ -228,7 +232,22 @@
                                         </div>
 
                                         <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
-                                            <button class="property-submit btn btn-block">Add Property</button>
+                                            <a href="#property_rooms" data-toggle="tab" class="btn btn-block">Next</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="property_rooms">
+                                <div class="tab-body">
+                                    <div class="rooms"></div>
+                                    <div class="row">
+                                        <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
+                                            <button type="button" onclick="addRoom()" class="property-submit btn btn-block">Add Room</button>
+                                        </div>
+
+                                        <div class="nav d-flex justify-content-end col-12 mb-30 pl-15 pr-15">
+                                            <button class="property-submit btn btn-block">Save Property</button>
                                         </div>
                                     </div>
                                 </div>
@@ -240,4 +259,58 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    let room_id = 0;
+
+    function addRoom() {
+        room_id++;
+
+        $(".rooms").append(`<div class="row room-${room_id}">
+            <div class="col-6 mb-30">
+                <label>Room Name</label>
+                <input name="room_name[]" type="text" required>
+            </div>
+
+            <div class="col-6 mb-30">
+                <label>Room Number</label>
+                <input name="room_number[]" type="text" required>
+            </div>
+
+            <div class="col-6 mb-30">
+                <label>Room Price</label>
+                <input name="room_price[]" type="text" required>
+            </div>
+            
+            <div class="col-3 mb-30">
+                <label>Room Capacity</label>
+                <input name="room_capacity[]" type="text" required>
+            </div>
+            
+            <div class="col-md-3 col-12 mb-30">
+                <label>Status</label>
+                <select class="nice-select" style="padding: 14px;" name="room_status[]">
+                    <option value="1" seleted>Available</option>
+                    <option value="2">Not Available</option>
+                </select>
+            </div>
+
+            <div class="col-12 mb-30">
+                <label>Images</label>
+                <input type="file" name="room_images[]" accept="image/*">
+            </div>
+            
+            <div class="col-12 mb-30">
+                <button type="button" onclick="deleteRoom('room-${room_id}')" class="btn btn-danger float-right" style="background-color: red">Delete Room</button>
+            </div>
+        </div>`);
+    }
+
+    function deleteRoom(id)
+    {
+        $('.'+id).remove();
+    }
+</script>
 @endsection
