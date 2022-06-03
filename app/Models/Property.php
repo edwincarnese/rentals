@@ -23,7 +23,6 @@ class Property extends Model
         'period',
         'type',
         'area',
-        'area',
         'bedroom',
         'bathroom',
         'kitchen',

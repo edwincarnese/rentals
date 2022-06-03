@@ -78,10 +78,10 @@ class PropertyController extends Controller
         }
        
         $property->update($data);
+        
+        Room::where('property_id', $property->id)->delete();
 
         if(isset($data['room_name'])) {
-            Room::where('property_id', $property->id)->delete();
-
             $total_rooms = count($data['room_name']);
 
             $room_index = 1;
@@ -119,7 +119,7 @@ class PropertyController extends Controller
         $data = $request->all();
 
         if($request->amenities) {
-            $request['amenities'] = json_encode($request->amenities);
+            $data['amenities'] = json_encode($request->amenities);
         }
 
         if($request->images) {
@@ -155,7 +155,7 @@ class PropertyController extends Controller
         }
 
         if($user->approved_at) {
-            $request['is_approved'] = 1;
+            $data['is_approved'] = 1;
         }
 
         $property = $user->properties()->create($data);
