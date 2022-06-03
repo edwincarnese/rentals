@@ -39,29 +39,26 @@
                             @csrf
                             @error('email')
                                 <h3 class="text-center text-danger">
-                                    These credentials does not match our records.
+                                    {{ $message }}
                                 </h3 >
                             @enderror
                             @error('password')
                                 <h3 class="text-center text-danger">
-                                    Passwords do not matched.
+                                    {{ $message }}
                                 </h3 >
                             @enderror
                             <div class="row">
                                 <div class="col-6 mb-30">
-                                    <input name="firstname" type="text" placeholder="First Name" required>
+                                    <input name="firstname" type="text" placeholder="First Name" value="{{ old('firstname') }}" required>
                                 </div>
                                 <div class="col-6 mb-30">
-                                    <input name="lastname" type="text" placeholder="Last Name" required>
-                                </div>
-                                {{-- <div class="col-12 mb-30">
-                                    <input name="email" type="email" placeholder="Email" required>
-                                </div> --}}
-                                <div class="col-6 mb-30">
-                                    <input name="email" type="email" placeholder="Email" required>
+                                    <input name="lastname" type="text" placeholder="Last Name" value="{{ old('lastname') }}" required>
                                 </div>
                                 <div class="col-6 mb-30">
-                                    <input name="phone" type="text" placeholder="Phone Number" required>
+                                    <input name="email" type="email" placeholder="Email" value="{{ old('email') }}" required>
+                                </div>
+                                <div class="col-6 mb-30">
+                                    <input name="phone" type="text" placeholder="Phone Number" value="{{ old('phone') }}" required>
                                 </div>                                
                                 <div class="col-6 mb-30">
                                     <input name="password" type="password" placeholder="Password" required>
